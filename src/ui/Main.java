@@ -36,8 +36,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mio.fxml"));
-        MioGUI mioGUI = new MioGUI(primaryStage);
-        fxmlLoader.setController(mioGUI);
+        MetrostGUI metrostGUI = new MetrostGUI(primaryStage);
+        fxmlLoader.setController(metrostGUI);
 		Parent root = fxmlLoader.load();
 		primaryStage.setScene(new Scene(root));
 		primaryStage.setTitle("Western Mass Integrated");

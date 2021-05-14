@@ -1,14 +1,14 @@
 package ui;
-
+import model.Metrost;
 import javafx.stage.Stage;
 
-public class MioGUI {
+public class MetrostGUI {
 
     private Stage primaryStage;
 
-    private MioGUI mioGUI;
+    private Metrost metrost;
 
-    public MioGUI(Stage primaryStage) {
+    public MetrostGUI(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 }
