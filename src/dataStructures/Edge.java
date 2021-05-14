@@ -1,11 +1,29 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
+ * @Date: June, 1st 2021
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 package dataStructures;
 
 public class Edge<V> {
 
+    // -----------------------------------------------------------------
+    // Attributes
+    // -----------------------------------------------------------------
+
     private double weight;
+
+    // -----------------------------------------------------------------
+    // Relations
+    // -----------------------------------------------------------------
 
     private VertexAL<V> source;
     private VertexAL<V> destination;
+
+    // -----------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------
 
     public Edge(double weight, VertexAL<V> source, VertexAL<V> destination) {
         this.weight = weight;
@@ -39,6 +57,7 @@ public class Edge<V> {
 
     @Override
     public String toString() {
-        return "Edge From: " + source.getValue().toString() + " to: " + destination.getValue().toString() + " distance: " + weight;
+        return "Edge From: " + source.getValue().toString() + " to: " + destination.getValue().toString()
+                + " distance: " + weight;
     }
 }

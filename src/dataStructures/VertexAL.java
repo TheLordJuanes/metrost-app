@@ -1,16 +1,34 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
+ * @Date: June, 1st 2021
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 package dataStructures;
 
 import java.util.ArrayList;
 
 public class VertexAL<V> {
 
+    // -----------------------------------------------------------------
+    // Constants
+    // -----------------------------------------------------------------
+
     public enum Color {
         WHITE, GRAY, BLACK
     }
 
+    // -----------------------------------------------------------------
+    // Attributes
+    // -----------------------------------------------------------------
+
     private Color color;
     private V value;
     private ArrayList<VertexAL<V>> destinations;
+
+    // -----------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------
 
     public VertexAL(Color color, V value) {
         this.color = color;

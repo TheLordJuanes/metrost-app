@@ -1,18 +1,37 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
+ * @Date: June, 1st 2021
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 package dataStructures;
 
 public class VertexAM<V> {
+
+    // -----------------------------------------------------------------
+    // Constants
+    // -----------------------------------------------------------------
 
     public enum Color {
         WHITE, GRAY, BLACK
     }
 
+    // -----------------------------------------------------------------
+    // Attributes
+    // -----------------------------------------------------------------
+
     private Color color;
     private V value;
 
-    public VertexAM(Color color, V value ){
-        this.color=color;
-        this.value=value;
+    // -----------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------
+
+    public VertexAM(Color color, V value) {
+        this.color = color;
+        this.value = value;
     }
+
     public Color getColor() {
         return color;
     }
@@ -29,7 +48,7 @@ public class VertexAM<V> {
         this.value = value;
     }
 
-    public boolean isWhite(){
-        return color==Color.WHITE;
+    public boolean isWhite() {
+        return color == Color.WHITE;
     }
 }

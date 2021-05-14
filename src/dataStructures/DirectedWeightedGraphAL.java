@@ -1,14 +1,28 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
+ * @Date: June, 1st 2021
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 package dataStructures;
 
 import java.util.ArrayList;
 
 public class DirectedWeightedGraphAL<V> {
 
+    // -----------------------------------------------------------------
+    // Attributes
+    // -----------------------------------------------------------------
+
     private ArrayList<VertexAL<V>> vertices;
     private ArrayList<Edge<V>> edges;
 
-    public DirectedWeightedGraphAL(){
-        vertices= new ArrayList<VertexAL<V>>();
+    // -----------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------
+
+    public DirectedWeightedGraphAL() {
+        vertices = new ArrayList<VertexAL<V>>();
     }
 
     public ArrayList<VertexAL<V>> getVertices() {
