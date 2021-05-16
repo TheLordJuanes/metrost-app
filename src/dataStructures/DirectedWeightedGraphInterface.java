@@ -6,9 +6,17 @@
 */
 package dataStructures;
 
-public interface DirectedWeightedGraphInterface  {
+public interface DirectedWeightedGraphInterface<V>  {
 
-    public void dijkstra();
+    public boolean dijkstra(Vertex<V> s);
 
-    public void bfs();
+    public boolean bfs(Vertex<V> vertex);
+
+    public void dfs();
+
+    public void addVertex(V value);
+
+    public void deleteVertex(V value);
+
+    public void modifyVertex(V oldValue, V newValue);
 }

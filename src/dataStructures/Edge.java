@@ -6,7 +6,7 @@
 */
 package dataStructures;
 
-public class Edge<V> {
+public class Edge<V> implements Comparable<Edge<V>> {
 
     // -----------------------------------------------------------------
     // Attributes
@@ -18,14 +18,14 @@ public class Edge<V> {
     // Relations
     // -----------------------------------------------------------------
 
-    private VertexInterface<V> source;
-    private VertexInterface<V> destination;
+    private Vertex<V> source;
+    private Vertex<V> destination;
 
     // -----------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------
 
-    public Edge(double weight, VertexInterface<V> source, VertexInterface<V> destination) {
+    public Edge(double weight, Vertex<V> source, Vertex<V> destination) {
         this.weight = weight;
         this.source = source;
         this.destination = destination;
@@ -39,24 +39,29 @@ public class Edge<V> {
         this.weight = weight;
     }
 
-    public VertexInterface<V> getSource() {
+    public Vertex<V> getSource() {
         return source;
     }
 
-    public void setSource(VertexInterface<V> source) {
+    public void setSource(Vertex<V> source) {
         this.source = source;
     }
 
-    public VertexInterface<V> getDestination() {
+    public Vertex<V> getDestination() {
         return destination;
     }
 
-    public void setDestination(VertexInterface<V> destination) {
+    public void setDestination(Vertex<V> destination) {
         this.destination = destination;
     }
 
     @Override
     public String toString() {
         return "Edge From: " + source.getValue().toString() + " to: " + destination.getValue().toString() + " distance: " + weight;
+    }
+
+    @Override
+    public int compareTo(Edge<V> o) {
+        return (int) weight - (int) o.getWeight();
     }
 }

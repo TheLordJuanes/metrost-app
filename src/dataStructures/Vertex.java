@@ -6,7 +6,9 @@
 */
 package dataStructures;
 
-public class VertexAM<V> implements VertexInterface<V>{
+import java.util.ArrayList;
+
+public class Vertex<V> implements Comparable<Vertex<V>>{
 
     // -----------------------------------------------------------------
     // Constants
@@ -22,14 +24,17 @@ public class VertexAM<V> implements VertexInterface<V>{
 
     private Color color;
     private V value;
+    private ArrayList<Vertex<V>> destinations;
+    private double priority;
 
     // -----------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------
 
-    public VertexAM(Color color, V value) {
+    public Vertex(Color color, V value) {
         this.color = color;
         this.value = value;
+        priority=Double.MAX_VALUE;
     }
 
     public Color getColor() {
@@ -47,8 +52,28 @@ public class VertexAM<V> implements VertexInterface<V>{
     public void setValue(V value) {
         this.value = value;
     }
+    public double getPriority() {
+        return priority;
+    }
+
+    public void setPriority(double priority) {
+        this.priority= priority;
+    }
 
     public boolean isWhite() {
         return color == Color.WHITE;
+    }
+
+    public ArrayList<Vertex<V>> getDestinations() {
+        return destinations;
+    }
+
+    public void setDestinations(ArrayList<Vertex<V>> destinations) {
+        this.destinations = destinations;
+    }
+
+    @Override
+    public int compareTo(Vertex<V> o) {
+        return (int) (priority - o.getPriority());
     }
 }
