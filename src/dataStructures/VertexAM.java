@@ -6,7 +6,7 @@
 */
 package dataStructures;
 
-public class VertexAM<V> {
+public class VertexAM<V> implements VertexInterface<V>{
 
     // -----------------------------------------------------------------
     // Constants

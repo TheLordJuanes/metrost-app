@@ -8,7 +8,7 @@ package dataStructures;
 
 import java.util.ArrayList;
 
-public class VertexAL<V> {
+public class VertexAL<V> implements VertexInterface<V>{
 
     // -----------------------------------------------------------------
     // Constants

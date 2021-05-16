@@ -8,7 +8,7 @@ package dataStructures;
 
 import java.util.ArrayList;
 
-public class DirectedWeightedGraphAL<V> {
+public class DirectedWeightedGraphAL<V> implements DirectedWeightedGraphInterface{
 
     // -----------------------------------------------------------------
     // Attributes
@@ -39,5 +39,15 @@ public class DirectedWeightedGraphAL<V> {
 
     public void setEdges(ArrayList<Edge<V>> edges) {
         this.edges = edges;
+    }
+
+    @Override
+    public void dijkstra() {
+
+    }
+
+    @Override
+    public void bfs() {
+
     }
 }
