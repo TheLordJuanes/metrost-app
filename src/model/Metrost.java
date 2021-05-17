@@ -8,4 +8,17 @@ package model;
 
 public class Metrost {
 
+    public Metrost() {
+
+    }
+
+    public boolean addStation() {
+        //TODO
+        return false;
+    }
+
+    public boolean deleteStation() {
+        //TODO
+        return false;
+    }
 }

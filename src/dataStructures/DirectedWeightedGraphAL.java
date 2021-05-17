@@ -56,6 +56,34 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> implements Directe
         this.adjacencyList = adjacencyList;
     }
 
+    /**
+     * @return double[] return the distD
+     */
+    public double[] getDistD() {
+        return distD;
+    }
+
+    /**
+     * @param distD the distD to set
+     */
+    public void setDistD(double[] distD) {
+        this.distD = distD;
+    }
+
+    /**
+     * @return ArrayList<Vertex<V>> return the prevD
+     */
+    public ArrayList<Vertex<V>> getPrevD() {
+        return prevD;
+    }
+
+    /**
+     * @param prevD the prevD to set
+     */
+    public void setPrevD(ArrayList<Vertex<V>> prevD) {
+        this.prevD = prevD;
+    }
+
     @Override
     public boolean dijkstra(Vertex<V> source) {
         if (vertices.isEmpty()) {
@@ -111,7 +139,15 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> implements Directe
 
     private int getIndex(Vertex<V> s) {
         for (int i = 0; i < vertices.size(); i++) {
-            if (s.equals(vertices.get(i)))
+            if (s.getValue().compareTo((vertices.get(i).getValue())) == 0)
+                return i;
+        }
+        return -1;
+    }
+
+    private int getIndex(V value) {
+        for (int i = 0; i < vertices.size(); i++) {
+            if (value.compareTo((vertices.get(i).getValue())) == 0)
                 return i;
         }
         return -1;
@@ -123,11 +159,12 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> implements Directe
             return false;
         }
         int index = getIndex(vertex);
-        if (index == -1) {
+        if (index == -1)
             return false;
-        }
         for (Vertex<V> u : vertices) {
             u.setColor(Color.WHITE);
+            u.setDistance(Integer.MAX_VALUE);
+            u.setParent(null);
         }
         vertex.setColor(Color.GRAY);
         Queue<Vertex<V>> queue = new LinkedList<>();
@@ -137,6 +174,8 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> implements Directe
             for (Vertex<V> v : u.getDestinations()) {
                 if (v.getColor() == Color.WHITE) {
                     v.setColor(Color.GRAY);
+                    v.setDistance(u.getDistance() + 1);
+                    v.setParent(u);
                     queue.add(v);
                 }
             }
@@ -146,51 +185,99 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> implements Directe
     }
 
     @Override
-    public void dfs() {
+    public boolean dfs() {
+        if (vertices.isEmpty())
+            return false;
+        for (Vertex<V> u : vertices) {
+            u.setColor(Color.WHITE);
+        }
+        int time = 0;
+        for (Vertex<V> u : vertices) {
+            if (u.getColor() == Color.WHITE)
+                dfsVisit(u, time);
+        }
+        return true;
+    }
 
+    private void dfsVisit(Vertex<V> u, int time) {
+        time += 1;
+        u.setDiscovery(time);
+        u.setColor(Color.GRAY);
+        for (Vertex<V> v : u.getDestinations()) {
+            if (v.getColor() == Color.WHITE) {
+                v.setParent(u);
+                dfsVisit(v, time);
+            }
+        }
+        u.setColor(Color.BLACK);
+        time += 1;
+        u.setFinalization(time);
     }
 
     @Override
-    public void addVertex(V value) {
+    public boolean addVertex(V value) {
+        if (value == null)
+            return false;
+        if (checkValue(value)) {
+            return false;
+        }
+        Vertex<V> newVertex = new Vertex<V>(value);
+        vertices.add(newVertex);
+        adjacencyList.add(new ArrayList<>());
+        return true;
+    }
 
+    private boolean checkValue(V value) {
+        for (int i = 0; i < vertices.size(); i++) {
+            if (vertices.get(i).getValue().equals(value))
+                return true;
+        }
+        return false;
     }
 
     @Override
-    public void deleteVertex(V value) {
+    public boolean deleteVertex(V value) {
+        for (int i = 0; i < vertices.size(); i++) {
+            if (vertices.get(i).getValue().equals(value)) {
+                deleteEdges(vertices.get(i));
+                adjacencyList.remove(i);
+                vertices.remove(i);
+            }
+        }
+        return true;
+    }
 
+    public void deleteEdges(Vertex<V> toDelete) {
+        for (int i = 0; i < edges.size(); i++) {
+            if (edges.get(i).getSource().equals(toDelete) || edges.get(i).getDestination().equals(toDelete))
+                edges.remove(i);
+        }
     }
 
     @Override
-    public void modifyVertex(V oldValue, V newValue) {
-
+    public boolean addEdge(Vertex<V> source, Vertex<V> destination, double weight) {
+        Edge<V> found = searchEdge(source, destination);
+        if (found == null) {
+            Edge<V> edge = new Edge<V>(weight, source, destination);
+            edges.add(edge);
+        } else
+            found.setWeight(weight);
+        return true;
     }
 
-    /**
-     * @return double[] return the distD
-     */
-    public double[] getDistD() {
-        return distD;
+    @Override
+    public boolean modifyVertex(V oldValue, V newValue) {
+        int index = getIndex(oldValue);
+        if(index == -1){
+            return false;
+        }
+        vertices.get(index).setValue(newValue);;
+        return true;
     }
 
-    /**
-     * @param distD the distD to set
-     */
-    public void setDistD(double[] distD) {
-        this.distD = distD;
+    @Override
+    public boolean deleteEdge(Vertex<V> source, Vertex<V> destination) {
+        Edge<V> toDelete = searchEdge(source, destination);
+        return false;
     }
-
-    /**
-     * @return ArrayList<Vertex<V>> return the prevD
-     */
-    public ArrayList<Vertex<V>> getPrevD() {
-        return prevD;
-    }
-
-    /**
-     * @param prevD the prevD to set
-     */
-    public void setPrevD(ArrayList<Vertex<V>> prevD) {
-        this.prevD = prevD;
-    }
-
 }

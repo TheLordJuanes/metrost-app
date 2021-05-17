@@ -35,12 +35,12 @@ public class Main extends Application {
 	*/
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mio.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("metrost.fxml"));
         MetrostGUI metrostGUI = new MetrostGUI(primaryStage);
         fxmlLoader.setController(metrostGUI);
 		Parent root = fxmlLoader.load();
 		primaryStage.setScene(new Scene(root));
-		primaryStage.setTitle("Western Mass Integrated");
+		primaryStage.setTitle("Metrost");
 		primaryStage.show();
 		/*File file = new File("resources/music.wav");
  		if (file.exists()) {

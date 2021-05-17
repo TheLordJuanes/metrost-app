@@ -8,7 +8,7 @@ package dataStructures;
 
 import java.util.ArrayList;
 
-public class Vertex<V> implements Comparable<Vertex<V>>{
+public class Vertex<V> implements Comparable<Vertex<V>> {
 
     // -----------------------------------------------------------------
     // Constants
@@ -24,17 +24,26 @@ public class Vertex<V> implements Comparable<Vertex<V>>{
 
     private Color color;
     private V value;
-    private ArrayList<Vertex<V>> destinations;
     private double priority;
+    private int distance;
+    private int discovery;
+    private int finalization;
+
+    // -----------------------------------------------------------------
+    // Relations
+    // -----------------------------------------------------------------
+
+    private ArrayList<Vertex<V>> destinations;
+    private Vertex<V> parent;
 
     // -----------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------
 
-    public Vertex(Color color, V value) {
-        this.color = color;
+    public Vertex(V value) {
+        color = Color.WHITE;
         this.value = value;
-        priority=Double.MAX_VALUE;
+        priority = Double.MAX_VALUE;
     }
 
     public Color getColor() {
@@ -52,12 +61,45 @@ public class Vertex<V> implements Comparable<Vertex<V>>{
     public void setValue(V value) {
         this.value = value;
     }
+
     public double getPriority() {
         return priority;
     }
 
     public void setPriority(double priority) {
-        this.priority= priority;
+        this.priority = priority;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public int getDiscovery() {
+        return discovery;
+    }
+
+    public void setDiscovery(int discovery) {
+        this.discovery = discovery;
+    }
+
+    public int getFinalization() {
+        return finalization;
+    }
+
+    public void setFinalization(int finalization) {
+        this.finalization = finalization;
+    }
+
+    public Vertex<V> getParent() {
+        return parent;
+    }
+
+    public void setParent(Vertex<V> parent) {
+        this.parent = parent;
     }
 
     public boolean isWhite() {
