@@ -2,13 +2,12 @@ package dataStructures;
 
 import java.util.ArrayList;
 
-public class DirectedWeightedGraphAM<V extends Comparable<V>> implements DirectedWeightedGraphInterface<V> {
+public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWeightedGraph<V> {
 
     // -----------------------------------------------------------------
     // Attributes
     // -----------------------------------------------------------------
 
-    private ArrayList<Vertex<V>> vertices;
     private ArrayList<ArrayList<Edge<V>>> adjacencyMatrix;
 
     // -----------------------------------------------------------------
@@ -16,22 +15,8 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> implements Directe
     // -----------------------------------------------------------------
 
     public DirectedWeightedGraphAM() {
-        vertices = new ArrayList<>();
+        super();
         adjacencyMatrix = new ArrayList<ArrayList<Edge<V>>>();
-    }
-
-    /**
-     * @return ArrayList<Vertex<V>> return the vertices
-     */
-    public ArrayList<Vertex<V>> getVertices() {
-        return vertices;
-    }
-
-    /**
-     * @param vertices the vertices to set
-     */
-    public void setVertices(ArrayList<Vertex<V>> vertices) {
-        this.vertices = vertices;
     }
 
     /**
@@ -49,27 +34,15 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> implements Directe
     }
 
     @Override
-    public boolean dijkstra(Vertex<V> s) {
-        return false;
-    }
-
-    @Override
-    public boolean bfs(Vertex<V> vertex) {
-        return false;
-    }
-
-    @Override
-    public boolean dfs() {
-        return false;
-    }
-
-    @Override
     public boolean addVertex(V value) {
+        if (value == null) {
+            return false;
+        }
         if (getIndex(value) != -1) {
             return false;
         }
         Vertex<V> vertex = new Vertex<V>(value);
-        vertices.add(vertex);
+        getVertices().add(vertex);
         for (int i = 0; i < adjacencyMatrix.size(); i++) {
             adjacencyMatrix.get(i).add(null);
         }
@@ -81,16 +54,11 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> implements Directe
         return true;
     }
 
-    private int getIndex(V value) {
-        for (int i = 0; i < vertices.size(); i++) {
-            if (value.compareTo((vertices.get(i).getValue())) == 0)
-                return i;
-        }
-        return -1;
-    }
-
     @Override
     public boolean addEdge(Vertex<V> source, Vertex<V> destination, double weight) {
+        if (source == null || destination == null) {
+            return false;
+        }
         int sourceIndex = getIndex(source.getValue());
         int destinationIndex = getIndex(destination.getValue());
         if (sourceIndex == -1 || destinationIndex == -1) {
@@ -103,34 +71,70 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> implements Directe
 
     @Override
     public boolean deleteVertex(V value) {
-        int index = getIndex(value);
-        if(index == -1){
+        if (value == null) {
             return false;
         }
-        vertices.remove(index);
-        adjacencyMatrix.remove(index);
-        for(int i=0; i<adjacencyMatrix.size(); i++){
-            adjacencyMatrix.get(i).remove(index);
+        int index = getIndex(value);
+        if (index == -1) {
+            return false;
         }
+        getVertices().remove(index);
+        adjacencyMatrix.remove(index);
+        for (int i = 0; i < adjacencyMatrix.size(); i++)
+            adjacencyMatrix.get(i).remove(index);
         return true;
     }
 
     @Override
     public boolean modifyVertex(V oldValue, V newValue) {
-        int index = getIndex(oldValue);
-        if(index == -1){
+        if (oldValue == null || newValue == null) {
             return false;
         }
-        vertices.get(index).setValue(newValue);;
+        int index = getIndex(oldValue);
+        if (index == -1) {
+            return false;
+        }
+        getVertices().get(index).setValue(newValue);
         return true;
     }
 
-    private Edge<V> searchEdge(Vertex<V> v1, Vertex<V> v2) {
-        return null; //CAMBIARRRRR
+    @Override
+    protected Edge<V> searchEdge(Vertex<V> source, Vertex<V> destination) {
+        if (source == null || destination == null) {
+            return null;
+        }
+        int indexSource = getIndex(source.getValue());
+        int indexDestination = getIndex(destination.getValue());
+        if (indexSource == -1 || indexDestination == -1)
+            return null;
+        return adjacencyMatrix.get(indexSource).get(indexDestination);
     }
 
     @Override
     public boolean deleteEdge(Vertex<V> source, Vertex<V> destination) {
-        return false;
+        if (source == null || destination == null) {
+            return false;
+        }
+        int indexSource = getIndex(source.getValue());
+        int indexDestination = getIndex(destination.getValue());
+        if (indexSource == -1 || indexDestination == -1) {
+            return false;
+        }
+        adjacencyMatrix.get(indexSource).set(indexDestination, null);
+        return true;
+    }
+
+    @Override
+    public boolean modifyWeight(Vertex<V> source, Vertex<V> destination, double newWeight) {
+        if (source == null || destination == null) {
+            return false;
+        }
+        int indexSource = getIndex(source.getValue());
+        int indexDestination = getIndex(destination.getValue());
+        if (indexSource == -1 || indexDestination == -1) {
+            return false;
+        }
+        adjacencyMatrix.get(indexSource).get(indexDestination).setWeight(newWeight);;
+        return true;
     }
 }

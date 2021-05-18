@@ -10,7 +10,7 @@ public interface DirectedWeightedGraphInterface<V> {
 
     public boolean dijkstra(Vertex<V> s);
 
-    //public boolean mst();
+    // public boolean mst();
 
     public boolean bfs(Vertex<V> vertex);
 
@@ -21,6 +21,8 @@ public interface DirectedWeightedGraphInterface<V> {
     public boolean deleteVertex(V value);
 
     public boolean modifyVertex(V oldValue, V newValue);
+
+    public boolean modifyWeight(Vertex<V> source, Vertex<V> destination, double newWeight);
 
     public boolean addEdge(Vertex<V> source, Vertex<V> destination, double weight);
 

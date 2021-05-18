@@ -3,5 +3,11 @@
         "ISMT",
         "Metrost",
         "Trost"
+    ],
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "resources/commons-lang3-3.12.0.jar",
+        "resources/jfoenix-8.0.10.jar",
+        "resources/opencsv-5.4.jar"
     ]
 }
