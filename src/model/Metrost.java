@@ -79,7 +79,7 @@ public class Metrost {
     /**
      * @return DirectedWeightedGraph?<String> return the graph
      */
-    public DirectedWeightedGraph?<String> getGraph() {
+    public DirectedWeightedGraph<String> getGraph() {
         return graph;
     }
 
@@ -164,7 +164,7 @@ public class Metrost {
                 break;
             case "Distance":
                 allData.get(station)[2] = newValue;
-                graph.modifyWeight(vertex1, vertex2, Double.valueOf(allData.get(station)[2]));
+                graph.modifyWeight(source, destination, Double.valueOf(allData.get(station)[2]));
                 break;
         }
         FileWriter fw = new FileWriter(FILE_NAME);

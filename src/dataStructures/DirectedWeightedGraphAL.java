@@ -85,7 +85,7 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
         return false;
     }
 
-    public void deleteEdges(Vertex<V> toDelete) {
+    private void deleteEdges(Vertex<V> toDelete) {
         for (int i = 0; i < edges.size(); i++) {
             if (edges.get(i).getSource().equals(toDelete) || edges.get(i).getDestination().equals(toDelete))
                 edges.remove(i);

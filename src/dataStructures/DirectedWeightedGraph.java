@@ -132,7 +132,7 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         return -1;
     }
 
-    protected int getIndex(V value) {
+    public int getIndex(V value) {
         for (int i = 0; i < getVertices().size(); i++) {
             if (value.compareTo((getVertices().get(i).getValue())) == 0)
                 return i;
