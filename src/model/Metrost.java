@@ -76,20 +76,6 @@ public class Metrost {
         this.allData = allData;
     }
 
-    /**
-     * @return DirectedWeightedGraph?<String> return the graph
-     */
-    public DirectedWeightedGraph<String> getGraph() {
-        return graph;
-    }
-
-    /**
-     * @param graph the graph to set
-     */
-    public void setGraph(DirectedWeightedGraph?<String> graph) {
-        this.graph = graph;
-    }
-
     public void addStationByTextFile(File file) throws InterruptedException, IOException, CsvException {
         FileWriter fw = new FileWriter(FILE_NAME, true);
         CSVWriter csvWriter = new CSVWriter(fw);

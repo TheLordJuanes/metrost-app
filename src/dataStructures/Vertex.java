@@ -44,6 +44,7 @@ public class Vertex<V> implements Comparable<Vertex<V>> {
         color = Color.WHITE;
         this.value = value;
         priority = Double.MAX_VALUE;
+        destinations = new ArrayList<Vertex<V>>();
     }
 
     public Color getColor() {

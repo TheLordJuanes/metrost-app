@@ -40,7 +40,7 @@ public class Main extends Application {
         fxmlLoader.setController(metrostGUI);
 		Parent root = fxmlLoader.load();
 		primaryStage.setScene(new Scene(root));
-		primaryStage.setTitle("Metrost");
+		primaryStage.setTitle("Metro Trost");
 		primaryStage.show();
 		/*File file = new File("resources/music.wav");
  		if (file.exists()) {

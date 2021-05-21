@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Pictures/bus-stop.jpg" />
+         </image>
+      </ImageView>
+      <JFXButton alignment="CENTER" layoutX="173.0" layoutY="271.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#goToMenu" prefHeight="35.0" prefWidth="138.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="START METROST" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label alignment="CENTER" layoutX="155.0" layoutY="90.0" prefHeight="27.0" prefWidth="170.0" text="METRO TROST®" textAlignment="CENTER" textFill="#18c264" underline="true">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="155.0" layoutY="130.0" prefHeight="27.0" prefWidth="170.0" text="Welcome!" textAlignment="CENTER" textFill="#315b38">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="185.0" layoutY="178.0" prefHeight="27.0" prefWidth="111.0" text="Design your " textAlignment="CENTER" textFill="#315b38">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="184.0" layoutY="204.0" prefHeight="27.0" prefWidth="117.0" text="transportation" textAlignment="CENTER" textFill="#315b38">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="205.0" layoutY="229.0" prefHeight="27.0" prefWidth="74.0" text="network." textAlignment="CENTER" textFill="#315b38">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

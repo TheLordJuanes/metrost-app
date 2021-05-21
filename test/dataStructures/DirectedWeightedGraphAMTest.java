@@ -5,20 +5,21 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 public class DirectedWeightedGraphAMTest {
+
     private DirectedWeightedGraphAM<String> graph;
 
-    public void setup1(){
+    public void setup1() {
         graph = new DirectedWeightedGraphAM<String>();
     }
 
-    public void setup2(){
+    public void setup2() {
         graph = new DirectedWeightedGraphAM<String>();
-        graph.addVertex("a"); //0
-        graph.addVertex("b"); //1
-        graph.addVertex("c"); //2
-        graph.addVertex("d"); //3
-        graph.addVertex("e"); //4
-        graph.addVertex("z"); //5
+        graph.addVertex("a"); // 0
+        graph.addVertex("b"); // 1
+        graph.addVertex("c"); // 2
+        graph.addVertex("d"); // 3
+        graph.addVertex("e"); // 4
+        graph.addVertex("z"); // 5
         ArrayList<Vertex<String>> vertices = graph.getVertices();
         graph.addEdge(vertices.get(0), vertices.get(1), 4);
         graph.addEdge(vertices.get(1), vertices.get(0), 4);
@@ -49,15 +50,11 @@ public class DirectedWeightedGraphAMTest {
     }
 
     /**
-    addVertex
-    addEdge
-    deleteVertex
-    modifyVertex
+     * addVertex addEdge deleteVertex modifyVertex
      */
 
     @Test
-    public void testAddVertex(){
-        //COMPLETARRRR
+    public void testAddVertex() {
+        // COMPLETARRRR
     }
-
 }

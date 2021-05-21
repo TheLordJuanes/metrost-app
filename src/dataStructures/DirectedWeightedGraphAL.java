@@ -66,7 +66,7 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
 
     private boolean checkValue(V value) {
         for (int i = 0; i < getVertices().size(); i++) {
-            if (getVertices().get(i).getValue().equals(value))
+            if (getVertices().get(i).getValue().compareTo(value)==0)
                 return true;
         }
         return false;
@@ -78,6 +78,7 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
             if (getVertices().get(i).getValue().compareTo(value) == 0) {
                 deleteEdges(getVertices().get(i));
                 adjacencyList.remove(i);
+                deleteFromAL(getVertices().get(i));
                 getVertices().remove(i);
                 return true;
             }
@@ -87,8 +88,22 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
 
     private void deleteEdges(Vertex<V> toDelete) {
         for (int i = 0; i < edges.size(); i++) {
-            if (edges.get(i).getSource().equals(toDelete) || edges.get(i).getDestination().equals(toDelete))
+            if (edges.get(i).getSource().equals(toDelete) || edges.get(i).getDestination().equals(toDelete)){
                 edges.remove(i);
+                i--;
+            }
+        }
+    }
+
+    private void deleteFromAL(Vertex<V> toDelete){
+        for(int index=0; index<adjacencyList.size(); index++){
+            ArrayList<Vertex<V>> destinations = adjacencyList.get(index);
+            for(int i=0; i<destinations.size(); i++){
+                if(destinations.get(i) == toDelete){
+                    destinations.remove(i);
+                    break;
+                }
+            }
         }
     }
 
