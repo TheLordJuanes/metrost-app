@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/query.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="14.0" layoutY="310.0" prefHeight="54.0" prefWidth="350.0" text="CONNECTION MODULE" textFill="WHITE">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="35.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </Label>
+      <JFXButton alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" layoutX="370.0" layoutY="255.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#modifyAConnection" prefHeight="48.0" prefWidth="203.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Modify a connection" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" layoutX="370.0" layoutY="313.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#deleteAConnection" prefHeight="48.0" prefWidth="203.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Delete a connection" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton alignment="CENTER" blendMode="DIFFERENCE" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" onAction="#goToMenu" prefHeight="35.0" prefWidth="40.0" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text=" " textAlignment="CENTER" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../FIBA-players-app/resources/return.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label alignment="CENTER" layoutX="377.0" layoutY="125.0" prefHeight="54.0" prefWidth="190.0" text="What to do?" textFill="WHITE" underline="true">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="33.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </Label>
+      <JFXButton alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" layoutX="370.0" layoutY="198.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#addAConnection" prefHeight="48.0" prefWidth="203.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Add a connection" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

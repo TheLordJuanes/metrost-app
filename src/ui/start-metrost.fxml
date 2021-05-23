@@ -15,12 +15,12 @@
             <Image url="@../../resources/menu.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" layoutX="267.0" layoutY="119.0" prefHeight="27.0" prefWidth="170.0" text="Modules" textAlignment="CENTER">
+      <Label alignment="CENTER" blendMode="COLOR_BURN" layoutX="267.0" layoutY="119.0" prefHeight="27.0" prefWidth="170.0" text="Modules" textAlignment="CENTER" textFill="GREEN">
          <font>
             <Font name="Avenir Next Condensed Bold" size="24.0" />
          </font>
       </Label>
-      <JFXButton alignment="CENTER" layoutX="200.0" layoutY="188.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#vertexModule" prefHeight="35.0" prefWidth="89.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="VERTEX" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton alignment="CENTER" layoutX="200.0" layoutY="188.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#stationModule" prefHeight="35.0" prefWidth="89.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="STATION" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Avenir Next Condensed Bold" size="16.0" />
          </font>
@@ -28,7 +28,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton alignment="CENTER" layoutX="306.0" layoutY="188.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#edgeModule" prefHeight="35.0" prefWidth="89.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="EDGE" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton alignment="CENTER" layoutX="306.0" layoutY="188.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#connectionModule" prefHeight="35.0" prefWidth="116.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="CONNECTION" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Avenir Next Condensed Bold" size="16.0" />
          </font>
@@ -36,7 +36,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton alignment="CENTER" layoutX="411.0" layoutY="188.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#queryModule" prefHeight="35.0" prefWidth="89.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="QUERY" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton alignment="CENTER" layoutX="437.0" layoutY="188.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#queryModule" prefHeight="35.0" prefWidth="89.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="QUERY" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Avenir Next Condensed Bold" size="16.0" />
          </font>

@@ -89,6 +89,7 @@ public class DirectedWeightedGraphALTest {
         assertFalse(graph.deleteVertex("m"));
         assertEquals(graph.getVertices().size(), 6);
         assertEquals(graph.getAdjacencyList().size(), 6);
+        setup2();
         assertTrue(graph.deleteVertex("d"));
         assertEquals(graph.getVertices().size(), 5);
         assertEquals(graph.getAdjacencyList().size(), 5);
@@ -116,20 +117,66 @@ public class DirectedWeightedGraphALTest {
         assertEquals(2, graph.getAdjacencyList().get(0).size());
         for (int i = 0; i < 2; i++) {
             if (graph.getAdjacencyList().get(0).get(i).getValue().compareTo("a") == 0) {
-                fail(); // TERMINARRR
+                fail();
             }
         }
-        assertEquals(3, graph.getAdjacencyList().get(0).size());
-        // TERMINARRR
+        assertEquals(3, graph.getAdjacencyList().get(1).size());
+        for (int i = 0; i < 3; i++) {
+            if (graph.getAdjacencyList().get(1).get(i).getValue().compareTo("a") == 0) {
+                fail();
+            }
+        }
+        assertEquals(4, graph.getAdjacencyList().get(2).size());
+        assertEquals(3, graph.getAdjacencyList().get(3).size());
+        assertEquals(2, graph.getAdjacencyList().get(4).size());
     }
 
     @Test
     public void testAddEdge() {
+        setup2();
+        ArrayList<Vertex<String>> vertices = graph.getVertices();
+        assertFalse(graph.addEdge(vertices.get(0), vertices.get(0), 10));
+        assertFalse(graph.addEdge(vertices.get(1), vertices.get(0), -1));
+        assertFalse(graph.addEdge(vertices.get(2), vertices.get(1), 0));
 
+        assertTrue(graph.addEdge(vertices.get(0), vertices.get(1), 10));
+        assertFalse(graph.addEdge(vertices.get(0), vertices.get(1), 10));
+
+        assertTrue(graph.addEdge(vertices.get(1), vertices.get(2), 5));
+        assertTrue(graph.addEdge(vertices.get(2), vertices.get(3), 2));
+        assertTrue(graph.addEdge(vertices.get(3), vertices.get(4), 7));
+        assertTrue(graph.addEdge(vertices.get(4), vertices.get(5), 12));
+        assertTrue(graph.addEdge(vertices.get(5), vertices.get(0), 13));
+        assertTrue(graph.addEdge(vertices.get(5), vertices.get(3), 16));
+
+        ArrayList<Edge<String>> edges=graph.getEdges();
+        assertEquals(7, edges.size());
+        ArrayList<ArrayList<Vertex<String>>> destinations = graph.getAdjacencyList();
+        assertEquals(1, destinations.get(0).size());
+        assertEquals(1, destinations.get(1).size());
+        assertEquals(1, destinations.get(2).size());
+        assertEquals(1, destinations.get(3).size());
+        assertEquals(1, destinations.get(4).size());
+        assertEquals(2, destinations.get(5).size());
+
+        assertEquals(1, vertices.get(0).getDestinations().size());
+        assertEquals(1, vertices.get(1).getDestinations().size());
+        assertEquals(1, vertices.get(2).getDestinations().size());
+        assertEquals(1, vertices.get(3).getDestinations().size());
+        assertEquals(1, vertices.get(4).getDestinations().size());
+        assertEquals(2, vertices.get(5).getDestinations().size());
+
+        assertEquals("d", edges.get(3).getSource().getValue());
+        assertEquals("e", edges.get(3).getDestination().getValue());
+        assertEquals(7, edges.get(3).getWeight());
     }
 
     @Test
     public void testModifyVertex() {
+        setup2();
+        assertFalse(graph.modifyVertex("a", "b"));
+        assertTrue(graph.modifyVertex("b", "f"));
+        assertTrue(graph.modifyVertex("a", "b"));
 
     }
 

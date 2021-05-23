@@ -66,9 +66,9 @@ public class MetrostGUI {
     }
 
     @FXML
-    public void vertexModule(ActionEvent event) {
+    public void stationModule(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("vertexModule.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("station-module.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
@@ -80,9 +80,24 @@ public class MetrostGUI {
     }
 
     @FXML
-    public void edgeModule(ActionEvent event) {
+    public void addAStation(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void modifyAStation(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void deleteAStation(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void connectionModule(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("edgeModule.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("connection-module.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
@@ -91,12 +106,27 @@ public class MetrostGUI {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+    }
+
+    @FXML
+    public void addAConnection(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void modifyAConnection(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void deleteAConnection(ActionEvent event) {
+
     }
 
     @FXML
     public void queryModule(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("queryModule.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("query-module.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
@@ -105,5 +135,15 @@ public class MetrostGUI {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+    }
+
+    @FXML
+    public void findShortestPath(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void showNetwork(ActionEvent event) {
+
     }
 }

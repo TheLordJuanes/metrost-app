@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/buses.png" />
+         </image>
+      </ImageView>
+      <JFXButton alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="31.0" layoutY="224.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#addAStation" prefHeight="48.0" prefWidth="156.0" style="-fx-background-radius: 5em; -fx-background-color: YELLOW;" text="Add station" textAlignment="CENTER">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="411.0" layoutY="224.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#deleteAStation" prefHeight="48.0" prefWidth="156.0" style="-fx-background-radius: 5em; -fx-background-color: YELLOW;" text="Delete station" textAlignment="CENTER">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="222.0" layoutY="224.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#modifyAStation" prefHeight="48.0" prefWidth="156.0" style="-fx-background-radius: 5em; -fx-background-color: YELLOW;" text="Modify station" textAlignment="CENTER">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label blendMode="COLOR_BURN" layoutX="168.0" layoutY="297.0" prefHeight="54.0" prefWidth="276.0" text="STATION MODULE">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="37.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </Label>
+      <JFXButton alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" onAction="#goToMenu" prefHeight="35.0" prefWidth="40.0" style="-fx-background-radius: 5em; -fx-background-color: YELLOW;" text=" " textAlignment="CENTER" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../FIBA-players-app/resources/return.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

@@ -109,6 +109,9 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public boolean addEdge(Vertex<V> source, Vertex<V> destination, double weight) {
+        if(source == destination || weight<=0){
+            return false;
+        }
         Edge<V> found = searchEdge(source, destination);
         if (found == null) {
             Edge<V> edge = new Edge<V>(weight, source, destination);
@@ -121,7 +124,11 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public boolean modifyVertex(V oldValue, V newValue) {
-        int index = getIndex(oldValue);
+        int index = getIndex(newValue);
+        if(index != -1){
+            return false;
+        }
+        index = getIndex(oldValue);
         if (index == -1) {
             return false;
         }
