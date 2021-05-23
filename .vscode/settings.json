@@ -1,8 +1,10 @@
 {
     "cSpell.words": [
+        "Avenir",
         "ISMT",
         "Metrost",
-        "Trost"
+        "Trost",
+        "dropshadow"
     ],
     "java.project.referencedLibraries": [
         "lib/**/*.jar",

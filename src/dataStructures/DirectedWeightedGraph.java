@@ -18,7 +18,7 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
 
     @Override
     public boolean dijkstra(Vertex<V> source) {
-        if (vertices.isEmpty()) {
+        if (vertices.isEmpty()||source==null) {
             return false;
         }
         int index = getIndex(source);

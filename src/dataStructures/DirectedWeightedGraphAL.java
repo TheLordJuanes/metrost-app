@@ -154,7 +154,7 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public boolean modifyWeight(Vertex<V> source, Vertex<V> destination, double newWeight) {
-        if (source == null || destination == null) {
+        if (source == null || destination == null || newWeight<=0) {
             return false;
         }
         int indexSource = getIndex(source);
@@ -162,7 +162,10 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
         if (indexSource == -1 || indexDestination == -1) {
             return false;
         }
-        searchEdge(source, destination).setWeight(newWeight);
+        Edge<V> edge = searchEdge(source, destination);
+        if(edge==null)
+            return false;
+        edge.setWeight(newWeight);
         return true;
     }
 }

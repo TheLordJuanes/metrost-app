@@ -48,7 +48,7 @@
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../FIBA-players-app/resources/return.png" />
+                  <Image url="@../../resources/return.png" />
                </image>
             </ImageView>
          </graphic>
