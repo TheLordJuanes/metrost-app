@@ -8,8 +8,8 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
     // Attributes
     // -----------------------------------------------------------------
 
-    private ArrayList<ArrayList<Edge<V>>> adjacencyMatrix;
     private int numEdges;
+    private ArrayList<ArrayList<Edge<V>>> adjacencyMatrix;
 
     // -----------------------------------------------------------------
     // Methods
@@ -37,9 +37,8 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public boolean addVertex(V value) {
-        if (value == null) {
+        if (value == null)
             return false;
-        }
         if (getIndex(value) != -1) {
             return false;
         }
@@ -58,15 +57,14 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public boolean addEdge(Vertex<V> source, Vertex<V> destination, double weight) {
-        if (source == null || destination == null || source == destination || weight<=0) {
+        if (source == null || destination == null || source == destination || weight <= 0) {
             return false;
         }
         int sourceIndex = getIndex(source.getValue());
         int destinationIndex = getIndex(destination.getValue());
-        if (sourceIndex == -1 || destinationIndex == -1) {
+        if (sourceIndex == -1 || destinationIndex == -1)
             return false;
-        }
-        if(adjacencyMatrix.get(sourceIndex).get(destinationIndex)!=null){
+        if (adjacencyMatrix.get(sourceIndex).get(destinationIndex) != null) {
             return false;
         }
         Edge<V> tempEdge = new Edge<V>(weight, source, destination);
@@ -97,7 +95,7 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
             return false;
         }
         int index = getIndex(newValue);
-        if(index != -1){
+        if (index != -1) {
             return false;
         }
         index = getIndex(oldValue);
@@ -127,10 +125,9 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         }
         int indexSource = getIndex(source.getValue());
         int indexDestination = getIndex(destination.getValue());
-        if (indexSource == -1 || indexDestination == -1) {
+        if (indexSource == -1 || indexDestination == -1)
             return false;
-        }
-        if(adjacencyMatrix.get(indexSource).get(indexDestination)==null){
+        if (adjacencyMatrix.get(indexSource).get(indexDestination) == null) {
             return false;
         }
         adjacencyMatrix.get(indexSource).set(indexDestination, null);
@@ -140,19 +137,27 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public boolean modifyWeight(Vertex<V> source, Vertex<V> destination, double newWeight) {
-        if (source == null || destination == null || newWeight<=0) {
+        if (source == null || destination == null || newWeight <= 0) {
             return false;
         }
         int indexSource = getIndex(source.getValue());
         int indexDestination = getIndex(destination.getValue());
-        if (indexSource == -1 || indexDestination == -1) {
+        if (indexSource == -1 || indexDestination == -1)
+            return false;
+        if (adjacencyMatrix.get(indexSource).get(indexDestination) == null) {
             return false;
         }
-        if(adjacencyMatrix.get(indexSource).get(indexDestination)==null){
-            return false;
-        }
-        adjacencyMatrix.get(indexSource).get(indexDestination).setWeight(newWeight);;
+        adjacencyMatrix.get(indexSource).get(indexDestination).setWeight(newWeight);
         return true;
+    }
+
+    protected void fillMatrix() {
+        for (int i = 0; i < adjacencyMatrix.size(); i++) {
+            for (int j = 0; j < adjacencyMatrix.size(); j++) {
+                if (adjacencyMatrix.get(i).get(j) != null)
+                    getMinDistances()[i][j] = adjacencyMatrix.get(i).get(j).getWeight();
+            }
+        }
     }
 
     public int getNumEdges() {

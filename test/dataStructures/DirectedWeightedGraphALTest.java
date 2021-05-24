@@ -186,7 +186,8 @@ public class DirectedWeightedGraphALTest {
         assertFalse(graph.modifyVertex("z", "c"));
         assertTrue(graph.modifyVertex("z", "f"));
         for (int i = 0; i < 18; i++) {
-            if (graph.getEdges().get(i).getSource().getValue().compareTo("z") == 0 || graph.getEdges().get(i).getDestination().getValue().compareTo("z") == 0)
+            if (graph.getEdges().get(i).getSource().getValue().compareTo("z") == 0
+                    || graph.getEdges().get(i).getDestination().getValue().compareTo("z") == 0)
                 fail();
         }
     }
@@ -230,42 +231,57 @@ public class DirectedWeightedGraphALTest {
     }
 
     @Test
-    public void testDijkstra(){
+    public void testDijkstra() {
         setup1();
-        Vertex<String> v= new Vertex<>("x");
+        Vertex<String> v = new Vertex<>("x");
         assertFalse(graph.dijkstra(v));
         setup3();
         assertFalse(graph.dijkstra(null));
         assertFalse(graph.dijkstra(v));
         graph.addVertex("x");
         assertTrue(graph.dijkstra(graph.getVertices().get(6)));
-        double[] distD=graph.getDistD();
-        ArrayList<Vertex<String>> prevD=graph.getPrevD();
-            assertEquals(0,distD[0]);//revisar
-        assertNull(prevD.get(0));
-        for (int i = 1; i < distD.length; i++) {
-            assertEquals(Double.MAX_VALUE,distD[i]);
+        double[] distD = graph.getDistD();
+        ArrayList<Vertex<String>> prevD = graph.getPrevD();
+        assertEquals(0, distD[6]);
+        assertNull(prevD.get(6));
+        for (int i = 0; i < distD.length - 1; i++) {
+            assertEquals(Double.MAX_VALUE, distD[i]);
             assertNull(prevD.get(i));
         }
         setup3();
         ArrayList<Vertex<String>> vertices = graph.getVertices();
         assertTrue(graph.dijkstra(graph.getVertices().get(0)));
-        distD=graph.getDistD();
-        prevD=graph.getPrevD();
-        assertEquals(0,distD[0]);
+        distD = graph.getDistD();
+        prevD = graph.getPrevD();
+        assertEquals(0, distD[0]);
         assertNull(prevD.get(0));
-        assertEquals(3,distD[1]);
-        assertEquals(vertices.get(2),prevD.get(1));
-        //TERMINARRRR
+        assertEquals(3, distD[1]);
+        assertEquals(vertices.get(2), prevD.get(1));
+        assertEquals(2, distD[2]);
+        assertEquals(vertices.get(0), prevD.get(2));
+        assertEquals(8, distD[3]);
+        assertEquals(vertices.get(1), prevD.get(3));
+        assertEquals(10, distD[4]);
+        assertEquals(vertices.get(3), prevD.get(4));
+        assertEquals(13, distD[5]);
+        assertEquals(vertices.get(4), prevD.get(5));
     }
 
     @Test
-    public void testBfs(){
+    public void testBfs() {
 
     }
 
     @Test
-    public void testDfs(){
+    public void testDfs() {
 
+    }
+
+    public void testfloydWarshall() {
+        setup3();
+        ArrayList<Vertex<String>> vertices = graph.getVertices();
+        graph.dijkstra(vertices.get(0));
+        // double[] row1 = ;
+        // TERMINARRRRR
     }
 }

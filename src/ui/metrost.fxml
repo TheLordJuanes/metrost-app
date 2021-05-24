@@ -15,7 +15,7 @@
             <Image url="@../../resources/bus-stop.jpg" />
          </image>
       </ImageView>
-      <JFXButton alignment="CENTER" layoutX="173.0" layoutY="271.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#goToMenu" prefHeight="35.0" prefWidth="138.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="START METROST" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="173.0" layoutY="271.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#goToMenu" prefHeight="35.0" prefWidth="138.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="START METROST" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Avenir Next Condensed Bold" size="16.0" />
          </font>
@@ -28,17 +28,17 @@
             <Font name="Avenir Next Condensed Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="155.0" layoutY="130.0" prefHeight="27.0" prefWidth="170.0" text="Welcome!" textAlignment="CENTER" textFill="#315b38">
+      <Label fx:id="lbWelcome" alignment="CENTER" layoutX="155.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="170.0" text="Welcome !" textAlignment="CENTER" textFill="#315b38">
          <font>
             <Font name="Avenir Next Condensed Bold" size="24.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="185.0" layoutY="178.0" prefHeight="27.0" prefWidth="111.0" text="Design your " textAlignment="CENTER" textFill="#315b38">
+      <Label alignment="CENTER" layoutX="185.0" layoutY="178.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="111.0" text="Design your " textAlignment="CENTER" textFill="#315b38">
          <font>
             <Font name="Avenir Next Condensed Bold" size="18.0" />
          </font>
       </Label>
-      <Label alignment="CENTER" layoutX="184.0" layoutY="204.0" prefHeight="27.0" prefWidth="117.0" text="transportation" textAlignment="CENTER" textFill="#315b38">
+      <Label alignment="CENTER" layoutX="184.0" layoutY="204.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="117.0" text="transportation" textAlignment="CENTER" textFill="#315b38">
          <font>
             <Font name="Avenir Next Condensed Bold" size="18.0" />
          </font>

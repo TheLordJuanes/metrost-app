@@ -7,6 +7,7 @@
 package ui;
 
 import model.Metrost;
+import thread.WelcomeThread;
 import java.io.IOException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -16,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class MetrostGUI {
@@ -23,6 +25,9 @@ public class MetrostGUI {
     // -----------------------------------------------------------------
     // Attributes
     // -----------------------------------------------------------------
+
+    @FXML
+    private Label lbWelcome;
 
     @FXML
     private JFXComboBox<String> cbStations;
@@ -36,25 +41,42 @@ public class MetrostGUI {
     @FXML
     private JFXTextField txtName;
 
+    private boolean labelChange;
+
     private Stage primaryStage;
 
     // -----------------------------------------------------------------
-	// Relations
+    // Relations
     // -----------------------------------------------------------------
 
     private Metrost metrost;
 
     // -----------------------------------------------------------------
-	// Methods
+    // Methods
     // -----------------------------------------------------------------
+
+    public Label getLbWelcome() {
+        return lbWelcome;
+    }
+
+    public void setLbWelcome(Label lbWelcome) {
+        this.lbWelcome = lbWelcome;
+    }
 
     public MetrostGUI(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        labelChange = true;
+        new WelcomeThread(this).start();
+    }
+
+    public boolean getLabelChange() {
+        return labelChange;
     }
 
     @FXML
     public void goBackToStart(ActionEvent event) {
         try {
+            labelChange = true;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("metrost.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
@@ -69,6 +91,7 @@ public class MetrostGUI {
     @FXML
     public void goToMenu(ActionEvent event) {
         try {
+            labelChange = false;
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("start-metrost.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
@@ -113,7 +136,6 @@ public class MetrostGUI {
     public void addStation(ActionEvent event) {
 
     }
-
 
     @FXML
     public void modifyAStation(ActionEvent event) {

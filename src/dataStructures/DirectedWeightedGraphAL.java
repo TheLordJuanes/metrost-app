@@ -66,7 +66,7 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
 
     private boolean checkValue(V value) {
         for (int i = 0; i < getVertices().size(); i++) {
-            if (getVertices().get(i).getValue().compareTo(value)==0)
+            if (getVertices().get(i).getValue().compareTo(value) == 0)
                 return true;
         }
         return false;
@@ -88,18 +88,18 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
 
     private void deleteEdges(Vertex<V> toDelete) {
         for (int i = 0; i < edges.size(); i++) {
-            if (edges.get(i).getSource().equals(toDelete) || edges.get(i).getDestination().equals(toDelete)){
+            if (edges.get(i).getSource().equals(toDelete) || edges.get(i).getDestination().equals(toDelete)) {
                 edges.remove(i);
                 i--;
             }
         }
     }
 
-    private void deleteFromAL(Vertex<V> toDelete){
-        for(int index=0; index<adjacencyList.size(); index++){
+    private void deleteFromAL(Vertex<V> toDelete) {
+        for (int index = 0; index < adjacencyList.size(); index++) {
             ArrayList<Vertex<V>> destinations = adjacencyList.get(index);
-            for(int i=0; i<destinations.size(); i++){
-                if(destinations.get(i) == toDelete){
+            for (int i = 0; i < destinations.size(); i++) {
+                if (destinations.get(i) == toDelete) {
                     destinations.remove(i);
                     break;
                 }
@@ -109,10 +109,9 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public boolean addEdge(Vertex<V> source, Vertex<V> destination, double weight) {
-        if(source == destination || weight<=0){
+        if (source == destination || weight <= 0)
             return false;
-        }
-        if(getIndex(source)==-1 || getIndex(destination)==-1){
+        if (getIndex(source) == -1 || getIndex(destination) == -1) {
             return false;
         }
         Edge<V> found = searchEdge(source, destination);
@@ -128,7 +127,7 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
     @Override
     public boolean modifyVertex(V oldValue, V newValue) {
         int index = getIndex(newValue);
-        if(index != -1){
+        if (index != -1) {
             return false;
         }
         index = getIndex(oldValue);
@@ -157,7 +156,7 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public boolean modifyWeight(Vertex<V> source, Vertex<V> destination, double newWeight) {
-        if (source == null || destination == null || newWeight<=0) {
+        if (source == null || destination == null || newWeight <= 0) {
             return false;
         }
         int indexSource = getIndex(source);
@@ -166,9 +165,19 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
             return false;
         }
         Edge<V> edge = searchEdge(source, destination);
-        if(edge==null)
+        if (edge == null)
             return false;
         edge.setWeight(newWeight);
         return true;
+    }
+
+    protected void fillMatrix() {
+        for (int i = 0; i < adjacencyList.size(); i++) {
+            for (int j = 0; j < adjacencyList.get(i).size(); j++) {
+                int index = getIndex(adjacencyList.get(i).get(j));
+                double dist = searchEdge(getVertices().get(i), adjacencyList.get(i).get(j)).getWeight();
+                getMinDistances()[i][index] = dist;
+            }
+        }
     }
 }

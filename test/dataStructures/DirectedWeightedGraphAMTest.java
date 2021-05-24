@@ -75,7 +75,7 @@ public class DirectedWeightedGraphAMTest {
             if (graph.getAdjacencyMatrix().get(i).size() != 6)
                 fail();
         }
-        for(int row=0; row<6; row++){
+        for (int row = 0; row < 6; row++) {
             for (int i = 0; i < 6; i++) {
                 assertNull(graph.getAdjacencyMatrix().get(row).get(i));
             }
@@ -129,47 +129,41 @@ public class DirectedWeightedGraphAMTest {
                 fail();
         }
         int numEdges = 0;
-        for(int row=0; row<5; row++){
+        for (int row = 0; row < 5; row++) {
             for (int i = 0; i < 5; i++) {
-                if(graph.getAdjacencyMatrix().get(row).get(i)!=null){
+                if (graph.getAdjacencyMatrix().get(row).get(i) != null)
                     numEdges++;
-                }
             }
         }
         assertEquals(14, numEdges);
         numEdges = 0;
-        for(int i=0; i<5; i++){
-            if(graph.getAdjacencyMatrix().get(0).get(i)!=null){
+        for (int i = 0; i < 5; i++) {
+            if (graph.getAdjacencyMatrix().get(0).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(2, numEdges);
         numEdges = 0;
-        for(int i=0; i<5; i++){
-            if(graph.getAdjacencyMatrix().get(1).get(i)!=null){
+        for (int i = 0; i < 5; i++) {
+            if (graph.getAdjacencyMatrix().get(1).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(3, numEdges);
         numEdges = 0;
-        for(int i=0; i<5; i++){
-            if(graph.getAdjacencyMatrix().get(2).get(i)!=null){
+        for (int i = 0; i < 5; i++) {
+            if (graph.getAdjacencyMatrix().get(2).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(4, numEdges);
         numEdges = 0;
-        for(int i=0; i<5; i++){
-            if(graph.getAdjacencyMatrix().get(3).get(i)!=null){
+        for (int i = 0; i < 5; i++) {
+            if (graph.getAdjacencyMatrix().get(3).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(3, numEdges);
         numEdges = 0;
-        for(int i=0; i<5; i++){
-            if(graph.getAdjacencyMatrix().get(4).get(i)!=null){
+        for (int i = 0; i < 5; i++) {
+            if (graph.getAdjacencyMatrix().get(4).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(2, numEdges);
     }
@@ -196,45 +190,39 @@ public class DirectedWeightedGraphAMTest {
 
         assertEquals(7, graph.getNumEdges());
         int numEdges = 0;
-        for(int i=0; i<6; i++){
-            if(graph.getAdjacencyMatrix().get(0).get(i)!=null){
+        for (int i = 0; i < 6; i++) {
+            if (graph.getAdjacencyMatrix().get(0).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(1, numEdges);
         numEdges = 0;
-        for(int i=0; i<6; i++){
-            if(graph.getAdjacencyMatrix().get(1).get(i)!=null){
+        for (int i = 0; i < 6; i++) {
+            if (graph.getAdjacencyMatrix().get(1).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(1, numEdges);
         numEdges = 0;
-        for(int i=0; i<6; i++){
-            if(graph.getAdjacencyMatrix().get(2).get(i)!=null){
+        for (int i = 0; i < 6; i++) {
+            if (graph.getAdjacencyMatrix().get(2).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(1, numEdges);
         numEdges = 0;
-        for(int i=0; i<6; i++){
-            if(graph.getAdjacencyMatrix().get(3).get(i)!=null){
+        for (int i = 0; i < 6; i++) {
+            if (graph.getAdjacencyMatrix().get(3).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(1, numEdges);
         numEdges = 0;
-        for(int i=0; i<6; i++){
-            if(graph.getAdjacencyMatrix().get(4).get(i)!=null){
+        for (int i = 0; i < 6; i++) {
+            if (graph.getAdjacencyMatrix().get(4).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(1, numEdges);
         numEdges = 0;
-        for(int i=0; i<6; i++){
-            if(graph.getAdjacencyMatrix().get(5).get(i)!=null){
+        for (int i = 0; i < 6; i++) {
+            if (graph.getAdjacencyMatrix().get(5).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(2, numEdges);
 
@@ -272,17 +260,15 @@ public class DirectedWeightedGraphAMTest {
         assertTrue(graph.deleteEdge(vertices.get(1), vertices.get(2)));
         assertEquals(15, graph.getNumEdges());
         int numEdges = 0;
-        for(int i=0; i<6; i++){
-            if(graph.getAdjacencyMatrix().get(0).get(i)!=null){
+        for (int i = 0; i < 6; i++) {
+            if (graph.getAdjacencyMatrix().get(0).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(0, numEdges);
         numEdges = 0;
-        for(int i=0; i<6; i++){
-            if(graph.getAdjacencyMatrix().get(1).get(i)!=null){
+        for (int i = 0; i < 6; i++) {
+            if (graph.getAdjacencyMatrix().get(1).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(2, numEdges);
     }
@@ -303,10 +289,9 @@ public class DirectedWeightedGraphAMTest {
         assertEquals(2.7, graph.getAdjacencyMatrix().get(1).get(0).getWeight());
         assertEquals(18, graph.getNumEdges());
         int numEdges = 0;
-        for(int i=0; i<6; i++){
-            if(graph.getAdjacencyMatrix().get(1).get(i)!=null){
+        for (int i = 0; i < 6; i++) {
+            if (graph.getAdjacencyMatrix().get(1).get(i) != null)
                 numEdges++;
-            }
         }
         assertEquals(3, numEdges);
     }

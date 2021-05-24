@@ -10,15 +10,38 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
 
     private ArrayList<Vertex<V>> vertices;
     private double[] distD;
+    private double[][] minDistances;
     private ArrayList<Vertex<V>> prevD;
 
-    public DirectedWeightedGraph(){
+    public DirectedWeightedGraph() {
         vertices = new ArrayList<Vertex<V>>();
     }
 
     @Override
+    public void floydWarshall() {
+        int size = vertices.size();
+        minDistances = new double[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++)
+                minDistances[i][j] = Double.MAX_VALUE;
+        }
+        for (int i = 0; i < size; i++) {
+            minDistances[i][i] = 0;
+        }
+        fillMatrix();
+        for (int k = 0; k < size; k++) {
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    if (minDistances[i][j] > minDistances[i][k] + minDistances[k][j])
+                        minDistances[i][j] = minDistances[i][k] + minDistances[k][j];
+                }
+            }
+        }
+    }
+
+    @Override
     public boolean dijkstra(Vertex<V> source) {
-        if (vertices.isEmpty()||source==null) {
+        if (vertices.isEmpty() || source == null) {
             return false;
         }
         int index = getIndex(source);
@@ -51,8 +74,10 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
                 if (alt < v.getPriority()) {
                     v.setPriority(alt);
                     index = getIndex(v);
+                    dist[index] = alt;
                     prev.set(index, u);
                     pq.remove(v);
+                    pq.add(v);
                 }
             }
         }
@@ -122,7 +147,6 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         u.setFinalization(time);
     }
 
-
     protected int getIndex(Vertex<V> s) {
         V value = s.getValue();
         for (int i = 0; i < vertices.size(); i++) {
@@ -141,6 +165,8 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
     }
 
     protected abstract Edge<V> searchEdge(Vertex<V> v1, Vertex<V> v2);
+
+    protected abstract void fillMatrix();
 
     public ArrayList<Vertex<V>> getVertices() {
         return vertices;
@@ -164,5 +190,9 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
 
     public void setPrevD(ArrayList<Vertex<V>> prevD) {
         this.prevD = prevD;
+    }
+
+    public double[][] getMinDistances() {
+        return minDistances;
     }
 }

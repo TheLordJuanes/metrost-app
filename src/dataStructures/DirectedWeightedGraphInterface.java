@@ -12,6 +12,8 @@ public interface DirectedWeightedGraphInterface<V> {
 
     // public boolean mst();
 
+    public void floydWarshall();
+
     public boolean bfs(Vertex<V> vertex);
 
     public boolean dfs();
