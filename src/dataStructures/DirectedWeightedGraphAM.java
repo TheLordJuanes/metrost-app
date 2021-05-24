@@ -9,6 +9,7 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
     // -----------------------------------------------------------------
 
     private ArrayList<ArrayList<Edge<V>>> adjacencyMatrix;
+    private int numEdges;
 
     // -----------------------------------------------------------------
     // Methods
@@ -17,6 +18,7 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
     public DirectedWeightedGraphAM() {
         super();
         adjacencyMatrix = new ArrayList<ArrayList<Edge<V>>>();
+        numEdges = 0;
     }
 
     /**
@@ -56,7 +58,7 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public boolean addEdge(Vertex<V> source, Vertex<V> destination, double weight) {
-        if (source == null || destination == null) {
+        if (source == null || destination == null || source == destination || weight<=0) {
             return false;
         }
         int sourceIndex = getIndex(source.getValue());
@@ -64,8 +66,12 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         if (sourceIndex == -1 || destinationIndex == -1) {
             return false;
         }
+        if(adjacencyMatrix.get(sourceIndex).get(destinationIndex)!=null){
+            return false;
+        }
         Edge<V> tempEdge = new Edge<V>(weight, source, destination);
         adjacencyMatrix.get(sourceIndex).set(destinationIndex, tempEdge);
+        numEdges++;
         return true;
     }
 
@@ -90,7 +96,11 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         if (oldValue == null || newValue == null) {
             return false;
         }
-        int index = getIndex(oldValue);
+        int index = getIndex(newValue);
+        if(index != -1){
+            return false;
+        }
+        index = getIndex(oldValue);
         if (index == -1) {
             return false;
         }
@@ -120,13 +130,17 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         if (indexSource == -1 || indexDestination == -1) {
             return false;
         }
+        if(adjacencyMatrix.get(indexSource).get(indexDestination)==null){
+            return false;
+        }
         adjacencyMatrix.get(indexSource).set(indexDestination, null);
+        numEdges--;
         return true;
     }
 
     @Override
     public boolean modifyWeight(Vertex<V> source, Vertex<V> destination, double newWeight) {
-        if (source == null || destination == null) {
+        if (source == null || destination == null || newWeight<=0) {
             return false;
         }
         int indexSource = getIndex(source.getValue());
@@ -134,7 +148,14 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         if (indexSource == -1 || indexDestination == -1) {
             return false;
         }
+        if(adjacencyMatrix.get(indexSource).get(indexDestination)==null){
+            return false;
+        }
         adjacencyMatrix.get(indexSource).get(indexDestination).setWeight(newWeight);;
         return true;
+    }
+
+    public int getNumEdges() {
+        return numEdges;
     }
 }

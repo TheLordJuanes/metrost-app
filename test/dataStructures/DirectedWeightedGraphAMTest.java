@@ -14,6 +14,16 @@ public class DirectedWeightedGraphAMTest {
 
     public void setup2() {
         graph = new DirectedWeightedGraphAM<String>();
+        graph.addVertex("a");
+        graph.addVertex("b");
+        graph.addVertex("c");
+        graph.addVertex("d");
+        graph.addVertex("e");
+        graph.addVertex("z");
+    }
+
+    public void setup3() {
+        graph = new DirectedWeightedGraphAM<String>();
         graph.addVertex("a"); // 0
         graph.addVertex("b"); // 1
         graph.addVertex("c"); // 2
@@ -65,12 +75,9 @@ public class DirectedWeightedGraphAMTest {
             if (graph.getAdjacencyMatrix().get(i).size() != 6)
                 fail();
         }
-        int row = 0;
-        for (int i = 0; row < 6; i++) {
-            assertNull(graph.getAdjacencyMatrix().get(row).get(i));
-            if (i == 5) {
-                row++;
-                i = -1;
+        for(int row=0; row<6; row++){
+            for (int i = 0; i < 6; i++) {
+                assertNull(graph.getAdjacencyMatrix().get(row).get(i));
             }
         }
         assertEquals(vertices.get(0).getValue(), "a");
@@ -96,7 +103,7 @@ public class DirectedWeightedGraphAMTest {
         assertTrue(graph.deleteVertex("d"));
         assertEquals(graph.getVertices().size(), 5);
         assertEquals(graph.getAdjacencyMatrix().size(), 5);
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             if (graph.getAdjacencyMatrix().get(i).size() != 5)
                 fail();
         }
@@ -107,7 +114,7 @@ public class DirectedWeightedGraphAMTest {
         assertEquals(vertices.get(3).getValue(), "e");
         assertEquals(vertices.get(4).getValue(), "z");
 
-        //setup3();
+        setup3();
         assertTrue(graph.deleteVertex("a"));
         vertices = graph.getVertices();
         assertEquals(vertices.get(0).getValue(), "b");
@@ -117,56 +124,191 @@ public class DirectedWeightedGraphAMTest {
         assertEquals(vertices.get(4).getValue(), "z");
         assertEquals(graph.getVertices().size(), 5);
         assertEquals(graph.getAdjacencyMatrix().size(), 5);
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             if (graph.getAdjacencyMatrix().get(i).size() != 5)
                 fail();
         }
-        /*int numEdges = 0;
-        for(int row=0; row<6; row++){
-            for (int i = 0; i < 6; i++) {
-            if(graph.getAdjacencyMatrix().get(row).get(i)!=null){
+        int numEdges = 0;
+        for(int row=0; row<5; row++){
+            for (int i = 0; i < 5; i++) {
+                if(graph.getAdjacencyMatrix().get(row).get(i)!=null){
+                    numEdges++;
+                }
+            }
+        }
+        assertEquals(14, numEdges);
+        numEdges = 0;
+        for(int i=0; i<5; i++){
+            if(graph.getAdjacencyMatrix().get(0).get(i)!=null){
                 numEdges++;
             }
         }
-        }
-        //COMPLETA
-
-        assertEquals(numEdges, graph.getEdges().size());
-        assertEquals(2, graph.getAdjacencyList().get(0).size());
-        for (int i = 0; i < 2; i++) {
-            if (graph.getAdjacencyList().get(0).get(i).getValue().compareTo("a") == 0) {
-                fail();
+        assertEquals(2, numEdges);
+        numEdges = 0;
+        for(int i=0; i<5; i++){
+            if(graph.getAdjacencyMatrix().get(1).get(i)!=null){
+                numEdges++;
             }
         }
-        assertEquals(3, graph.getAdjacencyList().get(1).size());
-        for (int i = 0; i < 3; i++) {
-            if (graph.getAdjacencyList().get(1).get(i).getValue().compareTo("a") == 0) {
-                fail();
+        assertEquals(3, numEdges);
+        numEdges = 0;
+        for(int i=0; i<5; i++){
+            if(graph.getAdjacencyMatrix().get(2).get(i)!=null){
+                numEdges++;
             }
         }
-        assertEquals(4, graph.getAdjacencyList().get(2).size());
-        assertEquals(3, graph.getAdjacencyList().get(3).size());
-        assertEquals(2, graph.getAdjacencyList().get(4).size());*/
+        assertEquals(4, numEdges);
+        numEdges = 0;
+        for(int i=0; i<5; i++){
+            if(graph.getAdjacencyMatrix().get(3).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(3, numEdges);
+        numEdges = 0;
+        for(int i=0; i<5; i++){
+            if(graph.getAdjacencyMatrix().get(4).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(2, numEdges);
     }
 
     @Test
     public void testAddEdge() {
+        setup2();
+        Vertex<String> tempV = new Vertex<>("h");
+        ArrayList<Vertex<String>> vertices = graph.getVertices();
+        assertFalse(graph.addEdge(vertices.get(0), tempV, 7.9));
+        assertFalse(graph.addEdge(vertices.get(0), vertices.get(0), 10));
+        assertFalse(graph.addEdge(vertices.get(1), vertices.get(0), -1));
+        assertFalse(graph.addEdge(vertices.get(2), vertices.get(1), 0));
 
+        assertTrue(graph.addEdge(vertices.get(0), vertices.get(1), 10));
+        assertFalse(graph.addEdge(vertices.get(0), vertices.get(1), 10));
+
+        assertTrue(graph.addEdge(vertices.get(1), vertices.get(2), 5));
+        assertTrue(graph.addEdge(vertices.get(2), vertices.get(3), 2));
+        assertTrue(graph.addEdge(vertices.get(3), vertices.get(4), 7));
+        assertTrue(graph.addEdge(vertices.get(4), vertices.get(5), 12));
+        assertTrue(graph.addEdge(vertices.get(5), vertices.get(0), 13));
+        assertTrue(graph.addEdge(vertices.get(5), vertices.get(3), 16));
+
+        assertEquals(7, graph.getNumEdges());
+        int numEdges = 0;
+        for(int i=0; i<6; i++){
+            if(graph.getAdjacencyMatrix().get(0).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(1, numEdges);
+        numEdges = 0;
+        for(int i=0; i<6; i++){
+            if(graph.getAdjacencyMatrix().get(1).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(1, numEdges);
+        numEdges = 0;
+        for(int i=0; i<6; i++){
+            if(graph.getAdjacencyMatrix().get(2).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(1, numEdges);
+        numEdges = 0;
+        for(int i=0; i<6; i++){
+            if(graph.getAdjacencyMatrix().get(3).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(1, numEdges);
+        numEdges = 0;
+        for(int i=0; i<6; i++){
+            if(graph.getAdjacencyMatrix().get(4).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(1, numEdges);
+        numEdges = 0;
+        for(int i=0; i<6; i++){
+            if(graph.getAdjacencyMatrix().get(5).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(2, numEdges);
+
+        Edge<String> temp = graph.getAdjacencyMatrix().get(3).get(4);
+        assertEquals("d", temp.getSource().getValue());
+        assertEquals("e", temp.getDestination().getValue());
+        assertEquals(7, temp.getWeight());
     }
 
     @Test
     public void testModifyVertex() {
+        setup2();
+        assertFalse(graph.modifyVertex("a", "b"));
+        assertTrue(graph.modifyVertex("b", "f"));
+        assertTrue(graph.modifyVertex("a", "b"));
+        assertEquals("b", graph.getVertices().get(0).getValue());
+        assertEquals("f", graph.getVertices().get(1).getValue());
 
+        setup3();
+        assertFalse(graph.modifyVertex("z", "c"));
+        assertTrue(graph.modifyVertex("z", "f"));
     }
 
     @Test
     public void testDeleteEdge() {
-
+        setup3();
+        ArrayList<Vertex<String>> vertices = graph.getVertices();
+        assertFalse(graph.deleteEdge(vertices.get(0), vertices.get(5)));
+        assertFalse(graph.deleteEdge(vertices.get(3), null));
+        Vertex<String> temp = new Vertex<>("h");
+        assertFalse(graph.deleteEdge(vertices.get(4), temp));
+        assertTrue(graph.deleteEdge(vertices.get(0), vertices.get(1)));
+        assertFalse(graph.deleteEdge(vertices.get(0), vertices.get(1)));
+        assertTrue(graph.deleteEdge(vertices.get(0), vertices.get(2)));
+        assertTrue(graph.deleteEdge(vertices.get(1), vertices.get(2)));
+        assertEquals(15, graph.getNumEdges());
+        int numEdges = 0;
+        for(int i=0; i<6; i++){
+            if(graph.getAdjacencyMatrix().get(0).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(0, numEdges);
+        numEdges = 0;
+        for(int i=0; i<6; i++){
+            if(graph.getAdjacencyMatrix().get(1).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(2, numEdges);
     }
 
     @Test
     public void testModifyWeight() {
-
+        setup3();
+        ArrayList<Vertex<String>> vertices = graph.getVertices();
+        assertFalse(graph.modifyWeight(vertices.get(0), vertices.get(5), 12.8));
+        assertFalse(graph.modifyWeight(null, vertices.get(5), 12.8));
+        assertFalse(graph.modifyWeight(vertices.get(0), vertices.get(1), 0));
+        assertFalse(graph.modifyWeight(vertices.get(0), vertices.get(2), -1));
+        assertTrue(graph.modifyWeight(vertices.get(1), vertices.get(3), 5.7));
+        assertTrue(graph.modifyWeight(vertices.get(1), vertices.get(2), 0.8));
+        assertTrue(graph.modifyWeight(vertices.get(1), vertices.get(0), 2.7));
+        assertEquals(5.7, graph.getAdjacencyMatrix().get(1).get(3).getWeight());
+        assertEquals(0.8, graph.getAdjacencyMatrix().get(1).get(2).getWeight());
+        assertEquals(2.7, graph.getAdjacencyMatrix().get(1).get(0).getWeight());
+        assertEquals(18, graph.getNumEdges());
+        int numEdges = 0;
+        for(int i=0; i<6; i++){
+            if(graph.getAdjacencyMatrix().get(1).get(i)!=null){
+                numEdges++;
+            }
+        }
+        assertEquals(3, numEdges);
     }
 
     @Test

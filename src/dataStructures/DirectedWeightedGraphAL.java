@@ -112,6 +112,9 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
         if(source == destination || weight<=0){
             return false;
         }
+        if(getIndex(source)==-1 || getIndex(destination)==-1){
+            return false;
+        }
         Edge<V> found = searchEdge(source, destination);
         if (found == null) {
             Edge<V> edge = new Edge<V>(weight, source, destination);

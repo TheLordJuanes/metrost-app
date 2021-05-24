@@ -134,7 +134,9 @@ public class DirectedWeightedGraphALTest {
     @Test
     public void testAddEdge() {
         setup2();
+        Vertex<String> temp = new Vertex<>("h");
         ArrayList<Vertex<String>> vertices = graph.getVertices();
+        assertFalse(graph.addEdge(vertices.get(0), temp, 7.9));
         assertFalse(graph.addEdge(vertices.get(0), vertices.get(0), 10));
         assertFalse(graph.addEdge(vertices.get(1), vertices.get(0), -1));
         assertFalse(graph.addEdge(vertices.get(2), vertices.get(1), 0));
