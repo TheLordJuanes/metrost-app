@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="392.0" prefWidth="532.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/form.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="129.0" layoutY="43.0" prefHeight="54.0" prefWidth="276.0" text="Add stations by..." textFill="WHITE">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="37.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </Label>
+      <JFXButton alignment="CENTER" blendMode="DIFFERENCE" contentDisplay="CENTER" layoutX="178.0" layoutY="128.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#platformStationAddition" prefHeight="68.0" prefWidth="176.0" style="-fx-background-radius: 5em; -fx-background-color: WHITE;" text="Platform" textAlignment="CENTER">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="33.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton alignment="CENTER" blendMode="DIFFERENCE" contentDisplay="CENTER" layoutX="179.0" layoutY="218.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#textFileStationAddition" prefHeight="68.0" prefWidth="176.0" style="-fx-background-radius: 5em; -fx-background-color: WHITE;" text="Text file" textAlignment="CENTER">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="33.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

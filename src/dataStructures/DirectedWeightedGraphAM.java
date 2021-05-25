@@ -69,6 +69,7 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         }
         Edge<V> tempEdge = new Edge<V>(weight, source, destination);
         adjacencyMatrix.get(sourceIndex).set(destinationIndex, tempEdge);
+        source.getDestinations().add(destination);
         numEdges++;
         return true;
     }

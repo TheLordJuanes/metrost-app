@@ -27,6 +27,18 @@ public class MetrostGUI {
     // -----------------------------------------------------------------
 
     @FXML
+    private JFXButton btnAddConnection;
+
+    @FXML
+    private JFXComboBox<String> cbAddConnection1;
+
+    @FXML
+    private JFXComboBox<String> cbAddConnection2;
+
+    @FXML
+    private JFXTextField txtDistance;
+
+    @FXML
     private Label lbWelcome;
 
     @FXML
@@ -110,7 +122,7 @@ public class MetrostGUI {
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
-            primaryStage.setTitle("Metrost");
+            primaryStage.setTitle("Station module");
             primaryStage.show();
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -118,7 +130,22 @@ public class MetrostGUI {
     }
 
     @FXML
-    public void addAStation(ActionEvent event) {
+    public void additionForm(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("stationAdditionForm.fxml"));
+            fxmlLoader.setController(this);
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Station addition form");
+            stage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void platformStationAddition(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("add-station.fxml"));
             fxmlLoader.setController(this);
@@ -130,6 +157,11 @@ public class MetrostGUI {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+    }
+
+    @FXML
+    public void textFileStationAddition(ActionEvent event) {
+
     }
 
     @FXML
@@ -184,7 +216,7 @@ public class MetrostGUI {
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
-            primaryStage.setTitle("Metrost");
+            primaryStage.setTitle("Connection module");
             primaryStage.show();
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -193,6 +225,20 @@ public class MetrostGUI {
 
     @FXML
     public void addAConnection(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("add-connection.fxml"));
+            fxmlLoader.setController(this);
+            Parent root = fxmlLoader.load();
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setTitle("Connection addition");
+            primaryStage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void addConnection(ActionEvent event) {
 
     }
 
@@ -213,7 +259,7 @@ public class MetrostGUI {
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
-            primaryStage.setTitle("Metrost");
+            primaryStage.setTitle("Query module");
             primaryStage.show();
         } catch (IOException ioe) {
             ioe.printStackTrace();

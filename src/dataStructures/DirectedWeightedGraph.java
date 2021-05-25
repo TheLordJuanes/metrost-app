@@ -100,6 +100,7 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
             u.setParent(null);
         }
         vertex.setColor(Color.GRAY);
+        vertex.setDistance(0);
         Queue<Vertex<V>> queue = new LinkedList<>();
         queue.add(vertex);
         while (!queue.isEmpty()) {
@@ -112,7 +113,7 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
                     queue.add(v);
                 }
             }
-            vertex.setColor(Color.BLACK);
+            u.setColor(Color.BLACK);
         }
         return true;
     }

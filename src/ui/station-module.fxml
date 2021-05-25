@@ -15,7 +15,7 @@
             <Image url="@../../resources/buses.png" />
          </image>
       </ImageView>
-      <JFXButton alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="31.0" layoutY="224.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#addAStation" prefHeight="48.0" prefWidth="156.0" style="-fx-background-radius: 5em; -fx-background-color: YELLOW;" text="Add station" textAlignment="CENTER">
+      <JFXButton alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="31.0" layoutY="224.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#additionForm" prefHeight="48.0" prefWidth="156.0" style="-fx-background-radius: 5em; -fx-background-color: YELLOW;" text="Add station" textAlignment="CENTER">
          <font>
             <Font name="Avenir Next Condensed Bold" size="20.0" />
          </font>

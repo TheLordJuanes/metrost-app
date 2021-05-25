@@ -12,6 +12,8 @@ import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
+
+import dataStructures.DirectedWeightedGraphAM;
 import dataStructures.Vertex;
 import java.io.File;
 import java.io.FileReader;
@@ -37,14 +39,14 @@ public class Metrost {
     // Relations
     // -----------------------------------------------------------------
 
-    private DirectedWeightedGraph?<String> graph;
+    private DirectedWeightedGraphAM<String> graph;
 
     // -----------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------
 
     public Metrost() {
-        graph = new DirectedWeightedGraph?<>();
+        graph = new DirectedWeightedGraphAM<>();
         progress = 0;
     }
 
@@ -76,7 +78,7 @@ public class Metrost {
         this.allData = allData;
     }
 
-    public void addStationByTextFile(File file) throws InterruptedException, IOException, CsvException {
+    public void addConnectionByTextFile(File file) throws InterruptedException, IOException, CsvException {
         FileWriter fw = new FileWriter(FILE_NAME, true);
         CSVWriter csvWriter = new CSVWriter(fw);
         FileReader fr = new FileReader(file);
@@ -86,6 +88,29 @@ public class Metrost {
             // allData = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
             fw = new FileWriter(FILE_NAME);
             CSVWriter writer = new CSVWriter(fw);
+            /*
+
+            Station,Connected station,Distance between them
+
+            */
+            /*
+number of stations
+6
+stations
+a
+b
+j
+
+e
+f
+g
+"Station", "Connected station", "Distance between them"
+a,b,3
+a,c,6
+b,a,5
+a,c,4
+            */
+
             String[] temp = { "Station", "Connected station", "Distance between them" };
             writer.writeNext(temp);
             for (int i = 0; i < allData.size(); i++) {
@@ -105,7 +130,7 @@ public class Metrost {
         csvWriter.close();
     }
 
-    public void addStationByPlatform(String name1, String name2, String distance) throws InterruptedException, IOException, CsvException {
+    public void addConnectionByPlatform(String name1, String name2, String distance) throws InterruptedException, IOException, CsvException {
         File dataFile = new File(FILE_NAME);
         FileWriter fw = new FileWriter(FILE_NAME, true);
         CSVWriter csvWriter = new CSVWriter(fw);
@@ -133,24 +158,21 @@ public class Metrost {
      * @throws IOException
      */
     public boolean modifyStationData(String dataType, String newValue, int station) throws IOException {
-        if (allData.get(station) == null)
+        if (allData.get(station) == null) {
             return false;
+        }
+        Vertex<String> source = new Vertex<String>(allData.get(station)[0]);
+        Vertex<String> destination = new Vertex<String>(allData.get(station)[1]);
         switch (dataType) {
             case "Name":
                 graph.modifyVertex(allData.get(station)[0], newValue);
                 allData.get(station)[0] = newValue;
                 break;
             case "Connected with":
-                Vertex<String> source = new Vertex<String>(allData.get(station)[0]);
-                Vertex<String> destination = new Vertex<String>(allData.get(station)[1]);
                 graph.deleteEdge(source, destination);
                 allData.get(station)[1] = newValue;
                 destination = new Vertex<String>(allData.get(station)[1]);
-                graph.addEdge(source, destination, allData.get(station)[2]);
-                break;
-            case "Distance":
-                allData.get(station)[2] = newValue;
-                graph.modifyWeight(source, destination, Double.valueOf(allData.get(station)[2]));
+                graph.addEdge(source, destination, Double.parseDouble(allData.get(station)[2]));
                 break;
         }
         FileWriter fw = new FileWriter(FILE_NAME);
@@ -160,6 +182,17 @@ public class Metrost {
         allData2.add(0, temp);
         csvWriter.writeAll(allData2);
         csvWriter.close();
+        return true;
+    }
+
+    public boolean modifyConnection(String newValue, int station) {
+        if (allData.get(station) == null) {
+            return false;
+        }
+        Vertex<String> source = new Vertex<String>(allData.get(station)[0]);
+        Vertex<String> destination = new Vertex<String>(allData.get(station)[1]);
+        allData.get(station)[2] = newValue;
+        graph.modifyWeight(source, destination, Double.valueOf(allData.get(station)[2]));
         return true;
     }
 

@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
+import dataStructures.Vertex.Color;
+
 public class DirectedWeightedGraphALTest {
 
     private DirectedWeightedGraphAL<String> graph;
@@ -186,8 +188,7 @@ public class DirectedWeightedGraphALTest {
         assertFalse(graph.modifyVertex("z", "c"));
         assertTrue(graph.modifyVertex("z", "f"));
         for (int i = 0; i < 18; i++) {
-            if (graph.getEdges().get(i).getSource().getValue().compareTo("z") == 0
-                    || graph.getEdges().get(i).getDestination().getValue().compareTo("z") == 0)
+            if (graph.getEdges().get(i).getSource().getValue().compareTo("z") == 0 || graph.getEdges().get(i).getDestination().getValue().compareTo("z") == 0)
                 fail();
         }
     }
@@ -269,7 +270,62 @@ public class DirectedWeightedGraphALTest {
 
     @Test
     public void testBfs() {
+        setup2();
+        ArrayList<Vertex<String>> vertices = graph.getVertices();
+        Vertex<String> temp = new Vertex<>("x");
+        assertFalse(graph.bfs(temp));
+        assertTrue(graph.bfs(vertices.get(0)));
+        assertEquals(Color.BLACK, vertices.get(0).getColor());
+        for(int i=1; i < vertices.size(); i++){
+            assertEquals(Color.WHITE, vertices.get(i).getColor());
+        }
 
+        setup2();
+        vertices = graph.getVertices();
+        graph.addEdge(vertices.get(0), vertices.get(1), 1);
+        graph.addEdge(vertices.get(0), vertices.get(2), 2);
+        graph.addEdge(vertices.get(5), vertices.get(4), 3);
+        graph.addEdge(vertices.get(5), vertices.get(3), 4);
+
+        assertTrue(graph.bfs(vertices.get(0)));
+        for(int i=0; i < 3; i++){
+            assertEquals(Color.BLACK, vertices.get(i).getColor());
+        }
+        assertEquals(0, vertices.get(0).getDistance());
+        assertEquals(1, vertices.get(1).getDistance());
+        assertEquals(1, vertices.get(2).getDistance());
+        assertEquals(null, vertices.get(0).getParent());
+        assertEquals(vertices.get(0), vertices.get(1).getParent());
+        assertEquals(vertices.get(0), vertices.get(2).getParent());
+        for(int i=3; i < 6; i++){
+            assertEquals(Color.WHITE, vertices.get(i).getColor());
+        }
+        assertEquals(Integer.MAX_VALUE, vertices.get(3).getDistance());
+        assertEquals(Integer.MAX_VALUE, vertices.get(4).getDistance());
+        assertEquals(Integer.MAX_VALUE, vertices.get(5).getDistance());
+        assertEquals(null, vertices.get(3).getParent());
+        assertEquals(null, vertices.get(4).getParent());
+        assertEquals(null, vertices.get(5).getParent());
+
+        setup3();
+        vertices = graph.getVertices();
+        assertTrue(graph.bfs(vertices.get(1)));
+        for(int i=0; i < vertices.size(); i++){
+            assertEquals(Color.BLACK, vertices.get(i).getColor());
+        }
+        assertEquals(0, vertices.get(1).getDistance());
+        assertEquals(1, vertices.get(0).getDistance());
+        assertEquals(1, vertices.get(2).getDistance());
+        assertEquals(1, vertices.get(3).getDistance());
+        assertEquals(2, vertices.get(4).getDistance());
+        assertEquals(2, vertices.get(5).getDistance());
+
+        assertEquals(null, vertices.get(1).getParent());
+        assertEquals(vertices.get(1), vertices.get(0).getParent());
+        assertEquals(vertices.get(1), vertices.get(2).getParent());
+        assertEquals(vertices.get(1), vertices.get(3).getParent());
+        assertEquals(vertices.get(2), vertices.get(4).getParent());
+        assertEquals(vertices.get(3), vertices.get(5).getParent());
     }
 
     @Test
@@ -277,11 +333,32 @@ public class DirectedWeightedGraphALTest {
 
     }
 
+    @Test
     public void testfloydWarshall() {
+        setup2();
+        graph.floydWarshall();
+        double[][] matrix = graph.getMinDistances();
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix.length; j++){
+                if(i==j){
+                    assertEquals(0, matrix[i][j]);
+                }else{
+                    if(matrix[i][j]!=Double.MAX_VALUE){
+                        fail();
+                    }
+                }
+            }
+        }
         setup3();
+        graph.floydWarshall();
+        matrix = graph.getMinDistances();
         ArrayList<Vertex<String>> vertices = graph.getVertices();
-        graph.dijkstra(vertices.get(0));
-        // double[] row1 = ;
-        // TERMINARRRRR
+        for(int i=0; i<vertices.size(); i++){
+            graph.dijkstra(vertices.get(i));
+            double[] row = graph.getDistD();
+            for(int j=0; j<vertices.size(); j++){
+                assertEquals(row[j], matrix[i][j]);
+            }
+        }
     }
 }
