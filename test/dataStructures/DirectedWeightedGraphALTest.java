@@ -3,7 +3,6 @@ package dataStructures;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
-
 import dataStructures.Vertex.Color;
 
 public class DirectedWeightedGraphALTest {
@@ -330,7 +329,52 @@ public class DirectedWeightedGraphALTest {
 
     @Test
     public void testDfs() {
+        setup1();
+        assertFalse(graph.dfs());
 
+        setup2();
+        ArrayList<Vertex<String>> vertices = graph.getVertices();
+        assertTrue(graph.dfs());
+        assertEquals(1, vertices.get(0).getDiscovery());
+        assertEquals(2, vertices.get(0).getFinalization());
+        assertEquals(3, vertices.get(1).getDiscovery());
+        assertEquals(4, vertices.get(1).getFinalization());
+        assertEquals(5, vertices.get(2).getDiscovery());
+        assertEquals(6, vertices.get(2).getFinalization());
+        assertEquals(7, vertices.get(3).getDiscovery());
+        assertEquals(8, vertices.get(3).getFinalization());
+        assertEquals(9, vertices.get(4).getDiscovery());
+        assertEquals(10, vertices.get(4).getFinalization());
+        assertEquals(11, vertices.get(5).getDiscovery());
+        assertEquals(12, vertices.get(5).getFinalization());
+        assertEquals(Color.BLACK, vertices.get(0).getColor());
+        assertEquals(Color.BLACK, vertices.get(1).getColor());
+        assertEquals(Color.BLACK, vertices.get(2).getColor());
+        assertEquals(Color.BLACK, vertices.get(3).getColor());
+        assertEquals(Color.BLACK, vertices.get(4).getColor());
+        assertEquals(Color.BLACK, vertices.get(5).getColor());
+
+        setup3();
+        vertices = graph.getVertices();
+        assertTrue(graph.dfs());
+        assertEquals(1, vertices.get(0).getDiscovery());
+        assertEquals(12, vertices.get(0).getFinalization());
+        assertEquals(2, vertices.get(1).getDiscovery());
+        assertEquals(11, vertices.get(1).getFinalization());
+        assertEquals(3, vertices.get(2).getDiscovery());
+        assertEquals(10, vertices.get(2).getFinalization());
+        assertEquals(5, vertices.get(3).getDiscovery());
+        assertEquals(8, vertices.get(3).getFinalization());
+        assertEquals(4, vertices.get(4).getDiscovery());
+        assertEquals(9, vertices.get(4).getFinalization());
+        assertEquals(6, vertices.get(5).getDiscovery());
+        assertEquals(7, vertices.get(5).getFinalization());
+        assertEquals(Color.BLACK, vertices.get(0).getColor());
+        assertEquals(Color.BLACK, vertices.get(1).getColor());
+        assertEquals(Color.BLACK, vertices.get(2).getColor());
+        assertEquals(Color.BLACK, vertices.get(3).getColor());
+        assertEquals(Color.BLACK, vertices.get(4).getColor());
+        assertEquals(Color.BLACK, vertices.get(5).getColor());
     }
 
     @Test

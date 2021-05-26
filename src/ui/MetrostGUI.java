@@ -11,11 +11,19 @@ import model.Station;
 import thread.WelcomeThread;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.opencsv.exceptions.CsvException;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,6 +41,9 @@ public class MetrostGUI {
     // -----------------------------------------------------------------
     // Attributes
     // -----------------------------------------------------------------
+
+    @FXML
+    private Label lbAddStation;
 
     @FXML
     private JFXButton btnCurrentNetwork;
@@ -139,7 +150,8 @@ public class MetrostGUI {
     @FXML
     public void textFileNetworkAddition(ActionEvent event) {
         // CORREGIR FORMATO
-        showWarningAlert("Text Input Format", "The data of the players must be in this order separated by a coma \",\"", "firstName,lastName,team,age,trueShooting,usage,assist,rebound,defensive,blocks");
+        showWarningAlert("Text Input Format", "The data of the players must be in this order separated by a coma \",\"",
+                "firstName,lastName,team,age,trueShooting,usage,assist,rebound,defensive,blocks");
         Stage stage = new Stage();
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Csv files", "*.csv"));
@@ -234,11 +246,14 @@ public class MetrostGUI {
     @FXML
     public void addStation(ActionEvent event) {
         try {
-            metrost.addStation(txtName.getText());
+            if (metrost.addStation(txtName.getText()))
+                lbAddStation.setText("Station successfully added!");
+            else
+                lbAddStation.setText("This station already exists!");
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } catch (CsvException e) {
-            e.printStackTrace();
+        } catch (CsvException csve) {
+            csve.printStackTrace();
         }
     }
 
@@ -255,11 +270,28 @@ public class MetrostGUI {
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+        ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+        cbStations.setItems(observableList);
+        cbStations.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                if (!cbStations.getSelectionModel().isEmpty())
+                    btnModifyStation.setDisable(false);
+            }
+        });
+        txtName.textProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (oldValue == newValue)
+                    btnModifyStation.setDisable(false);
+            }
+        });
     }
 
     @FXML
     public void modifyStation(ActionEvent event) {
-
     }
 
     @FXML
@@ -346,7 +378,23 @@ public class MetrostGUI {
 
     @FXML
     public void showNetworkData(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("network.fxml"));
+            fxmlLoader.setController(this);
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Network Data");
 
+            //JFXTreeTableColumn<Stations<String>> names = new JFXTreeTableColumn<>("Names");
+            //ArrayList<Station<String>> stations = new ArrayList<>();
+            JFXTreeTableColumn<Station> names = new JFXTreeTableColumn<>("Names");
+            ArrayList<Station> stations = new ArrayList<>();
+            //TERMINARRRR
+            stage.show();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
     public void showInformationAlert(String title, String header, String content) {

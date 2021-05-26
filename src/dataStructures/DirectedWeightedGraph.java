@@ -12,6 +12,8 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
     private double[] distD;
     private double[][] minDistances;
     private ArrayList<Vertex<V>> prevD;
+    private int time;
+    private Edge<V> minEdge;
 
     public DirectedWeightedGraph() {
         vertices = new ArrayList<Vertex<V>>();
@@ -125,27 +127,68 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         for (Vertex<V> u : vertices) {
             u.setColor(Color.WHITE);
         }
-        int time = 0;
+        time = 0;
         for (Vertex<V> u : vertices) {
             if (u.getColor() == Color.WHITE)
-                dfsVisit(u, time);
+                dfsVisit(u);
         }
         return true;
     }
 
-    private void dfsVisit(Vertex<V> u, int time) {
+    private void dfsVisit(Vertex<V> u) {
         time += 1;
         u.setDiscovery(time);
         u.setColor(Color.GRAY);
         for (Vertex<V> v : u.getDestinations()) {
             if (v.getColor() == Color.WHITE) {
                 v.setParent(u);
-                dfsVisit(v, time);
+                dfsVisit(v);
             }
         }
         u.setColor(Color.BLACK);
         time += 1;
         u.setFinalization(time);
+    }
+
+    public Edge<V> getMinEdge() {
+        return minEdge;
+    }
+
+    public void setMinEdge(Edge<V> minEdge) {
+        this.minEdge = minEdge;
+    }
+
+    @Override
+    public boolean prim(Vertex<V> r) {
+        if (!bfs(vertices.get(0))) {
+            return false;
+        }
+        for (int i = 0; i < vertices.size(); i++) {
+            Vertex<V> v = vertices.get(i);
+            if (v.isWhite()) {
+                return false;
+            } else {
+                v.setColor(Color.WHITE);
+                v.setPriority(Double.MAX_VALUE);
+            }
+        }
+        r.setPriority(0);
+        r.setParent(null);
+        Queue<Vertex<V>> queue = new LinkedList<>(vertices);
+        while (!queue.isEmpty()) {
+            Vertex<V> u = queue.poll();
+            for (Vertex<V> v : u.getDestinations()) {
+                double wei = searchEdge(u, v).getWeight();
+                if(v.isWhite()&&wei<v.getPriority()){
+                    v.setPriority(wei);
+                    queue.remove(v);
+                    queue.add(v);
+                    v.setParent(u);
+                }
+            }
+            u.setColor(Color.BLACK);
+        }
+        return true;
     }
 
     protected int getIndex(Vertex<V> s) {

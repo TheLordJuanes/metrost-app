@@ -18,6 +18,8 @@ public interface DirectedWeightedGraphInterface<V> {
 
     public boolean dfs();
 
+    public boolean prim(Vertex<V> r);
+
     public boolean addVertex(V value);
 
     public boolean deleteVertex(V value);
