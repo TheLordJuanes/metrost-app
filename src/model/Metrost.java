@@ -7,14 +7,16 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
-
 import dataStructures.DirectedWeightedGraphAM;
 import dataStructures.Vertex;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -78,6 +80,67 @@ public class Metrost {
         this.allData = allData;
     }
 
+    public void addNetwork(File file) throws IOException, CsvException {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME));
+        String line = br.readLine();
+        while (line != null) {
+            bw.write(line + "\n");
+            line = br.readLine();
+        }
+        bw.close();
+        br.close();
+        br = new BufferedReader(new FileReader(file));
+        line = br.readLine();
+        line = br.readLine();
+        line = br.readLine();
+        line = br.readLine();
+        while (!line.equals("Station,Connected station,Distance between them")) {
+            graph.addVertex(line);
+            line = br.readLine();
+        }
+        line = br.readLine();
+        while (line != null) {
+            String[] parts = line.split(",");
+            Vertex<String> source = new Vertex<String>(parts[0]);
+            Vertex<String> destination = new Vertex<String>(parts[1]);
+            double weight = Double.parseDouble(parts[2]);
+            graph.addEdge(source, destination, weight);
+            line = br.readLine();
+        }
+    }
+
+    public boolean addStation(String name) throws IOException, CsvException {
+        BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
+        if (br.lines().count() == 0) {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME));
+            bw.write("Number of stations");
+            bw.write("1");
+            bw.write("Stations");
+            bw.write(name);
+            bw.write("Station,Connected station,Distance between them");
+            bw.close();
+        } else {
+            FileReader fr = new FileReader(FILE_NAME);
+            CSVReader csvReader = new CSVReaderBuilder(fr).build();
+            ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
+            br.close();
+            br = new BufferedReader(new FileReader(FILE_NAME));
+            br.readLine();
+            int stations = Integer.parseInt(br.readLine());
+            stations++;
+            allLines.get(1)[0] = String.valueOf(stations);
+            String[] station = { name };
+            allLines.add(stations + 2, station);
+            FileWriter fw = new FileWriter(FILE_NAME);
+            CSVWriter csvWriter = new CSVWriter(fw);
+            csvWriter.writeAll(allLines, false);
+            csvWriter.close();
+        }
+        graph.addVertex(name);
+        return true;
+    }
+
     public void addConnectionByTextFile(File file) throws InterruptedException, IOException, CsvException {
         FileWriter fw = new FileWriter(FILE_NAME, true);
         CSVWriter csvWriter = new CSVWriter(fw);
@@ -88,29 +151,6 @@ public class Metrost {
             // allData = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
             fw = new FileWriter(FILE_NAME);
             CSVWriter writer = new CSVWriter(fw);
-            /*
-
-            Station,Connected station,Distance between them
-
-            */
-            /*
-number of stations
-6
-stations
-a
-b
-j
-
-e
-f
-g
-"Station", "Connected station", "Distance between them"
-a,b,3
-a,c,6
-b,a,5
-a,c,4
-            */
-
             String[] temp = { "Station", "Connected station", "Distance between them" };
             writer.writeNext(temp);
             for (int i = 0; i < allData.size(); i++) {
@@ -120,7 +160,8 @@ a,c,4
             writer.close();
         } else {
             ArrayList<String[]> newData = (ArrayList<String[]>) csvReader.readAll();
-            // ArrayList<String[]> newData = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
+            // ArrayList<String[]> newData = new ArrayList<>((LinkedList<String[]>)
+            // csvReader.readAll());
             for (int i = 0; i < newData.size(); i++) {
                 progress = (i + 1) / (double) newData.size();
                 csvWriter.writeNext(newData.get(i));
@@ -130,7 +171,8 @@ a,c,4
         csvWriter.close();
     }
 
-    public void addConnectionByPlatform(String name1, String name2, String distance) throws InterruptedException, IOException, CsvException {
+    public void addConnectionByPlatform(String name1, String name2, String distance)
+            throws InterruptedException, IOException, CsvException {
         File dataFile = new File(FILE_NAME);
         FileWriter fw = new FileWriter(FILE_NAME, true);
         CSVWriter csvWriter = new CSVWriter(fw);
@@ -139,10 +181,10 @@ a,c,4
             csvWriter.writeNext(temp);
         }
         String[] info = new String[3];
-		info[0] = name1;
-		info[1] = name2;
-		info[2] = distance;
-		csvWriter.writeNext(info);
+        info[0] = name1;
+        info[1] = name2;
+        info[2] = distance;
+        csvWriter.writeNext(info);
         csvWriter.close();
         FileReader fr = new FileReader(FILE_NAME);
         CSVReader csvReader = new CSVReaderBuilder(fr).withSkipLines(1).build();

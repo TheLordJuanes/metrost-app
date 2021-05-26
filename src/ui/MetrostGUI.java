@@ -7,17 +7,25 @@
 package ui;
 
 import model.Metrost;
+import model.Station;
 import thread.WelcomeThread;
+import java.io.File;
 import java.io.IOException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.opencsv.exceptions.CsvException;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MetrostGUI {
@@ -25,6 +33,15 @@ public class MetrostGUI {
     // -----------------------------------------------------------------
     // Attributes
     // -----------------------------------------------------------------
+
+    @FXML
+    private JFXButton btnCurrentNetwork;
+
+    @FXML
+    private JFXButton btnDesignedNetwork;
+
+    @FXML
+    private JFXTreeTableView<Station> tvNetwork;
 
     @FXML
     private JFXButton btnAddConnection;
@@ -62,10 +79,23 @@ public class MetrostGUI {
     // -----------------------------------------------------------------
 
     private Metrost metrost;
+    private WelcomeThread welcomeThread;
 
     // -----------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------
+
+    public MetrostGUI(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        metrost = new Metrost();
+        labelChange = true;
+        welcomeThread = new WelcomeThread(this);
+        welcomeThread.start();
+    }
+
+    public boolean getLabelChange() {
+        return labelChange;
+    }
 
     public Label getLbWelcome() {
         return lbWelcome;
@@ -75,14 +105,56 @@ public class MetrostGUI {
         this.lbWelcome = lbWelcome;
     }
 
-    public MetrostGUI(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        labelChange = true;
-        new WelcomeThread(this).start();
+    @FXML
+    public void networkForm(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("networkForm.fxml"));
+            fxmlLoader.setController(this);
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Transportation network");
+            stage.show();
+            btnDesignedNetwork.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    stage.close();
+                    textFileNetworkAddition(event);
+                }
+            });
+            btnCurrentNetwork.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    stage.close();
+                    goToMenu(event);
+                }
+            });
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 
-    public boolean getLabelChange() {
-        return labelChange;
+    @FXML
+    public void textFileNetworkAddition(ActionEvent event) {
+        // CORREGIR FORMATO
+        showWarningAlert("Text Input Format", "The data of the players must be in this order separated by a coma \",\"", "firstName,lastName,team,age,trueShooting,usage,assist,rebound,defensive,blocks");
+        Stage stage = new Stage();
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Csv files", "*.csv"));
+        File file = fc.showOpenDialog(stage);
+        if (file != null) {
+            try {
+                metrost.addNetwork(file);
+                goToMenu(event);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            } catch (CsvException ioe) {
+                ioe.printStackTrace();
+            }
+        } else
+            showInformationAlert("Missing File", null, "No file was selected ");
     }
 
     @FXML
@@ -92,6 +164,8 @@ public class MetrostGUI {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("metrost.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
+            welcomeThread = new WelcomeThread(this);
+            welcomeThread.start();
             primaryStage.setScene(new Scene(root));
             primaryStage.setTitle("Metro Trost");
             primaryStage.show();
@@ -104,6 +178,7 @@ public class MetrostGUI {
     public void goToMenu(ActionEvent event) {
         try {
             labelChange = false;
+            welcomeThread.join();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("start-metrost.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
@@ -112,6 +187,8 @@ public class MetrostGUI {
             primaryStage.show();
         } catch (IOException ioe) {
             ioe.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -130,28 +207,23 @@ public class MetrostGUI {
     }
 
     @FXML
-    public void additionForm(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("stationAdditionForm.fxml"));
-            fxmlLoader.setController(this);
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Station addition form");
-            stage.show();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void platformStationAddition(ActionEvent event) {
+    public void addAStation(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("add-station.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            btnAddStation.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (txtName.getText().isEmpty())
+                        showWarningAlert("Missing station name", null, "The text field must be filled!");
+                    else
+                        addStation(event);
+                }
+            });
             stage.setTitle("Station addition");
             stage.show();
         } catch (IOException ioe) {
@@ -160,13 +232,14 @@ public class MetrostGUI {
     }
 
     @FXML
-    public void textFileStationAddition(ActionEvent event) {
-
-    }
-
-    @FXML
     public void addStation(ActionEvent event) {
-
+        try {
+            metrost.addStation(txtName.getText());
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (CsvException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -274,5 +347,21 @@ public class MetrostGUI {
     @FXML
     public void showNetworkData(ActionEvent event) {
 
+    }
+
+    public void showInformationAlert(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public void showWarningAlert(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

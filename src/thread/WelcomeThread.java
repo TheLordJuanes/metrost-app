@@ -5,32 +5,36 @@ import ui.MetrostGUI;
 
 public class WelcomeThread extends Thread {
 
+    // -----------------------------------------------------------------
+    // Relations
+    // -----------------------------------------------------------------
+
     private MetrostGUI metrostGUI;
-    private boolean decrease;
-    private boolean increase;
+
+    // -----------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------
 
     public WelcomeThread(MetrostGUI metrostGUI) {
         setDaemon(true);
         this.metrostGUI = metrostGUI;
-        increase = false;
-        decrease = true;
     }
 
     @Override
     public void run() {
-        int countdecreaseOP = 0;
-        int countincreaseOP = 0;
+        int countDecreaseOP = 0;
+        int countIncreaseOP = 0;
         while (metrostGUI.getLabelChange()) {
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }
+            boolean decrease = true;
             while (decrease) {
-                if (countdecreaseOP == 10) {
+                if (countDecreaseOP == 10) {
                     decrease = false;
-                    increase = true;
-                    countincreaseOP = 0;
+                    countIncreaseOP = 0;
                     Platform.runLater(new Thread() {
 
                         @Override
@@ -77,7 +81,7 @@ public class WelcomeThread extends Thread {
                     });
                 } else {
                     metrostGUI.getLbWelcome().setOpacity(metrostGUI.getLbWelcome().getOpacity() - 0.1);
-                    countdecreaseOP++;
+                    countDecreaseOP++;
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ie) {
@@ -85,14 +89,14 @@ public class WelcomeThread extends Thread {
                     }
                 }
             }
+            boolean increase = true;
             while (increase) {
-                if (countincreaseOP == 10) {
+                if (countIncreaseOP == 10) {
                     increase = false;
-                    countdecreaseOP = 0;
-                    decrease = true;
+                    countDecreaseOP = 0;
                 } else {
                     metrostGUI.getLbWelcome().setOpacity(metrostGUI.getLbWelcome().getOpacity() + 0.1);
-                    countincreaseOP++;
+                    countIncreaseOP++;
                     try {
                         Thread.sleep(50);
                     } catch (InterruptedException ie) {

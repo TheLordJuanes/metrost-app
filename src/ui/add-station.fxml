@@ -16,7 +16,7 @@
             <Image url="@../../resources/form.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="btnAddStation" alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" layoutX="110.0" layoutY="175.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#addStation" prefHeight="48.0" prefWidth="185.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Add station" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton fx:id="btnAddStation" alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" layoutX="110.0" layoutY="175.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="185.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Add station" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Avenir Next Condensed Bold" size="20.0" />
          </font>

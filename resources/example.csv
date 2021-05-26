@@ -1,0 +1,14 @@
+Number of stations
+6
+Stations
+a
+b
+j
+e
+f
+g
+Station,Connected station,Distance between them
+a,b,3
+a,c,6
+b,a,5
+a,d,4
