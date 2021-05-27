@@ -11,15 +11,11 @@ import model.Station;
 import thread.WelcomeThread;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.opencsv.exceptions.CsvException;
-
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,11 +26,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class MetrostGUI {
 
@@ -44,6 +38,9 @@ public class MetrostGUI {
 
     @FXML
     private Label lbAddStation;
+
+    @FXML
+    private Label lbAddConnection;
 
     @FXML
     private Label lbModifyStation;
@@ -257,8 +254,10 @@ public class MetrostGUI {
         try {
             if (metrost.addStation(txtName.getText()))
                 lbAddStation.setText("Station successfully added!");
-            else
+            else {
                 lbAddStation.setText("This station already exists!");
+            }
+            txtName.setText("");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (CsvException csve) {
@@ -268,9 +267,9 @@ public class MetrostGUI {
 
     @FXML
     public void modifyAStation(ActionEvent event) {
-        if (metrost.getStations().isEmpty()) {
-            showInformationAlert("Non-existent stations", null, "There are no stations added to your transportation design yet.");
-        } else {
+        if (metrost.getStations().isEmpty())
+            showInformationAlert("Non-existent stations", null, "There are no stations added to your transportation network design yet.");
+        else {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modify-station.fxml"));
                 fxmlLoader.setController(this);
@@ -285,7 +284,7 @@ public class MetrostGUI {
 
                     @Override
                     public void handle(ActionEvent event) {
-                        if (!cbStations.getSelectionModel().isEmpty())
+                        if (!cbStations.getValue().isEmpty())
                             btnModifyStation.setDisable(false);
                     }
                 });
@@ -293,8 +292,8 @@ public class MetrostGUI {
 
                     @Override
                     public void handle(ActionEvent event) {
-                        if (txtName.getText().isEmpty())
-                            showWarningAlert("Missing new station name", null, "The text field must be filled!");
+                        if (txtName.getText().isEmpty() || cbStations.getValue() == null)
+                            showWarningAlert("Missing data", null, "Fill the required data.");
                         else
                             modifyStation(event);
                     }
@@ -308,10 +307,14 @@ public class MetrostGUI {
     @FXML
     public void modifyStation(ActionEvent event) {
         try {
-            if (metrost.modifyStation(cbStations.getValue(), txtName.getText()))
+            if (metrost.modifyStation(cbStations.getValue(), txtName.getText())) {
                 lbModifyStation.setText("Done!");
-            else
+                ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+                cbStations.setItems(observableList);
+            } else {
                 showWarningAlert("Modification process interrupted", null, "Another station already has that name.");
+            }
+            txtName.setText("");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (CsvException csve) {
@@ -321,46 +324,72 @@ public class MetrostGUI {
 
     @FXML
     public void deleteAStation(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("delete-station.fxml"));
-            fxmlLoader.setController(this);
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Station deletion");
-            stage.show();
-            ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
-            cbStations.setItems(observableList);
-            cbStations.setOnAction(new EventHandler<ActionEvent>() {
+        if (metrost.getStations().isEmpty())
+            showInformationAlert("Non-existent stations", null, "There are no stations added to your transportation network design yet.");
+        else {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("delete-station.fxml"));
+                fxmlLoader.setController(this);
+                Parent root = fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Station deletion");
+                stage.show();
+                ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+                cbStations.setItems(observableList);
+                cbStations.setOnAction(new EventHandler<ActionEvent>() {
 
-                @Override
-                public void handle(ActionEvent event) {
-                    if (!cbStations.getSelectionModel().isEmpty())
-                        btnDeleteStation.setDisable(false);
-                }
-            });
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if (!cbStations.getValue().isEmpty())
+                            btnDeleteStation.setDisable(false);
+                    }
+                });
+                btnDeleteStation.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if (cbStations.getValue() == null)
+                            showWarningAlert("Missing station", null, "You must choose a station!");
+                        else
+                            deleteStation(event);
+                    }
+                });
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
         }
     }
 
     @FXML
     public void deleteStation(ActionEvent event) {
-        metrost.deleteStation(cbStations.getValue());
+        try {
+            metrost.deleteStation(cbStations.getValue());
+            ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+            cbStations.setItems(observableList);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (CsvException ioe) {
+            ioe.printStackTrace();
+        }
         lbDeleteStation.setText("Station successfully deleted!");
     }
 
     @FXML
     public void connectionModule(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("connection-module.fxml"));
-            fxmlLoader.setController(this);
-            Parent root = fxmlLoader.load();
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setTitle("Connection module");
-            primaryStage.show();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        if (metrost.getStations().size() < 2)
+            showInformationAlert("Non-existent stations", null, "Not enough stations added to your transportation network design.");
+        else {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("connection-module.fxml"));
+                fxmlLoader.setController(this);
+                Parent root = fxmlLoader.load();
+                primaryStage.setScene(new Scene(root));
+                primaryStage.setTitle("Connection module");
+                primaryStage.show();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
         }
     }
 
@@ -373,6 +402,37 @@ public class MetrostGUI {
             primaryStage.setScene(new Scene(root));
             primaryStage.setTitle("Connection addition");
             primaryStage.show();
+            ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+            cbAddConnection1.setItems(observableList);
+            cbAddConnection2.setItems(observableList);
+            cbAddConnection1.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (!cbAddConnection1.getValue().isEmpty())
+                        btnAddConnection.setDisable(false);
+                }
+            });
+            cbAddConnection2.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (!cbAddConnection2.getValue().isEmpty())
+                        btnAddConnection.setDisable(false);
+                }
+            });
+            btnAddConnection.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (cbAddConnection1.getValue().equals(cbAddConnection2.getValue()) && !txtDistance.getText().isEmpty())
+                        showErrorAlert("Connection failed", null, "A station can't be connected to itself.");
+                    else if (txtDistance.getText().isEmpty())
+                        showWarningAlert("Missing data", null, "The distance between the two stations must be filled.");
+                    else
+                        addConnection(event);
+                }
+            });
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -380,7 +440,19 @@ public class MetrostGUI {
 
     @FXML
     public void addConnection(ActionEvent event) {
-
+        try {
+            if (metrost.addConnection(cbAddConnection1.getValue(), cbAddConnection2.getValue(), txtDistance.getText())) {
+                lbAddConnection.setText("Done!");
+                txtDistance.setText("");
+                cbAddConnection1.setValue(null);
+                cbAddConnection2.setValue(null);
+            } else
+                showErrorAlert("Connection failed", null, "A connection already existed between these two stations.");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (CsvException csve) {
+            csve.printStackTrace();
+        }
     }
 
     @FXML
@@ -421,10 +493,6 @@ public class MetrostGUI {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle("Network Data");
-
-            // ArrayList<Station<String>> stations = new ArrayList<>();
-            ArrayList<Station> stations = new ArrayList<>();
-
             stage.show();
         } catch (IOException ioe) {
             ioe.printStackTrace();
@@ -441,6 +509,14 @@ public class MetrostGUI {
 
     public void showWarningAlert(String title, String header, String content) {
         Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    public void showErrorAlert(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);

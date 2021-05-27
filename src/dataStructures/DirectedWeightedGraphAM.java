@@ -68,6 +68,12 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
             return false;
         }
         Edge<V> tempEdge = new Edge<V>(weight, source, destination);
+        if (getMinEdge() == null)
+            setMinEdge(tempEdge);
+        else {
+            if (weight < getMinEdge().getWeight())
+                setMinEdge(tempEdge);
+        }
         adjacencyMatrix.get(sourceIndex).set(destinationIndex, tempEdge);
         source.getDestinations().add(destination);
         numEdges++;
@@ -131,9 +137,31 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         if (adjacencyMatrix.get(indexSource).get(indexDestination) == null) {
             return false;
         }
+        if((getMinEdge().getSource().getValue().compareTo(source.getValue())==0)&&
+        (getMinEdge().getDestination().getValue().compareTo(destination.getValue())==0)&&
+        (getMinEdge().getWeight()==adjacencyMatrix.get(indexSource).get(indexDestination).getWeight()))
+            findNewMinEdge();
         adjacencyMatrix.get(indexSource).set(indexDestination, null);
         numEdges--;
         return true;
+    }
+
+    private void findNewMinEdge() {
+        if (numEdges == 0)
+            setMinEdge(null);
+        Edge<V> me = null;
+        double minWeight = Double.MAX_VALUE;
+        for (int i = 0; i < getVertices().size(); i++) {
+            for (int j = 0; j < getVertices().size(); j++) {
+                if (adjacencyMatrix.get(i).get(j) != null) {
+                    if (adjacencyMatrix.get(i).get(j).getWeight() < minWeight) {
+                        me = adjacencyMatrix.get(i).get(j);
+                        minWeight = me.getWeight();
+                    }
+                }
+            }
+        }
+        setMinEdge(me);
     }
 
     @Override
@@ -163,5 +191,17 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
 
     public int getNumEdges() {
         return numEdges;
+    }
+
+    @Override
+    public ArrayList<Edge<V>> getEdges() {
+        ArrayList<Edge<V>> edges= new ArrayList<>();
+        for (int i = 0; i < getVertices().size(); i++) {
+            for (int j = 0; j <  getVertices().size(); j++) {
+                if (adjacencyMatrix.get(i).get(j) != null)
+                    edges.add(adjacencyMatrix.get(i).get(j));
+            }
+        }
+        return edges;
     }
 }

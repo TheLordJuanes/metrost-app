@@ -17,7 +17,7 @@
             <Image url="@../../resources/places.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="btnAddConnection" alignment="CENTER" blendMode="DIFFERENCE" contentDisplay="CENTER" layoutX="200.0" layoutY="308.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#addConnection" prefHeight="48.0" prefWidth="185.0" style="-fx-background-radius: 5em; -fx-background-color: #ff871e;" text="Add connection" textAlignment="CENTER">
+      <JFXButton fx:id="btnAddConnection" alignment="CENTER" blendMode="DIFFERENCE" contentDisplay="CENTER" disable="true" layoutX="200.0" layoutY="308.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="185.0" style="-fx-background-radius: 5em; -fx-background-color: #ff871e;" text="Add connection" textAlignment="CENTER">
          <font>
             <Font name="Avenir Next Condensed Bold" size="20.0" />
          </font>
@@ -37,8 +37,8 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXComboBox fx:id="cbAddConnection1" focusColor="ORANGE" labelFloat="true" layoutX="47.0" layoutY="236.0" prefHeight="39.0" prefWidth="194.0" promptText="Choose station" stylesheets="@style.css" unFocusColor="#389bff" />
-      <JFXComboBox fx:id="cbAddConnection2" focusColor="ORANGE" labelFloat="true" layoutX="350.0" layoutY="238.0" prefHeight="39.0" prefWidth="194.0" promptText="Choose station" stylesheets="@style.css" unFocusColor="#389bff" />
+      <JFXComboBox fx:id="cbAddConnection1" focusColor="ORANGE" layoutX="47.0" layoutY="236.0" prefHeight="39.0" prefWidth="194.0" promptText="Choose station" stylesheets="@style.css" unFocusColor="#389bff" />
+      <JFXComboBox fx:id="cbAddConnection2" focusColor="ORANGE" layoutX="350.0" layoutY="238.0" prefHeight="39.0" prefWidth="194.0" promptText="Choose station" stylesheets="@style.css" unFocusColor="#389bff" />
       <Label blendMode="ADD" layoutX="95.0" layoutY="192.0" prefHeight="43.0" prefWidth="109.0" text="FROM" textFill="#ffa600">
          <font>
             <Font name="Avenir Next Condensed Bold" size="30.0" />
@@ -67,5 +67,10 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </JFXTextField>
+      <Label fx:id="lbAddConnection" blendMode="ADD" layoutX="436.0" layoutY="311.0" prefHeight="43.0" prefWidth="66.0" textFill="#ffa600">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="27.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

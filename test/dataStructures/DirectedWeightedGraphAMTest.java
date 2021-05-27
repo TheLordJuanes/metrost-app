@@ -451,18 +451,17 @@ public class DirectedWeightedGraphAMTest {
     }
 
     @Test
-    public void testfloydWarshall() {
+    public void testFloydWarshall() {
         setup2();
         graph.floydWarshall();
         double[][] matrix = graph.getMinDistances();
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix.length; j++) {
-                if (i == j) {
+                if (i == j)
                     assertEquals(0, matrix[i][j]);
-                } else {
-                    if (matrix[i][j] != Double.MAX_VALUE) {
+                else {
+                    if (matrix[i][j] != Double.MAX_VALUE)
                         fail();
-                    }
                 }
             }
         }
@@ -473,9 +472,8 @@ public class DirectedWeightedGraphAMTest {
         for (int i = 0; i < vertices.size(); i++) {
             graph.dijkstra(vertices.get(i));
             double[] row = graph.getDistD();
-            for (int j = 0; j < vertices.size(); j++) {
+            for (int j = 0; j < vertices.size(); j++)
                 assertEquals(row[j], matrix[i][j]);
-            }
         }
     }
 }

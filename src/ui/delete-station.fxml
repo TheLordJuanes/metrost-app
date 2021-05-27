@@ -16,7 +16,7 @@
             <Image url="@../../resources/form.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="btnDeleteStation" alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" disable="true" layoutX="109.0" layoutY="172.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#deleteStation" prefHeight="48.0" prefWidth="185.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Delete station" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton fx:id="btnDeleteStation" alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" disable="true" layoutX="109.0" layoutY="172.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="185.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Delete station" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Avenir Next Condensed Bold" size="20.0" />
          </font>

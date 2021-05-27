@@ -125,24 +125,21 @@ public class Metrost {
         if (graph.addVertex(name) && !stations.contains(name)) {
             if (br.lines().count() == 0) {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME));
-                bw.write("Number of stations");
-                bw.write("1");
-                bw.write("Stations");
-                bw.write(name);
-                bw.write("Station,Connected station,Distance between them");
+                bw.write("Number of stations\n");
+                bw.write("1\n");
+                bw.write("Stations\n");
+                bw.write(name + "\n");
+                bw.write("Station,Connected station,Distance between them\n");
                 bw.close();
             } else {
                 FileReader fr = new FileReader(FILE_NAME);
                 CSVReader csvReader = new CSVReaderBuilder(fr).build();
                 ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
-                br.close();
-                br = new BufferedReader(new FileReader(FILE_NAME));
-                br.readLine();
-                int stations = Integer.parseInt(br.readLine());
-                stations++;
-                allLines.get(1)[0] = String.valueOf(stations);
+                int numStations = Integer.parseInt(allLines.get(1)[0]);
+                numStations++;
+                allLines.get(1)[0] = String.valueOf(numStations);
                 String[] station = { name };
-                allLines.add(stations + 2, station);
+                allLines.add(numStations + 2, station);
                 FileWriter fw = new FileWriter(FILE_NAME);
                 CSVWriter csvWriter = new CSVWriter(fw);
                 csvWriter.writeAll(allLines, false);
@@ -158,9 +155,11 @@ public class Metrost {
 
     public boolean modifyStation(String oldName, String newName) throws IOException, CsvException {
         if (graph.modifyVertex(oldName, newName)) {
-            for (String station : stations) {
-                if (station.equals(oldName))
-                    station = newName;
+            for (int i = 0; i < stations.size(); i++) {
+                if (stations.get(i).equals(oldName)) {
+                    stations.set(i, newName);
+                    break;
+                }
             }
             FileReader fr = new FileReader(FILE_NAME);
             CSVReader csvReader = new CSVReaderBuilder(fr).build();
@@ -184,60 +183,52 @@ public class Metrost {
         return false;
     }
 
-    public void deleteStation(String name) { // TERMINAR
+    public void deleteStation(String name) throws IOException, CsvException {
         graph.deleteVertex(name);
-    }
-
-    public void addConnectionByTextFile(File file) throws InterruptedException, IOException, CsvException {
-        FileWriter fw = new FileWriter(FILE_NAME, true);
-        CSVWriter csvWriter = new CSVWriter(fw);
-        FileReader fr = new FileReader(file);
-        CSVReader csvReader = new CSVReaderBuilder(fr).withSkipLines(1).build();
-        if (allData.isEmpty()) {
-            allData = (ArrayList<String[]>) csvReader.readAll();
-            // allData = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
-            fw = new FileWriter(FILE_NAME);
-            CSVWriter writer = new CSVWriter(fw);
-            String[] temp = { "Station", "Connected station", "Distance between them" };
-            writer.writeNext(temp);
-            for (int i = 0; i < allData.size(); i++) {
-                progress = (i + 1) / (double) allData.size();
-                writer.writeNext(allData.get(i));
-            }
-            writer.close();
-        } else {
-            ArrayList<String[]> newData = (ArrayList<String[]>) csvReader.readAll();
-            // ArrayList<String[]> newData = new ArrayList<>((LinkedList<String[]>)
-            // csvReader.readAll());
-            for (int i = 0; i < newData.size(); i++) {
-                progress = (i + 1) / (double) newData.size();
-                csvWriter.writeNext(newData.get(i));
-                allData.add(newData.get(i));
-            }
-        }
-        csvWriter.close();
-    }
-
-    public void addConnectionByPlatform(String name1, String name2, String distance)
-            throws InterruptedException, IOException, CsvException {
-        File dataFile = new File(FILE_NAME);
-        FileWriter fw = new FileWriter(FILE_NAME, true);
-        CSVWriter csvWriter = new CSVWriter(fw);
-        if (dataFile.length() == 0) {
-            String[] temp = { "Station", "Connected station", "Distance between them" };
-            csvWriter.writeNext(temp);
-        }
-        String[] info = new String[3];
-        info[0] = name1;
-        info[1] = name2;
-        info[2] = distance;
-        csvWriter.writeNext(info);
-        csvWriter.close();
         FileReader fr = new FileReader(FILE_NAME);
-        CSVReader csvReader = new CSVReaderBuilder(fr).withSkipLines(1).build();
-        allData = (ArrayList<String[]>) csvReader.readAll();
-        // allData = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
-        csvReader.close();
+        CSVReader csvReader = new CSVReaderBuilder(fr).build();
+        ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
+        int numStations = Integer.parseInt(allLines.get(1)[0]);
+        numStations--;
+        allLines.get(1)[0] = String.valueOf(numStations);
+        for (int i = 0; i < allLines.size(); i++) {
+            if (allLines.get(i)[0].equals(name) && allLines.get(i).length != 3) {
+                allLines.remove(i);
+                stations.remove(name);
+            }
+            if (allLines.get(i).length == 3) {
+                if (allLines.get(i)[0].equals(name) || allLines.get(i)[1].equals(name)) {
+                    Vertex<String> source = new Vertex<String>(allLines.get(i)[0]);
+                    Vertex<String> destination = new Vertex<String>(allLines.get(i)[1]);
+                    graph.deleteEdge(source, destination);
+                    allLines.remove(i);
+                    i--;
+                }
+            }
+        }
+        FileWriter fw = new FileWriter(FILE_NAME);
+        CSVWriter csvWriter = new CSVWriter(fw);
+        csvWriter.writeAll(allLines, false);
+        csvWriter.close();
+    }
+
+    public boolean addConnection(String fromStation1, String toStation2, String distance) throws IOException, CsvException {
+        Vertex<String> source = new Vertex<String>(fromStation1);
+        Vertex<String> destination = new Vertex<String>(toStation2);
+        double dist = Double.parseDouble(distance);
+        if (graph.addEdge(source, destination, dist)) {
+            FileReader fr = new FileReader(FILE_NAME);
+            CSVReader csvReader = new CSVReaderBuilder(fr).build();
+            ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
+            String[] connection = { fromStation1, toStation2, distance };
+            allLines.add(connection);
+            FileWriter fw = new FileWriter(FILE_NAME);
+            CSVWriter csvWriter = new CSVWriter(fw);
+            csvWriter.writeAll(allLines, false);
+            csvWriter.close();
+            return true;
+        }
+        return false;
     }
 
     /**

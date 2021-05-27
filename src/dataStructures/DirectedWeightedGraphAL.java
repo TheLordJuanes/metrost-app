@@ -117,6 +117,13 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
         Edge<V> found = searchEdge(source, destination);
         if (found == null) {
             Edge<V> edge = new Edge<V>(weight, source, destination);
+            if(getMinEdge()==null){
+                setMinEdge(edge);
+            }else{
+                if(weight<getMinEdge().getWeight()){
+                    setMinEdge(edge);
+                }
+            }
             edges.add(edge);
             source.getDestinations().add(destination);
             return true;
@@ -149,9 +156,25 @@ public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWe
             return false;
         }
         Edge<V> toDelete = searchEdge(source, destination);
-        if (toDelete == null)
+        if (toDelete == null){
             return false;
+        }
+        if((getMinEdge().getSource().getValue().compareTo(source.getValue())==0)&&
+        (getMinEdge().getDestination().getValue().compareTo(destination.getValue())==0)&&
+        (getMinEdge().getWeight()==toDelete.getWeight()))
+            findNewMinEdge();
         return edges.remove(toDelete) && source.getDestinations().remove(destination);
+    }
+    private void findNewMinEdge(){
+        if(edges.size()==0)
+            setMinEdge(null);
+        Edge<V> me = edges.get(0);
+        for (int i = 1; i < edges.size(); i++) {
+            if(edges.get(i).getWeight()<me.getWeight()){
+                me=edges.get(i);
+            }
+        }
+        setMinEdge(me);
     }
 
     @Override

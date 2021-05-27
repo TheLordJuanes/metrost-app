@@ -65,3 +65,4 @@ public class Edge<V> implements Comparable<Edge<V>> {
         return (int) weight - (int) o.getWeight();
     }
 }
+        

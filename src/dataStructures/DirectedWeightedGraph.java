@@ -1,6 +1,7 @@
 package dataStructures;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -194,9 +195,24 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
     public ArrayList<Edge<V>> kruskal(){
         ArrayList<Edge<V>> a = new ArrayList<>();
         Uf uf = new Uf(vertices.size());
-            //xd
+        ArrayList<Edge<V>> edges = getEdges();
+        Collections.sort(edges);
+        for (int i = 0; i < distD.length; i++) {
+            uf.makeSet(i);
+        }
+        for (Edge<V> edge : edges) {
+            Vertex<V> source=edge.getSource();
+            Vertex<V> dest=edge.getDestination();
+            int u=getIndex(source);
+            int v= getIndex(dest);
+            if(uf.find(u)!=uf.find(v)){
+                a.add(edge);
+                uf.union(u, v);
+            }
+        }
         return a;
     }
+    public abstract ArrayList<Edge<V>> getEdges();
     static class Uf{
         ArrayList<LinkedList<Integer>> sets;
         int[] reps;
@@ -204,7 +220,28 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
             sets= new ArrayList<>();
             reps= new int[vs];
         }
+        public void makeSet(int x){
+            LinkedList<Integer> newSet= new LinkedList<>();
+            newSet.add(x);
+            sets.add(x,newSet);
+            reps[x]=x;
+        }
+        public int find(int x){
+            return reps[x];
+        }
+        public void union(int x, int y) {
+            if (x < y) {
+                reps[y]=x;
+                sets.get(x).addAll(sets.get(y));
+                sets.remove(sets.get(y));
+            } else {
+                reps[x]=y;
+                sets.get(y).addAll(sets.get(x));
+                sets.remove(sets.get(x));
+            }
+        }
     }
+
     protected int getIndex(Vertex<V> s) {
         V value = s.getValue();
         for (int i = 0; i < vertices.size(); i++) {
