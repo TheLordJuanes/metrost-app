@@ -1,6 +1,8 @@
 package model;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public class Station extends RecursiveTreeObject<Station> {
 
@@ -8,21 +10,21 @@ public class Station extends RecursiveTreeObject<Station> {
     // Attributes
     // -----------------------------------------------------------------
 
-    private String name;
+    private StringProperty name;
 
     // -----------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------
 
     public Station(String name) {
-        this.name = name;
+        this.name = new SimpleStringProperty(name);
     }
 
-    public String getName() {
+    public StringProperty getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(SimpleStringProperty name) {
         this.name = name;
     }
 }

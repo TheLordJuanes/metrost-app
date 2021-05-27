@@ -247,6 +247,10 @@ public class DirectedWeightedGraphAMTest {
         setup3();
         assertFalse(graph.modifyVertex("z", "c"));
         assertTrue(graph.modifyVertex("z", "f"));
+        for (int i = 0; i < graph.getAdjacencyMatrix().size(); i++) {
+            if (graph.getAdjacencyMatrix().get(5).get(i) != null)
+                assertEquals("f", graph.getAdjacencyMatrix().get(5).get(i).getSource().getValue());
+        }
     }
 
     @Test
@@ -344,7 +348,7 @@ public class DirectedWeightedGraphAMTest {
         assertFalse(graph.bfs(temp));
         assertTrue(graph.bfs(vertices.get(0)));
         assertEquals(Color.BLACK, vertices.get(0).getColor());
-        for(int i=1; i < vertices.size(); i++){
+        for (int i = 1; i < vertices.size(); i++) {
             assertEquals(Color.WHITE, vertices.get(i).getColor());
         }
 
@@ -356,7 +360,7 @@ public class DirectedWeightedGraphAMTest {
         graph.addEdge(vertices.get(5), vertices.get(3), 4);
 
         assertTrue(graph.bfs(vertices.get(0)));
-        for(int i=0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             assertEquals(Color.BLACK, vertices.get(i).getColor());
         }
         assertEquals(0, vertices.get(0).getDistance());
@@ -365,7 +369,7 @@ public class DirectedWeightedGraphAMTest {
         assertEquals(null, vertices.get(0).getParent());
         assertEquals(vertices.get(0), vertices.get(1).getParent());
         assertEquals(vertices.get(0), vertices.get(2).getParent());
-        for(int i=3; i < 6; i++){
+        for (int i = 3; i < 6; i++) {
             assertEquals(Color.WHITE, vertices.get(i).getColor());
         }
         assertEquals(Integer.MAX_VALUE, vertices.get(3).getDistance());
@@ -378,7 +382,7 @@ public class DirectedWeightedGraphAMTest {
         setup3();
         vertices = graph.getVertices();
         assertTrue(graph.bfs(vertices.get(1)));
-        for(int i=0; i < vertices.size(); i++){
+        for (int i = 0; i < vertices.size(); i++) {
             assertEquals(Color.BLACK, vertices.get(i).getColor());
         }
         assertEquals(0, vertices.get(1).getDistance());
@@ -451,12 +455,12 @@ public class DirectedWeightedGraphAMTest {
         setup2();
         graph.floydWarshall();
         double[][] matrix = graph.getMinDistances();
-        for(int i=0; i<matrix.length; i++){
-            for(int j=0; j<matrix.length; j++){
-                if(i==j){
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                if (i == j) {
                     assertEquals(0, matrix[i][j]);
-                }else{
-                    if(matrix[i][j]!=Double.MAX_VALUE){
+                } else {
+                    if (matrix[i][j] != Double.MAX_VALUE) {
                         fail();
                     }
                 }
@@ -466,10 +470,10 @@ public class DirectedWeightedGraphAMTest {
         graph.floydWarshall();
         matrix = graph.getMinDistances();
         ArrayList<Vertex<String>> vertices = graph.getVertices();
-        for(int i=0; i<vertices.size(); i++){
+        for (int i = 0; i < vertices.size(); i++) {
             graph.dijkstra(vertices.get(i));
             double[] row = graph.getDistD();
-            for(int j=0; j<vertices.size(); j++){
+            for (int j = 0; j < vertices.size(); j++) {
                 assertEquals(row[j], matrix[i][j]);
             }
         }

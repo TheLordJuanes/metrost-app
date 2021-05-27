@@ -36,6 +36,7 @@ public class Metrost {
 
     private double progress;
     private ArrayList<String> stations;
+    private ArrayList<String[]> allData;
 
     // -----------------------------------------------------------------
     // Relations
@@ -49,6 +50,7 @@ public class Metrost {
 
     public Metrost() {
         graph = new DirectedWeightedGraphAM<>();
+        stations = new ArrayList<String>();
         progress = 0;
     }
 
@@ -154,6 +156,38 @@ public class Metrost {
         return false;
     }
 
+    public boolean modifyStation(String oldName, String newName) throws IOException, CsvException {
+        if (graph.modifyVertex(oldName, newName)) {
+            for (String station : stations) {
+                if (station.equals(oldName))
+                    station = newName;
+            }
+            FileReader fr = new FileReader(FILE_NAME);
+            CSVReader csvReader = new CSVReaderBuilder(fr).build();
+            ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
+            for (String[] line : allLines) {
+                if (line[0].equals(oldName) && line.length != 3)
+                    line[0] = newName;
+                if (line.length == 3) {
+                    if (line[0].equals(oldName))
+                        line[0] = newName;
+                    else if (line[1].equals(oldName))
+                        line[1] = newName;
+                }
+            }
+            FileWriter fw = new FileWriter(FILE_NAME);
+            CSVWriter csvWriter = new CSVWriter(fw);
+            csvWriter.writeAll(allLines, false);
+            csvWriter.close();
+            return true;
+        }
+        return false;
+    }
+
+    public void deleteStation(String name) { // TERMINAR
+        graph.deleteVertex(name);
+    }
+
     public void addConnectionByTextFile(File file) throws InterruptedException, IOException, CsvException {
         FileWriter fw = new FileWriter(FILE_NAME, true);
         CSVWriter csvWriter = new CSVWriter(fw);
@@ -251,8 +285,8 @@ public class Metrost {
         return true;
     }
 
-    public void deleteStation(List<Station> stations) {
-        for (Station station : stations)
-            graph.deleteVertex(station.getName());
+    public void deleteStationData(List<Station> stations) {
+        //for (Station station : stations)
+            //graph.deleteVertex(station.getName());
     }
 }

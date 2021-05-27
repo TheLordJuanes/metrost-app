@@ -12,7 +12,6 @@ import thread.WelcomeThread;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -20,7 +19,6 @@ import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.opencsv.exceptions.CsvException;
 
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,9 +30,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class MetrostGUI {
 
@@ -44,6 +44,12 @@ public class MetrostGUI {
 
     @FXML
     private Label lbAddStation;
+
+    @FXML
+    private Label lbModifyStation;
+
+    @FXML
+    private Label lbDeleteStation;
 
     @FXML
     private JFXButton btnCurrentNetwork;
@@ -56,6 +62,9 @@ public class MetrostGUI {
 
     @FXML
     private JFXButton btnAddConnection;
+
+    @FXML
+    private JFXButton btnDeleteStation;
 
     @FXML
     private JFXComboBox<String> cbAddConnection1;
@@ -259,39 +268,55 @@ public class MetrostGUI {
 
     @FXML
     public void modifyAStation(ActionEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modify-station.fxml"));
-            fxmlLoader.setController(this);
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Station modification");
-            stage.show();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        if (metrost.getStations().isEmpty()) {
+            showInformationAlert("Non-existent stations", null, "There are no stations added to your transportation design yet.");
+        } else {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modify-station.fxml"));
+                fxmlLoader.setController(this);
+                Parent root = fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Station modification");
+                stage.show();
+                ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+                cbStations.setItems(observableList);
+                cbStations.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if (!cbStations.getSelectionModel().isEmpty())
+                            btnModifyStation.setDisable(false);
+                    }
+                });
+                btnModifyStation.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if (txtName.getText().isEmpty())
+                            showWarningAlert("Missing new station name", null, "The text field must be filled!");
+                        else
+                            modifyStation(event);
+                    }
+                });
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
         }
-        ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
-        cbStations.setItems(observableList);
-        cbStations.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                if (!cbStations.getSelectionModel().isEmpty())
-                    btnModifyStation.setDisable(false);
-            }
-        });
-        txtName.textProperty().addListener(new ChangeListener<String>() {
-
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (oldValue == newValue)
-                    btnModifyStation.setDisable(false);
-            }
-        });
     }
 
     @FXML
     public void modifyStation(ActionEvent event) {
+        try {
+            if (metrost.modifyStation(cbStations.getValue(), txtName.getText()))
+                lbModifyStation.setText("Done!");
+            else
+                showWarningAlert("Modification process interrupted", null, "Another station already has that name.");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (CsvException csve) {
+            csve.printStackTrace();
+        }
     }
 
     @FXML
@@ -304,6 +329,16 @@ public class MetrostGUI {
             stage.setScene(new Scene(root));
             stage.setTitle("Station deletion");
             stage.show();
+            ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+            cbStations.setItems(observableList);
+            cbStations.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (!cbStations.getSelectionModel().isEmpty())
+                        btnDeleteStation.setDisable(false);
+                }
+            });
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -311,7 +346,8 @@ public class MetrostGUI {
 
     @FXML
     public void deleteStation(ActionEvent event) {
-
+        metrost.deleteStation(cbStations.getValue());
+        lbDeleteStation.setText("Station successfully deleted!");
     }
 
     @FXML
@@ -386,11 +422,9 @@ public class MetrostGUI {
             stage.setScene(new Scene(root));
             stage.setTitle("Network Data");
 
-            //JFXTreeTableColumn<Stations<String>> names = new JFXTreeTableColumn<>("Names");
-            //ArrayList<Station<String>> stations = new ArrayList<>();
-            JFXTreeTableColumn<Station> names = new JFXTreeTableColumn<>("Names");
+            // ArrayList<Station<String>> stations = new ArrayList<>();
             ArrayList<Station> stations = new ArrayList<>();
-            //TERMINARRRR
+
             stage.show();
         } catch (IOException ioe) {
             ioe.printStackTrace();

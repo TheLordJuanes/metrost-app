@@ -16,7 +16,7 @@
             <Image url="@../../resources/form.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="btnModifyStation" alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" layoutX="109.0" layoutY="172.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#deleteStation" prefHeight="48.0" prefWidth="185.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Delete station" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton fx:id="btnDeleteStation" alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" disable="true" layoutX="109.0" layoutY="172.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#deleteStation" prefHeight="48.0" prefWidth="185.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Delete station" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Avenir Next Condensed Bold" size="20.0" />
          </font>
@@ -30,5 +30,10 @@
          </font>
       </Label>
       <JFXComboBox fx:id="cbStations" focusColor="ORANGE" layoutX="107.0" layoutY="106.0" prefHeight="31.0" prefWidth="194.0" promptText="Select station" stylesheets="@style.css" unFocusColor="WHITE" />
+      <Label fx:id="lbDeleteStation" layoutX="76.0" layoutY="235.0" prefHeight="32.0" prefWidth="296.0" textFill="#ff3a3a">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="22.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

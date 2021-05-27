@@ -13,7 +13,7 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
     private double[][] minDistances;
     private ArrayList<Vertex<V>> prevD;
     private int time;
-    private Edge<V> minEdge;
+    private Edge<V> minEdge;//TODO implementar el minedge en las dos clases
 
     public DirectedWeightedGraph() {
         vertices = new ArrayList<Vertex<V>>();
@@ -191,6 +191,20 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         return true;
     }
 
+    public ArrayList<Edge<V>> kruskal(){
+        ArrayList<Edge<V>> a = new ArrayList<>();
+        Uf uf = new Uf(vertices.size());
+            //xd
+        return a;
+    }
+    static class Uf{
+        ArrayList<LinkedList<Integer>> sets;
+        int[] reps;
+        public Uf(int vs){
+            sets= new ArrayList<>();
+            reps= new int[vs];
+        }
+    }
     protected int getIndex(Vertex<V> s) {
         V value = s.getValue();
         for (int i = 0; i < vertices.size(); i++) {
