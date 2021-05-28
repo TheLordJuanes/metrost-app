@@ -14,7 +14,7 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
     private double[][] minDistances;
     private ArrayList<Vertex<V>> prevD;
     private int time;
-    private Edge<V> minEdge;//TODO implementar el minedge en las dos clases
+    private Edge<V> minEdge;
 
     public DirectedWeightedGraph() {
         vertices = new ArrayList<Vertex<V>>();
@@ -175,12 +175,12 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         }
         r.setPriority(0);
         r.setParent(null);
-        Queue<Vertex<V>> queue = new LinkedList<>(vertices);
+        PriorityQueue<Vertex<V>> queue = new PriorityQueue<>(vertices);
         while (!queue.isEmpty()) {
             Vertex<V> u = queue.poll();
             for (Vertex<V> v : u.getDestinations()) {
                 double wei = searchEdge(u, v).getWeight();
-                if(v.isWhite()&&wei<v.getPriority()){
+                if (v.isWhite() && wei < v.getPriority()) {
                     v.setPriority(wei);
                     queue.remove(v);
                     queue.add(v);
@@ -192,53 +192,56 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         return true;
     }
 
-    public ArrayList<Edge<V>> kruskal(){
+    public ArrayList<Edge<V>> kruskal() {
         ArrayList<Edge<V>> a = new ArrayList<>();
         Uf uf = new Uf(vertices.size());
         ArrayList<Edge<V>> edges = getEdges();
         Collections.sort(edges);
-        for (int i = 0; i < distD.length; i++) {
+        for (int i = 0; i < vertices.size(); i++) {
             uf.makeSet(i);
         }
         for (Edge<V> edge : edges) {
-            Vertex<V> source=edge.getSource();
-            Vertex<V> dest=edge.getDestination();
-            int u=getIndex(source);
-            int v= getIndex(dest);
-            if(uf.find(u)!=uf.find(v)){
+            Vertex<V> source = edge.getSource();
+            Vertex<V> dest = edge.getDestination();
+            int u = getIndex(source);
+            int v = getIndex(dest);
+            if (uf.find(u) != uf.find(v)) {
                 a.add(edge);
                 uf.union(u, v);
             }
         }
         return a;
     }
+
     public abstract ArrayList<Edge<V>> getEdges();
-    static class Uf{
+
+    static class Uf {
+
         ArrayList<LinkedList<Integer>> sets;
         int[] reps;
-        public Uf(int vs){
-            sets= new ArrayList<>();
-            reps= new int[vs];
+
+        public Uf(int vs) {
+            sets = new ArrayList<>();
+            reps = new int[vs];
         }
-        public void makeSet(int x){
-            LinkedList<Integer> newSet= new LinkedList<>();
+
+        public void makeSet(int x) {
+            LinkedList<Integer> newSet = new LinkedList<>();
             newSet.add(x);
-            sets.add(x,newSet);
-            reps[x]=x;
+            sets.add(x, newSet);
+            reps[x] = x;
         }
-        public int find(int x){
-            return reps[x];
+
+        public int find(int i) {
+            while (reps[i] != i)
+                i = reps[i];
+            return i;
         }
+
         public void union(int x, int y) {
-            if (x < y) {
-                reps[y]=x;
-                sets.get(x).addAll(sets.get(y));
-                sets.remove(sets.get(y));
-            } else {
-                reps[x]=y;
-                sets.get(y).addAll(sets.get(x));
-                sets.remove(sets.get(x));
-            }
+            int a = find(x);
+            int b = find(y);
+            reps[a] = b;
         }
     }
 

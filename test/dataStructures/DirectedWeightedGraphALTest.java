@@ -60,6 +60,46 @@ public class DirectedWeightedGraphALTest {
         graph.addEdge(vertices.get(5), vertices.get(4), 3);
     }
 
+    public void setup4() {
+        graph = new DirectedWeightedGraphAL<String>();
+        graph.addVertex("San Francisco"); // 0
+        graph.addVertex("Chicago"); // 1
+        graph.addVertex("New York"); // 2
+        graph.addVertex("Denver"); // 3
+        graph.addVertex("Atlanta"); // 4
+        ArrayList<Vertex<String>> vertices = graph.getVertices();
+
+        graph.addEdge(vertices.get(0), vertices.get(1), 1200);
+        graph.addEdge(vertices.get(1), vertices.get(0), 1200);
+
+        graph.addEdge(vertices.get(0), vertices.get(2), 2000);
+        graph.addEdge(vertices.get(2), vertices.get(0), 2000);
+
+        graph.addEdge(vertices.get(0), vertices.get(3), 900);
+        graph.addEdge(vertices.get(3), vertices.get(0), 900);
+
+        graph.addEdge(vertices.get(0), vertices.get(4), 2200);
+        graph.addEdge(vertices.get(4), vertices.get(0), 2200);
+
+        graph.addEdge(vertices.get(1), vertices.get(2), 1000);
+        graph.addEdge(vertices.get(2), vertices.get(1), 1000);
+
+        graph.addEdge(vertices.get(1), vertices.get(3), 1300);
+        graph.addEdge(vertices.get(3), vertices.get(1), 1300);
+
+        graph.addEdge(vertices.get(1), vertices.get(4), 700);
+        graph.addEdge(vertices.get(4), vertices.get(1), 700);
+
+        graph.addEdge(vertices.get(2), vertices.get(3), 1600);
+        graph.addEdge(vertices.get(3), vertices.get(2), 1600);
+
+        graph.addEdge(vertices.get(2), vertices.get(4), 800);
+        graph.addEdge(vertices.get(4), vertices.get(2), 800);
+
+        graph.addEdge(vertices.get(3), vertices.get(4), 1400);
+        graph.addEdge(vertices.get(4), vertices.get(3), 1400);
+    }
+
     @Test
     public void testAddVertex() {
         setup1();
@@ -117,15 +157,13 @@ public class DirectedWeightedGraphALTest {
         assertEquals(14, graph.getEdges().size());
         assertEquals(2, graph.getAdjacencyList().get(0).size());
         for (int i = 0; i < 2; i++) {
-            if (graph.getAdjacencyList().get(0).get(i).getValue().compareTo("a") == 0) {
+            if (graph.getAdjacencyList().get(0).get(i).getValue().compareTo("a") == 0)
                 fail();
-            }
         }
         assertEquals(3, graph.getAdjacencyList().get(1).size());
         for (int i = 0; i < 3; i++) {
-            if (graph.getAdjacencyList().get(1).get(i).getValue().compareTo("a") == 0) {
+            if (graph.getAdjacencyList().get(1).get(i).getValue().compareTo("a") == 0)
                 fail();
-            }
         }
         assertEquals(4, graph.getAdjacencyList().get(2).size());
         assertEquals(3, graph.getAdjacencyList().get(3).size());
@@ -275,7 +313,7 @@ public class DirectedWeightedGraphALTest {
         assertFalse(graph.bfs(temp));
         assertTrue(graph.bfs(vertices.get(0)));
         assertEquals(Color.BLACK, vertices.get(0).getColor());
-        for(int i=1; i < vertices.size(); i++){
+        for (int i = 1; i < vertices.size(); i++) {
             assertEquals(Color.WHITE, vertices.get(i).getColor());
         }
 
@@ -287,7 +325,7 @@ public class DirectedWeightedGraphALTest {
         graph.addEdge(vertices.get(5), vertices.get(3), 4);
 
         assertTrue(graph.bfs(vertices.get(0)));
-        for(int i=0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             assertEquals(Color.BLACK, vertices.get(i).getColor());
         }
         assertEquals(0, vertices.get(0).getDistance());
@@ -296,7 +334,7 @@ public class DirectedWeightedGraphALTest {
         assertEquals(null, vertices.get(0).getParent());
         assertEquals(vertices.get(0), vertices.get(1).getParent());
         assertEquals(vertices.get(0), vertices.get(2).getParent());
-        for(int i=3; i < 6; i++){
+        for (int i = 3; i < 6; i++) {
             assertEquals(Color.WHITE, vertices.get(i).getColor());
         }
         assertEquals(Integer.MAX_VALUE, vertices.get(3).getDistance());
@@ -309,7 +347,7 @@ public class DirectedWeightedGraphALTest {
         setup3();
         vertices = graph.getVertices();
         assertTrue(graph.bfs(vertices.get(1)));
-        for(int i=0; i < vertices.size(); i++){
+        for (int i = 0; i < vertices.size(); i++) {
             assertEquals(Color.BLACK, vertices.get(i).getColor());
         }
         assertEquals(0, vertices.get(1).getDistance());
@@ -382,14 +420,13 @@ public class DirectedWeightedGraphALTest {
         setup2();
         graph.floydWarshall();
         double[][] matrix = graph.getMinDistances();
-        for(int i=0; i<matrix.length; i++){
-            for(int j=0; j<matrix.length; j++){
-                if(i==j){
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                if (i == j)
                     assertEquals(0, matrix[i][j]);
-                }else{
-                    if(matrix[i][j]!=Double.MAX_VALUE){
+                else {
+                    if (matrix[i][j] != Double.MAX_VALUE)
                         fail();
-                    }
                 }
             }
         }
@@ -397,12 +434,58 @@ public class DirectedWeightedGraphALTest {
         graph.floydWarshall();
         matrix = graph.getMinDistances();
         ArrayList<Vertex<String>> vertices = graph.getVertices();
-        for(int i=0; i<vertices.size(); i++){
+        for (int i = 0; i < vertices.size(); i++) {
             graph.dijkstra(vertices.get(i));
             double[] row = graph.getDistD();
-            for(int j=0; j<vertices.size(); j++){
+            for (int j = 0; j < vertices.size(); j++)
                 assertEquals(row[j], matrix[i][j]);
-            }
         }
+    }
+
+    @Test
+    public void testPrim() {
+        setup4();
+        ArrayList<Vertex<String>> vertices = graph.getVertices();
+        assertTrue(graph.prim(vertices.get(4)));
+
+        assertEquals(null, vertices.get(4).getParent());
+        assertEquals(vertices.get(4), vertices.get(1).getParent());
+        assertEquals(vertices.get(4), vertices.get(2).getParent());
+        assertEquals(vertices.get(1), vertices.get(0).getParent());
+        assertEquals(vertices.get(0), vertices.get(3).getParent());
+
+        double temp = 0;
+        for (int i = 0; i < 5; i++) {
+            temp += vertices.get(i).getPriority();
+        }
+        assertEquals(3600, temp);
+        assertEquals(0, vertices.get(4).getPriority());
+        assertEquals(700, vertices.get(1).getPriority());
+        assertEquals(800, vertices.get(2).getPriority());
+        assertEquals(1200, vertices.get(0).getPriority());
+        assertEquals(900, vertices.get(3).getPriority());
+    }
+
+    @Test
+    public void testKruskal() {
+        setup4();
+        ArrayList<Edge<String>> edges = graph.kruskal();
+        assertEquals(4, edges.size());
+        Edge<String> edge = edges.get(0);
+        assertTrue(edge.getSource().getValue().equals("Chicago") || edge.getSource().getValue().equals("Atlanta"));
+        assertTrue(edge.getDestination().getValue().equals("Chicago") || edge.getDestination().getValue().equals("Atlanta"));
+        assertEquals(700, edge.getWeight());
+        edge = edges.get(1);
+        assertTrue(edge.getSource().getValue().equals("New York") || edge.getSource().getValue().equals("Atlanta"));
+        assertTrue(edge.getDestination().getValue().equals("New York") || edge.getDestination().getValue().equals("Atlanta"));
+        assertEquals(800, edge.getWeight());
+        edge = edges.get(2);
+        assertTrue(edge.getSource().getValue().equals("San Francisco") || edge.getSource().getValue().equals("Denver"));
+        assertTrue(edge.getDestination().getValue().equals("San Francisco") || edge.getDestination().getValue().equals("Denver"));
+        assertEquals(900, edge.getWeight());
+        edge = edges.get(3);
+        assertTrue(edge.getSource().getValue().equals("Chicago") || edge.getSource().getValue().equals("San Francisco"));
+        assertTrue(edge.getDestination().getValue().equals("Chicago") || edge.getDestination().getValue().equals("San Francisco"));
+        assertEquals(1200, edge.getWeight());
     }
 }

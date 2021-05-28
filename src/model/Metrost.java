@@ -276,7 +276,7 @@ public class Metrost {
         return true;
     }
 
-    public void deleteStationData(List<Station> stations) {
+    public void deleteStationData(List<String> stations) {
         //for (Station station : stations)
             //graph.deleteVertex(station.getName());
     }

@@ -137,9 +137,9 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         if (adjacencyMatrix.get(indexSource).get(indexDestination) == null) {
             return false;
         }
-        if((getMinEdge().getSource().getValue().compareTo(source.getValue())==0)&&
-        (getMinEdge().getDestination().getValue().compareTo(destination.getValue())==0)&&
-        (getMinEdge().getWeight()==adjacencyMatrix.get(indexSource).get(indexDestination).getWeight()))
+        if ((getMinEdge().getSource().getValue().compareTo(source.getValue()) == 0)
+                && (getMinEdge().getDestination().getValue().compareTo(destination.getValue()) == 0)
+                && (getMinEdge().getWeight() == adjacencyMatrix.get(indexSource).get(indexDestination).getWeight()))
             findNewMinEdge();
         adjacencyMatrix.get(indexSource).set(indexDestination, null);
         numEdges--;
@@ -195,9 +195,9 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
 
     @Override
     public ArrayList<Edge<V>> getEdges() {
-        ArrayList<Edge<V>> edges= new ArrayList<>();
+        ArrayList<Edge<V>> edges = new ArrayList<>();
         for (int i = 0; i < getVertices().size(); i++) {
-            for (int j = 0; j <  getVertices().size(); j++) {
+            for (int j = 0; j < getVertices().size(); j++) {
                 if (adjacencyMatrix.get(i).get(j) != null)
                     edges.add(adjacencyMatrix.get(i).get(j));
             }

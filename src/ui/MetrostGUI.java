@@ -7,14 +7,12 @@
 package ui;
 
 import model.Metrost;
-import model.Station;
 import thread.WelcomeThread;
 import java.io.File;
 import java.io.IOException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
 import com.opencsv.exceptions.CsvException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,9 +51,6 @@ public class MetrostGUI {
 
     @FXML
     private JFXButton btnDesignedNetwork;
-
-    @FXML
-    private JFXTreeTableView<Station> tvNetwork;
 
     @FXML
     private JFXButton btnAddConnection;
@@ -155,9 +150,7 @@ public class MetrostGUI {
 
     @FXML
     public void textFileNetworkAddition(ActionEvent event) {
-        // CORREGIR FORMATO
-        showWarningAlert("Text Input Format", "The data of the players must be in this order separated by a coma \",\"",
-                "firstName,lastName,team,age,trueShooting,usage,assist,rebound,defensive,blocks");
+        showWarningAlert("Text File Input Format", "The data of the stations must be as follows:", "In the first line, the word \"Number of stations\" is writtten.\nIn the second line, there is a number n of stations.\nIn the third line, the word \"Stations\" is writtten.\nThen, n lines follow, each one with the name of a station.\nNext, the title \"Station,Connected station,Distance between them\" where each item is separated by a coma is written.\nFinally, all the connections between two stations with their distance between them are written with the same format of the last title.");
         Stage stage = new Stage();
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Csv files", "*.csv"));
@@ -172,7 +165,7 @@ public class MetrostGUI {
                 ioe.printStackTrace();
             }
         } else
-            showInformationAlert("Missing File", null, "No file was selected ");
+            showInformationAlert("Missing File", null, "No file was selected");
     }
 
     @FXML
