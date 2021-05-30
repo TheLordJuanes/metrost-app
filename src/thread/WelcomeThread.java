@@ -41,46 +41,85 @@ public class WelcomeThread extends Thread {
                         public void run() {
                             switch (metrostGUI.getLbWelcome().getText()) {
                                 case "Welcome !":
-                                    metrostGUI.getLbWelcome().setText("Bienvenid@ !");
+                                    metrostGUI.getLbWelcome().setText("Bienvenid@ !"); // Spanish
+                                    metrostGUI.getLbSentence1().setText("Diseña tu");
+                                    metrostGUI.getLbSentence2().setText("red de");
+                                    metrostGUI.getLbSentence3().setText("transporte.");
                                     break;
                                 case "Bienvenid@ !":
-                                    metrostGUI.getLbWelcome().setText("Bienvenue !");
+                                    metrostGUI.getLbWelcome().setText("Bienvenue !"); // French
+                                    metrostGUI.getLbSentence1().setText("Concevez votre");
+                                    metrostGUI.getLbSentence2().setText("réseau de");
+                                    metrostGUI.getLbSentence3().setText("transport.");
                                     break;
                                 case "Bienvenue !":
-                                    metrostGUI.getLbWelcome().setText("Willkommen !");
+                                    metrostGUI.getLbWelcome().setText("Willkommen !"); // German
+                                    metrostGUI.getLbSentence1().setText("Entwerfen");
+                                    metrostGUI.getLbSentence2().setText("Sie Ihr");
+                                    metrostGUI.getLbSentence3().setText("Transportnetz.");
                                     break;
                                 case "Willkommen !":
-                                    metrostGUI.getLbWelcome().setText("ようこそ !");
+                                    metrostGUI.getLbWelcome().setText("ようこそ !"); // Japanese
+                                    metrostGUI.getLbSentence1().setText("輸送ネット");
+                                    metrostGUI.getLbSentence2().setText("ワークを設");
+                                    metrostGUI.getLbSentence3().setText("計します。");
                                     break;
                                 case "ようこそ !":
-                                    metrostGUI.getLbWelcome().setText("Benvenut@ !");
+                                    metrostGUI.getLbWelcome().setText("Benvenut@ !"); // Italian
+                                    metrostGUI.getLbSentence1().setText("Progetta la");
+                                    metrostGUI.getLbSentence2().setText("tua rete di");
+                                    metrostGUI.getLbSentence3().setText("trasporto.");
                                     break;
                                 case "Benvenut@ !":
-                                    metrostGUI.getLbWelcome().setText("Bem-vind@ !");
+                                    metrostGUI.getLbWelcome().setText("Bem-vind@ !"); // Portuguese
+                                    metrostGUI.getLbSentence1().setText("Projete sua");
+                                    metrostGUI.getLbSentence2().setText("rede de");
+                                    metrostGUI.getLbSentence3().setText("transporte.");
                                     break;
                                 case "Bem-vind@ !":
-                                    metrostGUI.getLbWelcome().setText("مرحبا!");
+                                    metrostGUI.getLbWelcome().setText("مرحبا!"); // Arabic
+                                    metrostGUI.getLbSentence1().setText("الخاصة بك");
+                                    metrostGUI.getLbSentence2().setText("شبكة النقل");
+                                    metrostGUI.getLbSentence3().setText("صمم");
                                     break;
                                 case "مرحبا!":
-                                    metrostGUI.getLbWelcome().setText("Welkom !");
+                                    metrostGUI.getLbWelcome().setText("Welkom !"); // Dutch
+                                    metrostGUI.getLbSentence1().setText("Ontwerp uw");
+                                    metrostGUI.getLbSentence2().setText("transportnetwerk.");
+                                    metrostGUI.getLbSentence3().setText("");
                                     break;
                                 case "Welkom !":
-                                    metrostGUI.getLbWelcome().setText("Witamy !");
+                                    metrostGUI.getLbWelcome().setText("Witamy !"); // Polish
+                                    metrostGUI.getLbSentence1().setText("Zaprojektuj");
+                                    metrostGUI.getLbSentence2().setText("swoją sieć");
+                                    metrostGUI.getLbSentence3().setText("transportową.");
                                     break;
                                 case "Witamy !":
-                                    metrostGUI.getLbWelcome().setText("ברוך הבא!");
+                                    metrostGUI.getLbWelcome().setText("ברוך הבא!"); // Hebrew
+                                    metrostGUI.getLbSentence1().setText("התחבורה שלך");
+                                    metrostGUI.getLbSentence2().setText("את רשת ");
+                                    metrostGUI.getLbSentence3().setText("תכנן");
                                     break;
                                 case "ברוך הבא!":
-                                    metrostGUI.getLbWelcome().setText("欢​迎​光​临 !");
+                                    metrostGUI.getLbWelcome().setText("欢迎！"); // Chinese (simplified)
+                                    metrostGUI.getLbSentence1().setText("设计您");
+                                    metrostGUI.getLbSentence2().setText("的运");
+                                    metrostGUI.getLbSentence3().setText("输网络。");
                                     break;
-                                case "欢​迎​光​临 !":
-                                    metrostGUI.getLbWelcome().setText("Welcome !");
+                                case "欢迎！":
+                                    metrostGUI.getLbWelcome().setText("Welcome !"); // English
+                                    metrostGUI.getLbSentence1().setText("Design your");
+                                    metrostGUI.getLbSentence2().setText("transportation");
+                                    metrostGUI.getLbSentence3().setText("network.");
                                     break;
                             }
                         }
                     });
                 } else {
                     metrostGUI.getLbWelcome().setOpacity(metrostGUI.getLbWelcome().getOpacity() - 0.1);
+                    metrostGUI.getLbSentence1().setOpacity(metrostGUI.getLbSentence1().getOpacity() - 0.1);
+                    metrostGUI.getLbSentence2().setOpacity(metrostGUI.getLbSentence2().getOpacity() - 0.1);
+                    metrostGUI.getLbSentence3().setOpacity(metrostGUI.getLbSentence3().getOpacity() - 0.1);
                     countDecreaseOP++;
                     try {
                         Thread.sleep(100);
@@ -96,6 +135,9 @@ public class WelcomeThread extends Thread {
                     countDecreaseOP = 0;
                 } else {
                     metrostGUI.getLbWelcome().setOpacity(metrostGUI.getLbWelcome().getOpacity() + 0.1);
+                    metrostGUI.getLbSentence1().setOpacity(metrostGUI.getLbSentence1().getOpacity() + 0.1);
+                    metrostGUI.getLbSentence2().setOpacity(metrostGUI.getLbSentence2().getOpacity() + 0.1);
+                    metrostGUI.getLbSentence3().setOpacity(metrostGUI.getLbSentence3().getOpacity() + 0.1);
                     countIncreaseOP++;
                     try {
                         Thread.sleep(50);

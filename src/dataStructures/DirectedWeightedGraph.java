@@ -9,15 +9,52 @@ import dataStructures.Vertex.Color;
 
 public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements DirectedWeightedGraphInterface<V> {
 
-    private ArrayList<Vertex<V>> vertices;
+    // -----------------------------------------------------------------
+    // Attributes
+    // -----------------------------------------------------------------
+
+    private int time;
     private double[] distD;
     private double[][] minDistances;
+    private ArrayList<Vertex<V>> vertices;
     private ArrayList<Vertex<V>> prevD;
-    private int time;
+
+    // -----------------------------------------------------------------
+    // Relations
+    // -----------------------------------------------------------------
+
     private Edge<V> minEdge;
+
+    // -----------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------
 
     public DirectedWeightedGraph() {
         vertices = new ArrayList<Vertex<V>>();
+    }
+
+    public double[] getDistD() {
+        return distD;
+    }
+
+    public double[][] getMinDistances() {
+        return minDistances;
+    }
+
+    public ArrayList<Vertex<V>> getVertices() {
+        return vertices;
+    }
+
+    public ArrayList<Vertex<V>> getPrevD() {
+        return prevD;
+    }
+
+    public Edge<V> getMinEdge() {
+        return minEdge;
+    }
+
+    public void setMinEdge(Edge<V> minEdge) {
+        this.minEdge = minEdge;
     }
 
     @Override
@@ -151,24 +188,15 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         u.setFinalization(time);
     }
 
-    public Edge<V> getMinEdge() {
-        return minEdge;
-    }
-
-    public void setMinEdge(Edge<V> minEdge) {
-        this.minEdge = minEdge;
-    }
-
     @Override
     public boolean prim(Vertex<V> r) {
-        if (!bfs(vertices.get(0))) {
+        if (!bfs(vertices.get(0)))
             return false;
-        }
         for (int i = 0; i < vertices.size(); i++) {
             Vertex<V> v = vertices.get(i);
-            if (v.isWhite()) {
+            if (v.isWhite())
                 return false;
-            } else {
+            else {
                 v.setColor(Color.WHITE);
                 v.setPriority(Double.MAX_VALUE);
             }
@@ -197,9 +225,8 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         Uf uf = new Uf(vertices.size());
         ArrayList<Edge<V>> edges = getEdges();
         Collections.sort(edges);
-        for (int i = 0; i < vertices.size(); i++) {
+        for (int i = 0; i < vertices.size(); i++)
             uf.makeSet(i);
-        }
         for (Edge<V> edge : edges) {
             Vertex<V> source = edge.getSource();
             Vertex<V> dest = edge.getDestination();
@@ -211,6 +238,23 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
             }
         }
         return a;
+    }
+
+    public int getIndex(V value) {
+        for (int i = 0; i < getVertices().size(); i++) {
+            if (value.compareTo((getVertices().get(i).getValue())) == 0)
+                return i;
+        }
+        return -1;
+    }
+
+    protected int getIndex(Vertex<V> s) {
+        V value = s.getValue();
+        for (int i = 0; i < vertices.size(); i++) {
+            if (value.compareTo((vertices.get(i).getValue())) == 0)
+                return i;
+        }
+        return -1;
     }
 
     public abstract ArrayList<Edge<V>> getEdges();
@@ -245,52 +289,7 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         }
     }
 
-    protected int getIndex(Vertex<V> s) {
-        V value = s.getValue();
-        for (int i = 0; i < vertices.size(); i++) {
-            if (value.compareTo((vertices.get(i).getValue())) == 0)
-                return i;
-        }
-        return -1;
-    }
-
-    public int getIndex(V value) {
-        for (int i = 0; i < getVertices().size(); i++) {
-            if (value.compareTo((getVertices().get(i).getValue())) == 0)
-                return i;
-        }
-        return -1;
-    }
-
     protected abstract Edge<V> searchEdge(Vertex<V> v1, Vertex<V> v2);
 
     protected abstract void fillMatrix();
-
-    public ArrayList<Vertex<V>> getVertices() {
-        return vertices;
-    }
-
-    public void setVertices(ArrayList<Vertex<V>> vertices) {
-        this.vertices = vertices;
-    }
-
-    public double[] getDistD() {
-        return distD;
-    }
-
-    public void setDistD(double[] distD) {
-        this.distD = distD;
-    }
-
-    public ArrayList<Vertex<V>> getPrevD() {
-        return prevD;
-    }
-
-    public void setPrevD(ArrayList<Vertex<V>> prevD) {
-        this.prevD = prevD;
-    }
-
-    public double[][] getMinDistances() {
-        return minDistances;
-    }
 }

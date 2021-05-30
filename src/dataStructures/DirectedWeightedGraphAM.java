@@ -21,6 +21,10 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         numEdges = 0;
     }
 
+    public int getNumEdges() {
+        return numEdges;
+    }
+
     /**
      * @return ArrayList<ArrayList<Edge<V>>> return the adjacencyMatrix
      */
@@ -134,21 +138,20 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         int indexDestination = getIndex(destination.getValue());
         if (indexSource == -1 || indexDestination == -1)
             return false;
-        if (adjacencyMatrix.get(indexSource).get(indexDestination) == null) {
+        if (adjacencyMatrix.get(indexSource).get(indexDestination) == null)
             return false;
-        }
-        if ((getMinEdge().getSource().getValue().compareTo(source.getValue()) == 0)
-                && (getMinEdge().getDestination().getValue().compareTo(destination.getValue()) == 0)
-                && (getMinEdge().getWeight() == adjacencyMatrix.get(indexSource).get(indexDestination).getWeight()))
+        if ((getMinEdge().getSource().getValue().compareTo(source.getValue()) == 0) && (getMinEdge().getDestination().getValue().compareTo(destination.getValue()) == 0) && (getMinEdge().getWeight() == adjacencyMatrix.get(indexSource).get(indexDestination).getWeight())) {
             findNewMinEdge();
+        }
         adjacencyMatrix.get(indexSource).set(indexDestination, null);
         numEdges--;
         return true;
     }
 
     private void findNewMinEdge() {
-        if (numEdges == 0)
+        if (numEdges == 0) {
             setMinEdge(null);
+        }
         Edge<V> me = null;
         double minWeight = Double.MAX_VALUE;
         for (int i = 0; i < getVertices().size(); i++) {
@@ -187,10 +190,6 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
                     getMinDistances()[i][j] = adjacencyMatrix.get(i).get(j).getWeight();
             }
         }
-    }
-
-    public int getNumEdges() {
-        return numEdges;
     }
 
     @Override

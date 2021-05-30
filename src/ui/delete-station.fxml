@@ -28,8 +28,14 @@
          <font>
             <Font name="Avenir Next Condensed Bold" size="22.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
       </Label>
-      <JFXComboBox fx:id="cbStations" focusColor="ORANGE" layoutX="107.0" layoutY="106.0" prefHeight="31.0" prefWidth="194.0" promptText="Select station" stylesheets="@style.css" unFocusColor="WHITE" />
+      <JFXComboBox fx:id="cbStations" focusColor="ORANGE" layoutX="107.0" layoutY="106.0" prefHeight="31.0" prefWidth="194.0" promptText="Select station" stylesheets="@style.css" unFocusColor="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXComboBox>
       <Label fx:id="lbDeleteStation" layoutX="76.0" layoutY="235.0" prefHeight="32.0" prefWidth="296.0" textFill="#ff3a3a">
          <font>
             <Font name="Avenir Next Condensed Bold" size="22.0" />

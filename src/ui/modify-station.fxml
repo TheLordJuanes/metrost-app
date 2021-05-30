@@ -29,19 +29,28 @@
          <font>
             <Font name="Avenir Next Condensed Bold" size="22.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
       </Label>
-      <JFXComboBox fx:id="cbStations" focusColor="ORANGE" layoutX="105.0" layoutY="64.0" prefHeight="31.0" prefWidth="194.0" promptText="Select station" stylesheets="@style.css" unFocusColor="WHITE" />
+      <JFXComboBox fx:id="cbStations" focusColor="ORANGE" layoutX="105.0" layoutY="64.0" prefHeight="31.0" prefWidth="194.0" promptText="Select station" stylesheets="@style.css" unFocusColor="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXComboBox>
       <Label layoutX="109.0" layoutY="118.0" prefHeight="32.0" prefWidth="185.0" text="Write its new name:" textFill="WHITE">
          <font>
             <Font name="Avenir Next Condensed Bold" size="22.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
       </Label>
-      <JFXTextField fx:id="txtName" blendMode="ADD" focusColor="ORANGE" layoutX="106.0" layoutY="159.0" prefHeight="39.0" prefWidth="194.0" stylesheets="@../../../FIBA-players-app/src/ui/style.css" unFocusColor="WHITE">
+      <JFXTextField fx:id="txtName" blendMode="ADD" focusColor="ORANGE" layoutX="106.0" layoutY="159.0" prefHeight="39.0" prefWidth="194.0" stylesheets="@style.css" unFocusColor="WHITE">
          <font>
             <Font name="Avenir Next Condensed Bold" size="18.0" />
          </font>
          <cursor>
-            <Cursor fx:constant="TEXT" />
+            <Cursor fx:constant="HAND" />
          </cursor>
       </JFXTextField>
       <Label fx:id="lbModifyStation" alignment="CENTER" layoutX="301.0" layoutY="229.0" prefHeight="32.0" prefWidth="87.0" textAlignment="CENTER" textFill="#4aaeff">

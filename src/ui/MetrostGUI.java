@@ -35,16 +35,31 @@ public class MetrostGUI {
     // -----------------------------------------------------------------
 
     @FXML
-    private Label lbAddStation;
+    private JFXButton btnDeleteStation;
 
     @FXML
-    private Label lbAddConnection;
+    private Label lbAddStation;
 
     @FXML
     private Label lbModifyStation;
 
     @FXML
     private Label lbDeleteStation;
+
+    @FXML
+    private Label lbAddConnection;
+
+    @FXML
+    private JFXButton btnModifyConnection;
+
+    @FXML
+    private Label lbModifyConnection1;
+
+    @FXML
+    private Label lbModifyConnection2;
+
+    @FXML
+    private Label lbDeleteConnection;
 
     @FXML
     private JFXButton btnCurrentNetwork;
@@ -56,13 +71,7 @@ public class MetrostGUI {
     private JFXButton btnAddConnection;
 
     @FXML
-    private JFXButton btnDeleteStation;
-
-    @FXML
-    private JFXComboBox<String> cbAddConnection1;
-
-    @FXML
-    private JFXComboBox<String> cbAddConnection2;
+    private JFXButton btnDeleteConnection;
 
     @FXML
     private JFXTextField txtDistance;
@@ -71,7 +80,19 @@ public class MetrostGUI {
     private Label lbWelcome;
 
     @FXML
+    private Label lbSentence1;
+
+    @FXML
+    private Label lbSentence2;
+
+    @FXML
+    private Label lbSentence3;
+
+    @FXML
     private JFXComboBox<String> cbStations;
+
+    @FXML
+    private JFXComboBox<String> cbStations2;
 
     @FXML
     private JFXButton btnAddStation;
@@ -113,8 +134,16 @@ public class MetrostGUI {
         return lbWelcome;
     }
 
-    public void setLbWelcome(Label lbWelcome) {
-        this.lbWelcome = lbWelcome;
+    public Label getLbSentence1() {
+        return lbSentence1;
+    }
+
+    public Label getLbSentence2() {
+        return lbSentence2;
+    }
+
+    public Label getLbSentence3() {
+        return lbSentence3;
     }
 
     @FXML
@@ -150,7 +179,7 @@ public class MetrostGUI {
 
     @FXML
     public void textFileNetworkAddition(ActionEvent event) {
-        showWarningAlert("Text File Input Format", "The data of the stations must be as follows:", "In the first line, the word \"Number of stations\" is writtten.\nIn the second line, there is a number n of stations.\nIn the third line, the word \"Stations\" is writtten.\nThen, n lines follow, each one with the name of a station.\nNext, the title \"Station,Connected station,Distance between them\" where each item is separated by a coma is written.\nFinally, all the connections between two stations with their distance between them are written with the same format of the last title.");
+        showWarningAlert("Text File Input Format", "The network data must be as follows:", "In the first line, the word \"Number of stations\" is written.\nIn the second line, there is a number n of stations.\nIn the third line, the word \"Stations\" is written.\nThen, n lines follow, each one with the name of a station.\nNext, the title \"Station,Connected station,Distance between them\" where each item is separated by a coma is written.\nFinally, all the connections between two stations with their distance between them are written with the same format of the last title.");
         Stage stage = new Stage();
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Csv files", "*.csv"));
@@ -198,8 +227,8 @@ public class MetrostGUI {
             primaryStage.show();
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
         }
     }
 
@@ -277,7 +306,7 @@ public class MetrostGUI {
 
                     @Override
                     public void handle(ActionEvent event) {
-                        if (!cbStations.getValue().isEmpty())
+                        if (cbStations.getValue() != null)
                             btnModifyStation.setDisable(false);
                     }
                 });
@@ -334,7 +363,7 @@ public class MetrostGUI {
 
                     @Override
                     public void handle(ActionEvent event) {
-                        if (!cbStations.getValue().isEmpty())
+                        if (cbStations.getValue() != null)
                             btnDeleteStation.setDisable(false);
                     }
                 });
@@ -371,7 +400,7 @@ public class MetrostGUI {
     @FXML
     public void connectionModule(ActionEvent event) {
         if (metrost.getStations().size() < 2)
-            showInformationAlert("Non-existent stations", null, "Not enough stations added to your transportation network design.");
+            showInformationAlert("Insufficient stations", null, "Not enough stations added to your transportation network design to open this module.");
         else {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("connection-module.fxml"));
@@ -396,21 +425,21 @@ public class MetrostGUI {
             primaryStage.setTitle("Connection addition");
             primaryStage.show();
             ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
-            cbAddConnection1.setItems(observableList);
-            cbAddConnection2.setItems(observableList);
-            cbAddConnection1.setOnAction(new EventHandler<ActionEvent>() {
+            cbStations.setItems(observableList);
+            cbStations2.setItems(observableList);
+            cbStations.setOnAction(new EventHandler<ActionEvent>() {
 
                 @Override
                 public void handle(ActionEvent event) {
-                    if (!cbAddConnection1.getValue().isEmpty())
+                    if (cbStations.getValue() != null)
                         btnAddConnection.setDisable(false);
                 }
             });
-            cbAddConnection2.setOnAction(new EventHandler<ActionEvent>() {
+            cbStations2.setOnAction(new EventHandler<ActionEvent>() {
 
                 @Override
                 public void handle(ActionEvent event) {
-                    if (!cbAddConnection2.getValue().isEmpty())
+                    if (cbStations2.getValue() != null)
                         btnAddConnection.setDisable(false);
                 }
             });
@@ -418,7 +447,7 @@ public class MetrostGUI {
 
                 @Override
                 public void handle(ActionEvent event) {
-                    if (cbAddConnection1.getValue().equals(cbAddConnection2.getValue()) && !txtDistance.getText().isEmpty())
+                    if (cbStations.getValue().equals(cbStations2.getValue()) && !txtDistance.getText().isEmpty())
                         showErrorAlert("Connection failed", null, "A station can't be connected to itself.");
                     else if (txtDistance.getText().isEmpty())
                         showWarningAlert("Missing data", null, "The distance between the two stations must be filled.");
@@ -434,13 +463,13 @@ public class MetrostGUI {
     @FXML
     public void addConnection(ActionEvent event) {
         try {
-            if (metrost.addConnection(cbAddConnection1.getValue(), cbAddConnection2.getValue(), txtDistance.getText())) {
+            if (metrost.addConnection(cbStations.getValue(), cbStations2.getValue(), Double.parseDouble(txtDistance.getText()))) {
                 lbAddConnection.setText("Done!");
                 txtDistance.setText("");
-                cbAddConnection1.setValue(null);
-                cbAddConnection2.setValue(null);
+                cbStations.setValue(null);
+                cbStations2.setValue(null);
             } else
-                showErrorAlert("Connection failed", null, "A connection already existed between these two stations.");
+                showErrorAlert("Connection addition failed", null, "A connection already exists between these two stations.");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (CsvException csve) {
@@ -450,35 +479,157 @@ public class MetrostGUI {
 
     @FXML
     public void modifyAConnection(ActionEvent event) {
-
-    }
-
-    @FXML
-    public void deleteAConnection(ActionEvent event) {
-
-    }
-
-    @FXML
-    public void queryModule(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("query-module.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("modify-connection.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
-            primaryStage.setTitle("Query module");
+            primaryStage.setTitle("Connection modification");
             primaryStage.show();
+            ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+            cbStations.setItems(observableList);
+            cbStations2.setItems(observableList);
+            cbStations.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (cbStations.getValue() != null)
+                        btnModifyConnection.setDisable(false);
+                }
+            });
+            cbStations2.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (cbStations2.getValue() != null)
+                        btnModifyConnection.setDisable(false);
+                }
+            });
+            btnModifyConnection.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (cbStations.getValue().equals(cbStations2.getValue()) && !txtDistance.getText().isEmpty())
+                        showErrorAlert("Connection modification failed", null, "A station can't be connected to itself.");
+                    else if (txtDistance.getText().isEmpty())
+                        showWarningAlert("Missing data", null, "The distance between the two stations must be filled.");
+                    else
+                        modifyConnection(event);
+                }
+            });
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
 
     @FXML
-    public void findShortestPath(ActionEvent event) {
-
+    public void modifyConnection(ActionEvent event) {
+        try {
+            if (metrost.modifyConnection(cbStations.getValue(), cbStations2.getValue(), Double.parseDouble(txtDistance.getText()))) {
+                lbModifyConnection1.setText("Connection distance");
+                lbModifyConnection2.setText("successfully modified!");
+            } else {
+                showErrorAlert("Connection modification failed", null, "There isn't a connection from " + cbStations.getValue() + " to " + cbStations2.getValue() + ".");
+            }
+            cbStations.setValue(null);
+            cbStations2.setValue(null);
+            txtDistance.setText("");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (CsvException csve) {
+            csve.printStackTrace();
+        }
     }
 
     @FXML
-    public void showNetworkData(ActionEvent event) {
+    public void deleteAConnection(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("delete-connection.fxml"));
+            fxmlLoader.setController(this);
+            Parent root = fxmlLoader.load();
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setTitle("Connection elimination");
+            primaryStage.show();
+            ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+            cbStations.setItems(observableList);
+            cbStations2.setItems(observableList);
+            cbStations.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (cbStations.getValue() != null)
+                        btnDeleteConnection.setDisable(false);
+                }
+            });
+            cbStations2.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (cbStations2.getValue() != null)
+                        btnDeleteConnection.setDisable(false);
+                }
+            });
+            btnDeleteConnection.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (cbStations.getValue().equals(cbStations2.getValue()))
+                        showErrorAlert("Connection deletion failed", null, "A station can't be connected to itself.");
+                    else
+                        deleteConnection(event);
+                }
+            });
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void deleteConnection(ActionEvent event) {
+        try {
+            if (metrost.deleteConnection(cbStations.getValue(), cbStations2.getValue()))
+                lbDeleteConnection.setText("Connection successfully deleted!");
+            else {
+                showErrorAlert("Connection deletion failed", null, "There isn't a connection from " + cbStations.getValue() + " to " + cbStations2.getValue() + ".");
+            }
+            cbStations.setValue(null);
+            cbStations2.setValue(null);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (CsvException csve) {
+            csve.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void queryModule(ActionEvent event) {
+        if (metrost.getStations().isEmpty())
+            showInformationAlert("Non-existent stations", null, "There are no stations added to your transportation network design yet.");
+        else {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("query-module.fxml"));
+                fxmlLoader.setController(this);
+                Parent root = fxmlLoader.load();
+                primaryStage.setScene(new Scene(root));
+                primaryStage.setTitle("Query module");
+                primaryStage.show();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    public void findShortestPath(ActionEvent event) {
+        if (metrost.getStations().size() < 2)
+            showInformationAlert("Insufficient stations", null, "Not enough stations added to your transportation network design to execute this function.");
+        else {
+
+        }
+    }
+
+    @FXML
+    public void checkNetworkData(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("network.fxml"));
             fxmlLoader.setController(this);

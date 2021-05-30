@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/bus-highway.jpg" />
+         </image>
+      </ImageView>
+      <JFXComboBox fx:id="cbStations" focusColor="#ff7650" layoutX="379.0" layoutY="234.0" prefHeight="39.0" prefWidth="176.0" promptText="FROM" stylesheets="@style.css" unFocusColor="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXComboBox>
+      <Label blendMode="ADD" layoutX="386.0" layoutY="14.0" prefHeight="59.0" prefWidth="184.0" text="Connection" textFill="RED">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="40.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </Label>
+      <JFXComboBox fx:id="cbStations2" focusColor="#ff7650" layoutX="379.0" layoutY="283.0" prefHeight="39.0" prefWidth="176.0" promptText="TO" stylesheets="@style.css" unFocusColor="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXComboBox>
+      <Label blendMode="ADD" layoutX="385.0" layoutY="58.0" prefHeight="59.0" prefWidth="195.0" text="Elimination" textFill="RED">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="40.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </Label>
+      <Label fx:id="lbDeleteConnection" blendMode="HARD_LIGHT" layoutX="14.0" layoutY="338.0" prefHeight="48.0" prefWidth="361.0" textFill="RED">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="26.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnDeleteConnection" alignment="CENTER" blendMode="SRC_ATOP" contentDisplay="CENTER" disable="true" layoutX="375.0" layoutY="338.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="185.0" style="-fx-background-radius: 5em; -fx-background-color: #ff3333;" text="Delete Station" textAlignment="CENTER">
+         <font>
+            <Font name="Avenir Next Condensed Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" layoutX="14.0" layoutY="14.0" onAction="#connectionModule" prefHeight="30.0" prefWidth="66.0" style="-fx-background-radius: 5em; -fx-background-color: #ff7752;" text=" " textAlignment="CENTER" textFill="#ff871e">
+         <graphic>
+            <ImageView fitHeight="42.0" fitWidth="84.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/return.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>

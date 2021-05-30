@@ -28,6 +28,9 @@
          <font>
             <Font name="Avenir Next Condensed Bold" size="22.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
       </Label>
       <JFXTextField fx:id="txtName" blendMode="ADD" focusColor="#00b6ff" layoutX="108.0" layoutY="98.0" prefHeight="48.0" prefWidth="185.0" promptText="Name" stylesheets="@style.css" unFocusColor="WHITE">
          <font>

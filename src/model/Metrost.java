@@ -8,7 +8,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
@@ -34,9 +33,7 @@ public class Metrost {
     // Attributes
     // -----------------------------------------------------------------
 
-    private double progress;
     private ArrayList<String> stations;
-    private ArrayList<String[]> allData;
 
     // -----------------------------------------------------------------
     // Relations
@@ -49,37 +46,15 @@ public class Metrost {
     // -----------------------------------------------------------------
 
     public Metrost() {
-        graph = new DirectedWeightedGraphAM<>();
+        graph = new DirectedWeightedGraphAM<String>();
         stations = new ArrayList<String>();
-        progress = 0;
     }
 
     /**
-     * @return double return the progress
-     */
-    public double getProgress() {
-        return progress;
-    }
-
-    /**
-     * @param progress the progress to set
-     */
-    public void setProgress(double progress) {
-        this.progress = progress;
-    }
-
-    /**
-     * @return ArrayList<String[]> return the allData
-     */
-    public ArrayList<String[]> getAllData() {
-        return allData;
-    }
-
-    /**
-     * @param allData the allData to set
-     */
-    public void setAllData(ArrayList<String[]> allData) {
-        this.allData = allData;
+     * @return ArrayList<String> return the stations
+    */
+    public ArrayList<String> getStations() {
+        return stations;
     }
 
     public void addNetwork(File file) throws IOException, CsvException {
@@ -111,13 +86,6 @@ public class Metrost {
             graph.addEdge(source, destination, weight);
             line = br.readLine();
         }
-    }
-
-    /**
-     * @return ArrayList<String> return the stations
-     */
-    public ArrayList<String> getStations() {
-        return stations;
     }
 
     public boolean addStation(String name) throws IOException, CsvException {
@@ -212,15 +180,14 @@ public class Metrost {
         csvWriter.close();
     }
 
-    public boolean addConnection(String fromStation1, String toStation2, String distance) throws IOException, CsvException {
+    public boolean addConnection(String fromStation1, String toStation2, double distance) throws IOException, CsvException {
         Vertex<String> source = new Vertex<String>(fromStation1);
         Vertex<String> destination = new Vertex<String>(toStation2);
-        double dist = Double.parseDouble(distance);
-        if (graph.addEdge(source, destination, dist)) {
+        if (graph.addEdge(source, destination, distance)) {
             FileReader fr = new FileReader(FILE_NAME);
             CSVReader csvReader = new CSVReaderBuilder(fr).build();
             ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
-            String[] connection = { fromStation1, toStation2, distance };
+            String[] connection = { fromStation1, toStation2, String.valueOf(distance) };
             allLines.add(connection);
             FileWriter fw = new FileWriter(FILE_NAME);
             CSVWriter csvWriter = new CSVWriter(fw);
@@ -231,53 +198,59 @@ public class Metrost {
         return false;
     }
 
-    /**
-     * @param attribute
-     * @param valueD
-     * @param valueS
-     * @throws IOException
-     */
-    public boolean modifyStationData(String dataType, String newValue, int station) throws IOException {
-        if (allData.get(station) == null) {
-            return false;
+    public boolean modifyConnection(String fromStation1, String toStation2, double newDistance) throws IOException, CsvException {
+        Vertex<String> source = new Vertex<String>(fromStation1);
+        Vertex<String> destination = new Vertex<String>(toStation2);
+        if (graph.modifyWeight(source, destination, newDistance)) {
+            FileReader fr = new FileReader(FILE_NAME);
+            CSVReader csvReader = new CSVReaderBuilder(fr).build();
+            ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
+            for (String[] line : allLines) {
+                if (line.length == 3) {
+                    if (line[0].equals(fromStation1) && line[1].equals(toStation2)) {
+                        line[2] = String.valueOf(newDistance);
+                        break;
+                    }
+                }
+            }
+            FileWriter fw = new FileWriter(FILE_NAME);
+            CSVWriter csvWriter = new CSVWriter(fw);
+            csvWriter.writeAll(allLines, false);
+            csvWriter.close();
+            return true;
         }
-        Vertex<String> source = new Vertex<String>(allData.get(station)[0]);
-        Vertex<String> destination = new Vertex<String>(allData.get(station)[1]);
-        switch (dataType) {
-            case "Name":
-                graph.modifyVertex(allData.get(station)[0], newValue);
-                allData.get(station)[0] = newValue;
-                break;
-            case "Connected with":
-                graph.deleteEdge(source, destination);
-                allData.get(station)[1] = newValue;
-                destination = new Vertex<String>(allData.get(station)[1]);
-                graph.addEdge(source, destination, Double.parseDouble(allData.get(station)[2]));
-                break;
-        }
-        FileWriter fw = new FileWriter(FILE_NAME);
-        CSVWriter csvWriter = new CSVWriter(fw);
-        ArrayList<String[]> allData2 = new ArrayList<>(allData);
-        String[] temp = { "Station", "Connected station", "Distance between them" };
-        allData2.add(0, temp);
-        csvWriter.writeAll(allData2);
-        csvWriter.close();
-        return true;
+        return false;
     }
 
-    public boolean modifyConnection(String newValue, int station) {
-        if (allData.get(station) == null) {
-            return false;
+    public boolean deleteConnection(String fromStation1, String toStation2) throws IOException, CsvException {
+        Vertex<String> source = new Vertex<String>(fromStation1);
+        Vertex<String> destination = new Vertex<String>(toStation2);
+        if (graph.deleteEdge(source, destination)) {
+            FileReader fr = new FileReader(FILE_NAME);
+            CSVReader csvReader = new CSVReaderBuilder(fr).build();
+            ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
+            for (String[] line : allLines) {
+                if (line.length == 3) {
+                    if (line[0].equals(fromStation1) && line[1].equals(toStation2)) {
+                        allLines.remove(line);
+                        break;
+                    }
+                }
+            }
+            FileWriter fw = new FileWriter(FILE_NAME);
+            CSVWriter csvWriter = new CSVWriter(fw);
+            csvWriter.writeAll(allLines, false);
+            csvWriter.close();
+            return true;
         }
-        Vertex<String> source = new Vertex<String>(allData.get(station)[0]);
-        Vertex<String> destination = new Vertex<String>(allData.get(station)[1]);
-        allData.get(station)[2] = newValue;
-        graph.modifyWeight(source, destination, Double.valueOf(allData.get(station)[2]));
-        return true;
+        return false;
     }
 
-    public void deleteStationData(List<String> stations) {
-        //for (Station station : stations)
-            //graph.deleteVertex(station.getName());
+    public boolean findShortestPath() {
+        return false;
+    }
+
+    public String checkNetworkData() {
+        return "";
     }
 }
