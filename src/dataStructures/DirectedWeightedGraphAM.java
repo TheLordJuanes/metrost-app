@@ -66,7 +66,7 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         }
         int sourceIndex = getIndex(source.getValue());
         int destinationIndex = getIndex(destination.getValue());
-        if (sourceIndex == -1 || destinationIndex == -1)
+        if (sourceIndex == -1 || destinationIndex == -1 || sourceIndex == destinationIndex)
             return false;
         if (adjacencyMatrix.get(sourceIndex).get(destinationIndex) != null) {
             return false;
@@ -151,20 +151,21 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
     private void findNewMinEdge() {
         if (numEdges == 0) {
             setMinEdge(null);
-        }
-        Edge<V> me = null;
-        double minWeight = Double.MAX_VALUE;
-        for (int i = 0; i < getVertices().size(); i++) {
-            for (int j = 0; j < getVertices().size(); j++) {
-                if (adjacencyMatrix.get(i).get(j) != null) {
-                    if (adjacencyMatrix.get(i).get(j).getWeight() < minWeight) {
-                        me = adjacencyMatrix.get(i).get(j);
-                        minWeight = me.getWeight();
+        } else {
+            Edge<V> me = null;
+            double minWeight = Double.MAX_VALUE;
+            for (int i = 0; i < getVertices().size(); i++) {
+                for (int j = 0; j < getVertices().size(); j++) {
+                    if (adjacencyMatrix.get(i).get(j) != null) {
+                        if (adjacencyMatrix.get(i).get(j).getWeight() < minWeight) {
+                            me = adjacencyMatrix.get(i).get(j);
+                            minWeight = me.getWeight();
+                        }
                     }
                 }
             }
+            setMinEdge(me);
         }
-        setMinEdge(me);
     }
 
     @Override

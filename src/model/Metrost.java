@@ -24,16 +24,11 @@ import java.io.IOException;
 public class Metrost {
 
     // -----------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------
-
-    public static final String FILE_NAME = "data/stations.csv";
-
-    // -----------------------------------------------------------------
     // Attributes
     // -----------------------------------------------------------------
 
     private ArrayList<String> stations;
+    private String fileName= "data/stations.csv";
 
     // -----------------------------------------------------------------
     // Relations
@@ -45,9 +40,31 @@ public class Metrost {
     // Methods
     // -----------------------------------------------------------------
 
+    public DirectedWeightedGraphAM<String> getGraph() {
+        return graph;
+    }
+
+    public void setGraph(DirectedWeightedGraphAM<String> graph) {
+        this.graph = graph;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public Metrost() {
         graph = new DirectedWeightedGraphAM<String>();
         stations = new ArrayList<String>();
+    }
+
+    public Metrost(String file) {
+        graph = new DirectedWeightedGraphAM<String>();
+        stations = new ArrayList<String>();
+        fileName = file;
     }
 
     /**
@@ -59,7 +76,7 @@ public class Metrost {
 
     public void addNetwork(File file) throws IOException, CsvException {
         BufferedReader br = new BufferedReader(new FileReader(file));
-        BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
         String line = br.readLine();
         while (line != null) {
             bw.write(line + "\n");
@@ -89,10 +106,10 @@ public class Metrost {
     }
 
     public boolean addStation(String name) throws IOException, CsvException {
-        BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
         if (graph.addVertex(name) && !stations.contains(name)) {
             if (br.lines().count() == 0) {
-                BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME));
+                BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
                 bw.write("Number of stations\n");
                 bw.write("1\n");
                 bw.write("Stations\n");
@@ -100,7 +117,7 @@ public class Metrost {
                 bw.write("Station,Connected station,Distance between them\n");
                 bw.close();
             } else {
-                FileReader fr = new FileReader(FILE_NAME);
+                FileReader fr = new FileReader(fileName);
                 CSVReader csvReader = new CSVReaderBuilder(fr).build();
                 ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
                 int numStations = Integer.parseInt(allLines.get(1)[0]);
@@ -108,7 +125,7 @@ public class Metrost {
                 allLines.get(1)[0] = String.valueOf(numStations);
                 String[] station = { name };
                 allLines.add(numStations + 2, station);
-                FileWriter fw = new FileWriter(FILE_NAME);
+                FileWriter fw = new FileWriter(fileName);
                 CSVWriter csvWriter = new CSVWriter(fw);
                 csvWriter.writeAll(allLines, false);
                 csvWriter.close();
@@ -129,7 +146,7 @@ public class Metrost {
                     break;
                 }
             }
-            FileReader fr = new FileReader(FILE_NAME);
+            FileReader fr = new FileReader(fileName);
             CSVReader csvReader = new CSVReaderBuilder(fr).build();
             ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
             for (String[] line : allLines) {
@@ -142,7 +159,7 @@ public class Metrost {
                         line[1] = newName;
                 }
             }
-            FileWriter fw = new FileWriter(FILE_NAME);
+            FileWriter fw = new FileWriter(fileName);
             CSVWriter csvWriter = new CSVWriter(fw);
             csvWriter.writeAll(allLines, false);
             csvWriter.close();
@@ -153,7 +170,7 @@ public class Metrost {
 
     public void deleteStation(String name) throws IOException, CsvException {
         graph.deleteVertex(name);
-        FileReader fr = new FileReader(FILE_NAME);
+        FileReader fr = new FileReader(fileName);
         CSVReader csvReader = new CSVReaderBuilder(fr).build();
         ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
         int numStations = Integer.parseInt(allLines.get(1)[0]);
@@ -174,7 +191,7 @@ public class Metrost {
                 }
             }
         }
-        FileWriter fw = new FileWriter(FILE_NAME);
+        FileWriter fw = new FileWriter(fileName);
         CSVWriter csvWriter = new CSVWriter(fw);
         csvWriter.writeAll(allLines, false);
         csvWriter.close();
@@ -184,12 +201,12 @@ public class Metrost {
         Vertex<String> source = new Vertex<String>(fromStation1);
         Vertex<String> destination = new Vertex<String>(toStation2);
         if (graph.addEdge(source, destination, distance)) {
-            FileReader fr = new FileReader(FILE_NAME);
+            FileReader fr = new FileReader(fileName);
             CSVReader csvReader = new CSVReaderBuilder(fr).build();
             ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
             String[] connection = { fromStation1, toStation2, String.valueOf(distance) };
             allLines.add(connection);
-            FileWriter fw = new FileWriter(FILE_NAME);
+            FileWriter fw = new FileWriter(fileName);
             CSVWriter csvWriter = new CSVWriter(fw);
             csvWriter.writeAll(allLines, false);
             csvWriter.close();
@@ -202,7 +219,7 @@ public class Metrost {
         Vertex<String> source = new Vertex<String>(fromStation1);
         Vertex<String> destination = new Vertex<String>(toStation2);
         if (graph.modifyWeight(source, destination, newDistance)) {
-            FileReader fr = new FileReader(FILE_NAME);
+            FileReader fr = new FileReader(fileName);
             CSVReader csvReader = new CSVReaderBuilder(fr).build();
             ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
             for (String[] line : allLines) {
@@ -213,7 +230,7 @@ public class Metrost {
                     }
                 }
             }
-            FileWriter fw = new FileWriter(FILE_NAME);
+            FileWriter fw = new FileWriter(fileName);
             CSVWriter csvWriter = new CSVWriter(fw);
             csvWriter.writeAll(allLines, false);
             csvWriter.close();
@@ -226,7 +243,7 @@ public class Metrost {
         Vertex<String> source = new Vertex<String>(fromStation1);
         Vertex<String> destination = new Vertex<String>(toStation2);
         if (graph.deleteEdge(source, destination)) {
-            FileReader fr = new FileReader(FILE_NAME);
+            FileReader fr = new FileReader(fileName);
             CSVReader csvReader = new CSVReaderBuilder(fr).build();
             ArrayList<String[]> allLines = new ArrayList<>((LinkedList<String[]>) csvReader.readAll());
             for (String[] line : allLines) {
@@ -237,7 +254,7 @@ public class Metrost {
                     }
                 }
             }
-            FileWriter fw = new FileWriter(FILE_NAME);
+            FileWriter fw = new FileWriter(fileName);
             CSVWriter csvWriter = new CSVWriter(fw);
             csvWriter.writeAll(allLines, false);
             csvWriter.close();
@@ -246,8 +263,12 @@ public class Metrost {
         return false;
     }
 
-    public boolean findShortestPath() {
-        return false;
+    public String findShortestPath(String fromStation) {
+        Vertex<String> source = new Vertex<String>(fromStation);
+        if (graph.dijkstra(source)) {
+
+        }
+        return "";
     }
 
     public String checkNetworkData() {

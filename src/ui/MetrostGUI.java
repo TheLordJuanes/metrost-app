@@ -14,6 +14,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.opencsv.exceptions.CsvException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -422,6 +424,14 @@ public class MetrostGUI {
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
+            txtDistance.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    if (!newValue.matches("\\d{0,20}?"))
+                        txtDistance.setText(oldValue);
+                }
+                //TERMINARRRRR
+            });
             primaryStage.setTitle("Connection addition");
             primaryStage.show();
             ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
@@ -513,6 +523,8 @@ public class MetrostGUI {
                         showErrorAlert("Connection modification failed", null, "A station can't be connected to itself.");
                     else if (txtDistance.getText().isEmpty())
                         showWarningAlert("Missing data", null, "The distance between the two stations must be filled.");
+                    else if (Double.parseDouble(txtDistance.getText()) == 0)
+                        showErrorAlert("Connection modification failed", null, "A station can't have distance 0 to another station.");
                     else
                         modifyConnection(event);
                 }
