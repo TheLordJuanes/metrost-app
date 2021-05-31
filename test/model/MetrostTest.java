@@ -43,6 +43,17 @@ public class MetrostTest {
 		}
 	}
 
+	public void setup3() {
+		metrost = new Metrost("test/stations.csv");
+		File file = new File("test/inputExample2.csv");
+		try {
+			metrost.addDesignedNetwork(file);
+		} catch (IOException | CsvException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
 	@Test
 	public void testAddDesignedNetwork() {
 		setup1();
@@ -339,11 +350,18 @@ public class MetrostTest {
 
 	@Test
 	public void testFindShortestPath() {
-		fail("Not yet implemented");
+
 	}
 
 	@Test
-	public void testCheckNetworkData() {
-		fail("Not yet implemented");
+	public void testShowNetworkData() {
+		setup3();
+		String temp ="Number of stations\n8\nStations\na\nb\nc\nd\ne\nf\ng\nh\nStation,Connected station,Distance between them\na,b,20.0\na,d,80.0\na,g,90.0\nb,f,10.0\nc,f,50.0\nc,h,20.0\nd,c,10.0\nd,g,20.0\ne,b,50.0\ne,g,30.0\nf,c,10.0\nf,d,40.0\ng,a,20.0\n";
+		try {
+			assertEquals(temp, metrost.showNetworkData());
+		} catch (IOException e) {
+			fail();
+			e.printStackTrace();
+		}
 	}
 }
