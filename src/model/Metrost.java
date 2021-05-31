@@ -295,7 +295,7 @@ public class Metrost {
         graph.dijkstra(graph.getVertices().get(graph.getIndex(fromStation)));
         String info = "";
         for (int i = 0; i < stations.size(); i++) {
-            if (stations.get(i) != fromStation) {
+            if (!stations.get(i).equals(fromStation)) {
                 Vertex<String> target = new Vertex<String>(stations.get(i));
                 ArrayList<Vertex<String>> path = getPath(target);
                 if (graph.getDistD()[i] == Double.MAX_VALUE)
@@ -304,9 +304,9 @@ public class Metrost {
                     info += "\nTo " + stations.get(i) + ": \tDistance: " + graph.getDistD()[i] + "\t\tPath: ";
                 if (path != null) {
                     for (Vertex<String> station : path) {
-                        info += station.getValue() + "->";
+                        info += station.getValue() + "—–>";
                     }
-                    info = info.substring(0, info.length() - 2);
+                    info = info.substring(0, info.length() - 3);
                 } else
                     info += "Non-existent";
             }

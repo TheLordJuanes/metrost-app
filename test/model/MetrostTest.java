@@ -350,7 +350,15 @@ public class MetrostTest {
 
 	@Test
 	public void testFindShortestPath() {
-
+		setup3();
+		String temp = "To b: 	Distance: 20.0		Path: a—–>b"+
+		"\nTo c: 	Distance: 40.0		Path: a—–>b—–>f—–>c"+
+		"\nTo d: 	Distance: 70.0		Path: a—–>b—–>f—–>d"+
+		"\nTo e: 	Distance: N/A		Path: Non-existent"+
+		"\nTo f: 	Distance: 30.0		Path: a—–>b—–>f"+
+		"\nTo g: 	Distance: 90.0		Path: a—–>g"+
+		"\nTo h: 	Distance: 60.0		Path: a—–>b—–>f—–>c—–>h";
+		assertEquals(temp, metrost.findShortestPath("a"));
 	}
 
 	@Test
