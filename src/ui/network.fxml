@@ -19,7 +19,7 @@
       </ImageView>
       <JFXTextArea fx:id="taInfo" editable="false" focusColor="ORANGE" layoutX="17.0" layoutY="90.0" prefHeight="283.0" prefWidth="566.0" style="-fx-border-color: BLACK; -fx-background-color: TRANSPARENT;" stylesheets="@style.css">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />
@@ -42,7 +42,7 @@
       </JFXButton>
       <Label blendMode="SCREEN" layoutX="209.0" layoutY="16.0" prefHeight="48.0" prefWidth="228.0" text="Network data" textFill="WHITE" underline="true">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="33.0" />
+            <Font name="System Bold" size="33.0" />
          </font>
       </Label>
    </children>

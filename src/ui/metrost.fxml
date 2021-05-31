@@ -15,9 +15,9 @@
             <Image url="@../../resources/bus-stop.jpg" />
          </image>
       </ImageView>
-      <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="173.0" layoutY="271.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#networkForm" prefHeight="35.0" prefWidth="138.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="START METROST" textAlignment="CENTER" textFill="WHITE">
+      <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="270.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#networkForm" prefHeight="34.0" prefWidth="138.0" style="-fx-background-color: #18c264; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="START METROST" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="16.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -25,27 +25,27 @@
       </JFXButton>
       <Label alignment="CENTER" layoutX="155.0" layoutY="90.0" prefHeight="27.0" prefWidth="170.0" text="METRO TROST®" textAlignment="CENTER" textFill="#18c264" underline="true">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label fx:id="lbWelcome" alignment="CENTER" layoutX="155.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="170.0" text="Welcome !" textAlignment="CENTER" textFill="#315b38">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="24.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
       </Label>
       <Label fx:id="lbSentence1" alignment="CENTER" layoutX="166.0" layoutY="178.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="151.0" text="Design your " textAlignment="CENTER" textFill="#315b38">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label fx:id="lbSentence2" alignment="CENTER" layoutX="163.0" layoutY="204.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="151.0" text="transportation" textAlignment="CENTER" textFill="#315b38">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
       <Label fx:id="lbSentence3" alignment="CENTER" layoutX="175.0" layoutY="229.0" prefHeight="27.0" prefWidth="138.0" text="network." textAlignment="CENTER" textFill="#315b38">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
    </children>

@@ -47,7 +47,7 @@
          </cursor></JFXComboBox>
       <Label blendMode="ADD" layoutX="95.0" layoutY="192.0" prefHeight="43.0" prefWidth="109.0" text="FROM" textFill="#ffa600">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="30.0" />
+            <Font name="System Bold" size="30.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />
@@ -55,7 +55,7 @@
       </Label>
       <Label blendMode="ADD" layoutX="425.0" layoutY="194.0" prefHeight="43.0" prefWidth="54.0" text="TO" textFill="#ffa600">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="30.0" />
+            <Font name="System Bold" size="30.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />
@@ -63,7 +63,7 @@
       </Label>
       <Label blendMode="ADD" layoutX="181.0" layoutY="19.0" prefHeight="43.0" prefWidth="288.0" text="Connection addition" textFill="#ffa600" underline="true">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="30.0" />
+            <Font name="System Bold" size="30.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />
@@ -71,7 +71,7 @@
       </Label>
       <Label blendMode="ADD" layoutX="250.0" layoutY="82.0" prefHeight="43.0" prefWidth="164.0" text="DISTANCE" textFill="#ffa600">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="30.0" />
+            <Font name="System Bold" size="30.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />

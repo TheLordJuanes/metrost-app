@@ -18,9 +18,9 @@
             <Image url="@../../resources/paths.png" />
          </image>
       </ImageView>
-      <Label blendMode="SCREEN" layoutX="206.0" layoutY="16.0" prefHeight="48.0" prefWidth="236.0" text="Shorest paths" textFill="WHITE" underline="true">
+      <Label blendMode="SCREEN" layoutX="182.0" layoutY="16.0" prefHeight="48.0" prefWidth="236.0" text="Shortest paths" textFill="WHITE" underline="true">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="33.0" />
+            <Font name="System Bold" size="33.0" />
          </font>
       </Label>
       <JFXComboBox fx:id="cbStations3" focusColor="#35da2f" layoutX="118.0" layoutY="80.0" prefHeight="39.0" prefWidth="176.0" promptText="Choose station" stylesheets="@style.css" unFocusColor="WHITE">
@@ -30,7 +30,7 @@
       </JFXComboBox>
       <JFXTextArea fx:id="taInfo" editable="false" focusColor="ORANGE" layoutX="14.0" layoutY="149.0" prefHeight="236.0" prefWidth="566.0" style="-fx-border-color: BLACK; -fx-background-color: TRANSPARENT;" stylesheets="@style.css" text="&#10;">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />
@@ -53,15 +53,15 @@
       </JFXButton>
       <JFXButton fx:id="btnFindPaths" alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" disable="true" layoutX="336.0" layoutY="75.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="203.0" ripplerFill="#c9c9c9" style="-fx-background-radius: 5em; -fx-background-color: #c9c9c9;" text="Find paths" textAlignment="CENTER">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Label blendMode="SCREEN" layoutX="51.0" layoutY="76.0" prefHeight="48.0" prefWidth="58.0" text="FROM" textFill="WHITE">
+      <Label blendMode="SCREEN" layoutX="43.0" layoutY="76.0" prefHeight="48.0" prefWidth="66.0" text="FROM" textFill="WHITE">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="22.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
       </Label>
    </children>

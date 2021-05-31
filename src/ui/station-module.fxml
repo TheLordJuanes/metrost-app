@@ -17,7 +17,7 @@
       </ImageView>
       <JFXButton alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="31.0" layoutY="224.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#addAStation" prefHeight="48.0" prefWidth="156.0" style="-fx-background-radius: 5em; -fx-background-color: YELLOW;" text="Add station" textAlignment="CENTER">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -25,7 +25,7 @@
       </JFXButton>
       <JFXButton alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="411.0" layoutY="224.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#deleteAStation" prefHeight="48.0" prefWidth="156.0" style="-fx-background-radius: 5em; -fx-background-color: YELLOW;" text="Delete station" textAlignment="CENTER">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="20.0" />
+            <Font name="System Bold" size="19.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -33,7 +33,7 @@
       </JFXButton>
       <JFXButton alignment="CENTER" blendMode="MULTIPLY" contentDisplay="CENTER" layoutX="222.0" layoutY="224.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#modifyAStation" prefHeight="48.0" prefWidth="156.0" style="-fx-background-radius: 5em; -fx-background-color: YELLOW;" text="Modify station" textAlignment="CENTER">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="20.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -41,7 +41,7 @@
       </JFXButton>
       <Label blendMode="COLOR_BURN" layoutX="168.0" layoutY="297.0" prefHeight="54.0" prefWidth="276.0" text="STATION MODULE">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="37.0" />
+            <Font name="System Bold" size="31.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />
