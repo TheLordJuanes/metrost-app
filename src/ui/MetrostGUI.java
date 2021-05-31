@@ -450,10 +450,9 @@ public class MetrostGUI {
             txtDistance.textProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    if (!newValue.matches("\\d{0,20}?"))
+                    if (!newValue.matches("^[0-9]*+([.][0-9]*)?$"))
                         txtDistance.setText(oldValue);
                 }
-                //TERMINARRRRR
             });
             primaryStage.setTitle("Connection addition");
             primaryStage.show();
@@ -520,10 +519,9 @@ public class MetrostGUI {
             txtDistance.textProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    if (!newValue.matches("\\d{0,20}?"))
+                    if (!newValue.matches("^[0-9]*+([.][0-9]*)?$"))
                         txtDistance.setText(oldValue);
                 }
-                //TERMINARRRRR
             });
             primaryStage.setTitle("Connection modification");
             primaryStage.show();
