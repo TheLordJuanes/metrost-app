@@ -1,3 +1,9 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
+ * @Date: June, 3rd 2021
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 package dataStructures;
 
 import java.util.ArrayList;
@@ -9,6 +15,11 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
     // -----------------------------------------------------------------
 
     private int numEdges;
+
+    // -----------------------------------------------------------------
+    // Relations
+    // -----------------------------------------------------------------
+
     private ArrayList<ArrayList<Edge<V>>> adjacencyMatrix;
 
     // -----------------------------------------------------------------
@@ -71,6 +82,10 @@ public class DirectedWeightedGraphAM<V extends Comparable<V>> extends DirectedWe
         if (adjacencyMatrix.get(sourceIndex).get(destinationIndex) != null) {
             return false;
         }
+        //
+        source=getVertices().get(sourceIndex);
+        destination=getVertices().get(destinationIndex);
+        //
         Edge<V> tempEdge = new Edge<V>(weight, source, destination);
         if (getMinEdge() == null)
             setMinEdge(tempEdge);

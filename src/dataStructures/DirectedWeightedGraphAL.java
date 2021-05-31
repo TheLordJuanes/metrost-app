@@ -1,7 +1,7 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
- * @Date: June, 1st 2021
+ * @Date: June, 3rd 2021
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 package dataStructures;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class DirectedWeightedGraphAL<V extends Comparable<V>> extends DirectedWeightedGraph<V> {
 
     // -----------------------------------------------------------------
-    // Attributes
+    // Relations
     // -----------------------------------------------------------------
 
     private ArrayList<ArrayList<Vertex<V>>> adjacencyList;

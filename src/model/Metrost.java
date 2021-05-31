@@ -1,12 +1,13 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
- * @Date: June, 1st 2021
+ * @Date: June, 3rd 2021
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -28,7 +29,7 @@ public class Metrost {
     // -----------------------------------------------------------------
 
     private ArrayList<String> stations;
-    private String fileName= "data/stations.csv";
+    private String fileName = "data/stations.csv";
 
     // -----------------------------------------------------------------
     // Relations
@@ -74,7 +75,7 @@ public class Metrost {
         return stations;
     }
 
-    public void addNetwork(File file) throws IOException, CsvException {
+    public void addDesignedNetwork(File file) throws IOException, CsvException {
         BufferedReader br = new BufferedReader(new FileReader(file));
         BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
         String line = br.readLine();
@@ -105,7 +106,34 @@ public class Metrost {
         }
     }
 
+    public void addCurrentNetWork(File file) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line = br.readLine();
+        line = br.readLine();
+        line = br.readLine();
+        line = br.readLine();
+        while (!line.equals("Station,Connected station,Distance between them")) {
+            graph.addVertex(line);
+            stations.add(line);
+            line = br.readLine();
+        }
+        line = br.readLine();
+        while (line != null) {
+            String[] parts = line.split(",");
+            Vertex<String> source = new Vertex<String>(parts[0]);
+            Vertex<String> destination = new Vertex<String>(parts[1]);
+            double weight = Double.parseDouble(parts[2]);
+            graph.addEdge(source, destination, weight);
+            line = br.readLine();
+        }
+        br.close();
+    }
+
     public boolean addStation(String name) throws IOException, CsvException {
+        File file = new File(fileName);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         if (graph.addVertex(name) && !stations.contains(name)) {
             if (br.lines().count() == 0) {
@@ -264,14 +292,53 @@ public class Metrost {
     }
 
     public String findShortestPath(String fromStation) {
-        Vertex<String> source = new Vertex<String>(fromStation);
-        if (graph.dijkstra(source)) {
-
+        graph.dijkstra(graph.getVertices().get(graph.getIndex(fromStation)));
+        String info = "";
+        for (int i = 0; i < stations.size(); i++) {
+            if (stations.get(i) != fromStation) {
+                Vertex<String> target = new Vertex<String>(stations.get(i));
+                ArrayList<Vertex<String>> path = getPath(target);
+                if (graph.getDistD()[i] == Double.MAX_VALUE)
+                    info += "\nTo " + stations.get(i) + ": \tDistance: " + "N/A" + "\t\tPath: ";
+                else
+                    info += "\nTo " + stations.get(i) + ": \tDistance: " + graph.getDistD()[i] + "\t\tPath: ";
+                if (path != null) {
+                    for (Vertex<String> station : path) {
+                        info += station.getValue() + "->";
+                    }
+                    info = info.substring(0, info.length() - 2);
+                } else
+                    info += "Non-existent";
+            }
         }
-        return "";
+        info = info.substring(1, info.length());
+        return info;
     }
 
-    public String checkNetworkData() {
-        return "";
+    private ArrayList<Vertex<String>> getPath(Vertex<String> target) {
+        ArrayList<Vertex<String>> path = new ArrayList<Vertex<String>>();
+        Vertex<String> step = target;
+        if (graph.getPrevD().get(graph.getIndex(step.getValue())) == null) {
+            return null;
+        }
+        path.add(step);
+        while (graph.getPrevD().get(graph.getIndex(step.getValue())) != null) {
+            step = graph.getPrevD().get(graph.getIndex(step.getValue()));
+            path.add(step);
+        }
+        Collections.reverse(path);
+        return path;
+    }
+
+    public String showNetworkData() throws IOException {
+        String network = "";
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        String line = br.readLine();
+        while (line != null) {
+            network += line + "\n";
+            line = br.readLine();
+        }
+        br.close();
+        return network;
     }
 }

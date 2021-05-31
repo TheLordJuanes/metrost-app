@@ -1,5 +1,5 @@
 Number of stations
-7
+8
 Stations
 a
 b
@@ -8,8 +8,18 @@ d
 e
 f
 g
+h
 Station,Connected station,Distance between them
-a,b,3.0
-a,c,6.0
-b,a,5.0
-a,d,4.0
+a,b,20.0
+a,d,80.0
+a,g,90.0
+b,f,10.0
+c,f,50.0
+c,h,20.0
+d,c,10.0
+d,g,20.0
+e,b,50.0
+e,g,30.0
+f,c,10.0
+f,d,40.0
+g,a,20.0

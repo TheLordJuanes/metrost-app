@@ -1,16 +1,16 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
- * @Date: June, 1st 2021
+ * @Date: June, 3rd 2021
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 package dataStructures;
 
+import java.util.ArrayList;
+
 public interface DirectedWeightedGraphInterface<V> {
 
     public boolean dijkstra(Vertex<V> s);
-
-    // public boolean mst();
 
     public void floydWarshall();
 
@@ -19,6 +19,8 @@ public interface DirectedWeightedGraphInterface<V> {
     public boolean dfs();
 
     public boolean prim(Vertex<V> r);
+
+    public ArrayList<Edge<V>> kruskal();
 
     public boolean addVertex(V value);
 

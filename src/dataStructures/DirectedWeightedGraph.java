@@ -1,3 +1,9 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
+ * @Date: June, 3rd 2021
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 package dataStructures;
 
 import java.util.ArrayList;
@@ -16,14 +22,14 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
     private int time;
     private double[] distD;
     private double[][] minDistances;
-    private ArrayList<Vertex<V>> vertices;
-    private ArrayList<Vertex<V>> prevD;
 
     // -----------------------------------------------------------------
     // Relations
     // -----------------------------------------------------------------
 
     private Edge<V> minEdge;
+    private ArrayList<Vertex<V>> vertices;
+    private ArrayList<Vertex<V>> prevD;
 
     // -----------------------------------------------------------------
     // Methods
@@ -220,6 +226,7 @@ public abstract class DirectedWeightedGraph<V extends Comparable<V>> implements 
         return true;
     }
 
+    @Override
     public ArrayList<Edge<V>> kruskal() {
         ArrayList<Edge<V>> a = new ArrayList<>();
         Uf uf = new Uf(vertices.size());

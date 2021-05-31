@@ -1,7 +1,7 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
- * @Date: June, 1st 2021
+ * @Date: June, 3rd 2021
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 package ui;
@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.opencsv.exceptions.CsvException;
 import javafx.beans.value.ChangeListener;
@@ -35,6 +36,12 @@ public class MetrostGUI {
     // -----------------------------------------------------------------
     // Attributes
     // -----------------------------------------------------------------
+
+    @FXML
+    private JFXTextArea taInfo;
+
+    @FXML
+    private JFXButton btnFindPaths;
 
     @FXML
     private JFXButton btnDeleteStation;
@@ -95,6 +102,9 @@ public class MetrostGUI {
 
     @FXML
     private JFXComboBox<String> cbStations2;
+
+    @FXML
+    private JFXComboBox<String> cbStations3;
 
     @FXML
     private JFXButton btnAddStation;
@@ -170,6 +180,7 @@ public class MetrostGUI {
 
                 @Override
                 public void handle(ActionEvent event) {
+                    loadCurrentNetwork(event);
                     stage.close();
                     goToMenu(event);
                 }
@@ -188,7 +199,7 @@ public class MetrostGUI {
         File file = fc.showOpenDialog(stage);
         if (file != null) {
             try {
-                metrost.addNetwork(file);
+                metrost.addDesignedNetwork(file);
                 goToMenu(event);
             } catch (IOException ioe) {
                 ioe.printStackTrace();
@@ -197,6 +208,18 @@ public class MetrostGUI {
             }
         } else
             showInformationAlert("Missing File", null, "No file was selected");
+    }
+
+    @FXML
+    public void loadCurrentNetwork(ActionEvent event) {
+        File file = new File(metrost.getFileName());
+        if (file != null && file.length() != 0) {
+            try {
+                metrost.addCurrentNetWork(file);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -494,6 +517,14 @@ public class MetrostGUI {
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
+            txtDistance.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    if (!newValue.matches("\\d{0,20}?"))
+                        txtDistance.setText(oldValue);
+                }
+                //TERMINARRRRR
+            });
             primaryStage.setTitle("Connection modification");
             primaryStage.show();
             ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
@@ -636,20 +667,54 @@ public class MetrostGUI {
         if (metrost.getStations().size() < 2)
             showInformationAlert("Insufficient stations", null, "Not enough stations added to your transportation network design to execute this function.");
         else {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("shortest-path.fxml"));
+                fxmlLoader.setController(this);
+                Parent root = fxmlLoader.load();
+                primaryStage.setScene(new Scene(root));
+                primaryStage.setTitle("Shortest path search");
+                primaryStage.show();
+                ObservableList<String> observableList = FXCollections.observableArrayList(metrost.getStations());
+                cbStations3.setItems(observableList);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            }
+            cbStations3.setOnAction(new EventHandler<ActionEvent>() {
 
+                @Override
+                public void handle(ActionEvent event) {
+                    if (cbStations3.getValue() != null)
+                        btnFindPaths.setDisable(false);
+                }
+            });
+            btnFindPaths.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    if (cbStations3.getValue() == null)
+                        taInfo.setText("");
+                    else
+                        findPaths(event);
+                }
+            });
         }
     }
 
     @FXML
-    public void checkNetworkData(ActionEvent event) {
+    public void findPaths(ActionEvent event) {
+        taInfo.setText(metrost.findShortestPath(cbStations3.getValue()));
+    }
+
+    @FXML
+    public void showNetworkData(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("network.fxml"));
             fxmlLoader.setController(this);
             Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Network Data");
-            stage.show();
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setTitle("Network Data");
+            primaryStage.show();
+            taInfo.setText(metrost.showNetworkData());
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

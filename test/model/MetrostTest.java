@@ -1,3 +1,9 @@
+/**
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
+ * @Date: June, 3rd 2021
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +21,7 @@ public class MetrostTest {
 
 	private Metrost metrost;
 
-	public void setup1(){
+	public void setup1() {
 		File file = new File("test/stations.csv");
 		file.delete();
 		try {
@@ -26,11 +32,11 @@ public class MetrostTest {
 		metrost = new Metrost("test/stations.csv");
 	}
 
-	public void setup2(){
+	public void setup2() {
 		metrost = new Metrost("test/stations.csv");
 		File file = new File("test/inputExample.csv");
 		try {
-			metrost.addNetwork(file);
+			metrost.addDesignedNetwork(file);
 		} catch (IOException | CsvException e) {
 			e.printStackTrace();
 			fail();
@@ -38,11 +44,11 @@ public class MetrostTest {
 	}
 
 	@Test
-	public void testAddNetwork() {
+	public void testAddDesignedNetwork() {
 		setup1();
 		File file = new File("test/inputExample.csv");
 		try {
-			metrost.addNetwork(file);
+			metrost.addDesignedNetwork(file);
 			assertEquals(7, metrost.getStations().size());
 			assertEquals("a", metrost.getStations().get(0));
 			assertEquals("b", metrost.getStations().get(1));
@@ -75,15 +81,15 @@ public class MetrostTest {
 			assertEquals(5.0, adjacencyMatrix.get(1).get(0).getWeight());
 			assertEquals(4.0, adjacencyMatrix.get(0).get(3).getWeight());
 
-			for(int i=0; i<7; i++){
-				for(int j=0; j<7; j++){
-					if(i==0){
-						if(j==1 || j==2 || j==3){
+			for (int i = 0; i < 7; i++) {
+				for (int j = 0; j < 7; j++) {
+					if (i == 0) {
+						if (j == 1 || j == 2 || j == 3) {
 							continue;
 						}
 					}
-					if(i==1){
-						if(j==0){
+					if (i == 1) {
+						if (j == 0) {
 							continue;
 						}
 					}
@@ -107,11 +113,11 @@ public class MetrostTest {
 			assertEquals(1, metrost.getStations().size());
 			assertEquals("Prueba", metrost.getStations().get(0));
 			BufferedReader br = new BufferedReader(new FileReader(metrost.getFileName()));
-			assertEquals("Number of stations",br.readLine());
-			assertEquals("1",br.readLine());
-			assertEquals("Stations",br.readLine());
-			assertEquals("Prueba",br.readLine());
-			assertEquals("Station,Connected station,Distance between them",br.readLine());
+			assertEquals("Number of stations", br.readLine());
+			assertEquals("1", br.readLine());
+			assertEquals("Stations", br.readLine());
+			assertEquals("Prueba", br.readLine());
+			assertEquals("Station,Connected station,Distance between them", br.readLine());
 			assertNull(br.readLine());
 			br.close();
 		} catch (IOException | CsvException e) {
@@ -131,22 +137,22 @@ public class MetrostTest {
 			assertEquals("g", metrost.getStations().get(6));
 			assertEquals("Prueba", metrost.getStations().get(7));
 			BufferedReader br = new BufferedReader(new FileReader(metrost.getFileName()));
-			assertEquals("Number of stations",br.readLine());
-			assertEquals("8",br.readLine());
-			assertEquals("Stations",br.readLine());
-			assertEquals("a",br.readLine());
-			assertEquals("b",br.readLine());
-			assertEquals("c",br.readLine());
-			assertEquals("d",br.readLine());
-			assertEquals("e",br.readLine());
-			assertEquals("f",br.readLine());
-			assertEquals("g",br.readLine());
-			assertEquals("Prueba",br.readLine());
-			assertEquals("Station,Connected station,Distance between them",br.readLine());
-			assertEquals("a,b,3.0",br.readLine());
-			assertEquals("a,c,6.0",br.readLine());
-			assertEquals("b,a,5.0",br.readLine());
-			assertEquals("a,d,4.0",br.readLine());
+			assertEquals("Number of stations", br.readLine());
+			assertEquals("8", br.readLine());
+			assertEquals("Stations", br.readLine());
+			assertEquals("a", br.readLine());
+			assertEquals("b", br.readLine());
+			assertEquals("c", br.readLine());
+			assertEquals("d", br.readLine());
+			assertEquals("e", br.readLine());
+			assertEquals("f", br.readLine());
+			assertEquals("g", br.readLine());
+			assertEquals("Prueba", br.readLine());
+			assertEquals("Station,Connected station,Distance between them", br.readLine());
+			assertEquals("a,b,3.0", br.readLine());
+			assertEquals("a,c,6.0", br.readLine());
+			assertEquals("b,a,5.0", br.readLine());
+			assertEquals("a,d,4.0", br.readLine());
 			assertNull(br.readLine());
 			br.close();
 		} catch (IOException | CsvException e) {
@@ -207,16 +213,16 @@ public class MetrostTest {
 			assertEquals("f", metrost.getStations().get(4));
 			assertEquals("g", metrost.getStations().get(5));
 			BufferedReader br = new BufferedReader(new FileReader(metrost.getFileName()));
-			assertEquals("Number of stations",br.readLine());
-			assertEquals("6",br.readLine());
-			assertEquals("Stations",br.readLine());
-			assertEquals("b",br.readLine());
-			assertEquals("c",br.readLine());
-			assertEquals("d",br.readLine());
-			assertEquals("e",br.readLine());
-			assertEquals("f",br.readLine());
-			assertEquals("g",br.readLine());
-			assertEquals("Station,Connected station,Distance between them",br.readLine());
+			assertEquals("Number of stations", br.readLine());
+			assertEquals("6", br.readLine());
+			assertEquals("Stations", br.readLine());
+			assertEquals("b", br.readLine());
+			assertEquals("c", br.readLine());
+			assertEquals("d", br.readLine());
+			assertEquals("e", br.readLine());
+			assertEquals("f", br.readLine());
+			assertEquals("g", br.readLine());
+			assertEquals("Station,Connected station,Distance between them", br.readLine());
 			assertNull(br.readLine());
 			br.close();
 		} catch (IOException | CsvException e) {
@@ -237,7 +243,7 @@ public class MetrostTest {
 
 			BufferedReader br = new BufferedReader(new FileReader("test/stations.csv"));
 
-			for(int i=0; i<15; i++){
+			for (int i = 0; i < 15; i++) {
 				br.readLine();
 			}
 			String[] temp = br.readLine().split(",");
@@ -275,7 +281,7 @@ public class MetrostTest {
 			assertTrue(metrost.modifyConnection("a", "b", 3.5));
 			BufferedReader br = new BufferedReader(new FileReader("test/stations.csv"));
 
-			for(int i=0; i<11; i++){
+			for (int i = 0; i < 11; i++) {
 				br.readLine();
 			}
 			String[] temp = br.readLine().split(",");
@@ -309,20 +315,20 @@ public class MetrostTest {
 			assertEquals("f", metrost.getStations().get(5));
 			assertEquals("g", metrost.getStations().get(6));
 			BufferedReader br = new BufferedReader(new FileReader(metrost.getFileName()));
-			assertEquals("Number of stations",br.readLine());
-			assertEquals("7",br.readLine());
-			assertEquals("Stations",br.readLine());
-			assertEquals("a",br.readLine());
-			assertEquals("b",br.readLine());
-			assertEquals("c",br.readLine());
-			assertEquals("d",br.readLine());
-			assertEquals("e",br.readLine());
-			assertEquals("f",br.readLine());
-			assertEquals("g",br.readLine());
-			assertEquals("Station,Connected station,Distance between them",br.readLine());
-			assertEquals("a,c,6.0",br.readLine());
-			assertEquals("b,a,5.0",br.readLine());
-			assertEquals("a,d,4.0",br.readLine());
+			assertEquals("Number of stations", br.readLine());
+			assertEquals("7", br.readLine());
+			assertEquals("Stations", br.readLine());
+			assertEquals("a", br.readLine());
+			assertEquals("b", br.readLine());
+			assertEquals("c", br.readLine());
+			assertEquals("d", br.readLine());
+			assertEquals("e", br.readLine());
+			assertEquals("f", br.readLine());
+			assertEquals("g", br.readLine());
+			assertEquals("Station,Connected station,Distance between them", br.readLine());
+			assertEquals("a,c,6.0", br.readLine());
+			assertEquals("b,a,5.0", br.readLine());
+			assertEquals("a,d,4.0", br.readLine());
 			assertNull(br.readLine());
 			br.close();
 		} catch (IOException | CsvException e) {

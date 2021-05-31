@@ -1,7 +1,7 @@
 /**
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * @Authors: Juan Pablo Ramos, Juan Esteban Caicedo and Jose Alejandro García
- * @Date: June, 1st 2021
+ * @Date: June, 3rd 2021
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 package dataStructures;
@@ -56,13 +56,7 @@ public class Edge<V> implements Comparable<Edge<V>> {
     }
 
     @Override
-    public String toString() {
-        return "Edge From: " + source.getValue().toString() + " to: " + destination.getValue().toString() + " distance: " + weight;
-    }
-
-    @Override
     public int compareTo(Edge<V> o) {
         return (int) weight - (int) o.getWeight();
     }
 }
-        

@@ -4,7 +4,7 @@
 
 Metro Trost, a decentralized, industrial and commercial entity of the State of the municipal order, whose objective is to develop an Integrated System of Mass Transportation (ISMT) of the city of Trost.
 
-<img src = "resources/bus-station.jpg" >
+![Screenshot](resources/lookMe.png)
 
 Metro Trost, assumed a double challenge: the construction and operation of its transportation system, it is in charge of the design, construction and start-up of the ISMT, of passengers for Trost, based on the definitions technical, legal and financial provided by investment banking.
 
@@ -22,11 +22,11 @@ Check the engineering method with the functional requirements, the UML Class Dia
 - Programming Language 💱 : Java 8
 - Operating systems used 💻 : Windows 10 Home Single and MacOS Big Sur
 - Integrated Development Environment used 👨🏻‍💻 : Visual Studio Code v. 1.56.2 and Eclipse IDE v. 4.17
-- External Libraries used: JFoeniX-8.0.10 (https://github.com/jfoenixadmin/JFoenix)
+- External Libraries used: JFoeniX-8.0.10 (<https://github.com/jfoenixadmin/JFoenix>)
 - Installation 🔧 : Click on Code, then on Download ZIP.
 
 ## Authors 🖊️
 
-[Juan-dev123](https://github.com/Juan-dev123)<br />
-[TheLordJuanes](https://github.com/TheLordJuanes)<br />
+[Juan-dev123](https://github.com/Juan-dev123)\
+[TheLordJuanes](https://github.com/TheLordJuanes)\
 [jose-2001](https://github.com/jose-2001)
