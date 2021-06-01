@@ -42,7 +42,7 @@
       </Label>
       <Label fx:id="lbDeleteConnection" blendMode="HARD_LIGHT" layoutX="14.0" layoutY="338.0" prefHeight="48.0" prefWidth="361.0" textFill="RED">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="26.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
       </Label>
       <JFXButton fx:id="btnDeleteConnection" alignment="CENTER" blendMode="SRC_ATOP" contentDisplay="CENTER" disable="true" layoutX="375.0" layoutY="338.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="185.0" style="-fx-background-radius: 5em; -fx-background-color: #ff3333;" text="Delete Station" textAlignment="CENTER">

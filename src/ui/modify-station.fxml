@@ -19,15 +19,15 @@
       </ImageView>
       <JFXButton fx:id="btnModifyStation" alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" disable="true" layoutX="109.0" layoutY="221.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="185.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Modify station" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Label layoutX="114.0" layoutY="24.0" prefHeight="32.0" prefWidth="177.0" text="Choose the station:" textFill="WHITE">
+      <Label layoutX="100.0" layoutY="24.0" prefHeight="32.0" prefWidth="207.0" text="Choose the station:" textFill="WHITE">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="22.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />
@@ -37,9 +37,9 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></JFXComboBox>
-      <Label layoutX="109.0" layoutY="118.0" prefHeight="32.0" prefWidth="185.0" text="Write its new name:" textFill="WHITE">
+      <Label layoutX="94.0" layoutY="117.0" prefHeight="32.0" prefWidth="215.0" text="Write its new name:" textFill="WHITE">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="22.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />

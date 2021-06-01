@@ -19,7 +19,7 @@
       </ImageView>
       <JFXButton fx:id="btnAddConnection" alignment="CENTER" blendMode="DIFFERENCE" contentDisplay="CENTER" disable="true" layoutX="200.0" layoutY="308.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="185.0" style="-fx-background-radius: 5em; -fx-background-color: #ff871e;" text="Add connection" textAlignment="CENTER">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -85,9 +85,9 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </JFXTextField>
-      <Label fx:id="lbAddConnection" blendMode="ADD" layoutX="436.0" layoutY="311.0" prefHeight="43.0" prefWidth="66.0" textFill="#ffa600">
+      <Label fx:id="lbAddConnection" blendMode="ADD" layoutX="436.0" layoutY="311.0" prefHeight="43.0" prefWidth="109.0" textFill="#ffa600">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="27.0" />
+            <Font name="System Bold" size="27.0" />
          </font>
       </Label>
    </children>

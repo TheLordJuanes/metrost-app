@@ -18,15 +18,15 @@
       </ImageView>
       <JFXButton fx:id="btnAddStation" alignment="CENTER" blendMode="HARD_LIGHT" contentDisplay="CENTER" layoutX="110.0" layoutY="175.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="185.0" ripplerFill="WHITE" style="-fx-background-radius: 5em; -fx-background-color: #969696;" text="Add station" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Label layoutX="88.0" layoutY="35.0" prefHeight="32.0" prefWidth="266.0" text="Choose the station name:" textFill="WHITE">
+      <Label layoutX="70.0" layoutY="36.0" prefHeight="32.0" prefWidth="266.0" text="Choose the station name:" textFill="WHITE">
          <font>
-            <Font name="Avenir Next Condensed Bold" size="22.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
          <cursor>
             <Cursor fx:constant="TEXT" />

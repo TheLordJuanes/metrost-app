@@ -74,6 +74,9 @@ public class MetrostGUI {
     private JFXButton btnCurrentNetwork;
 
     @FXML
+    private JFXButton btnEmptyNetwork;
+
+    @FXML
     private JFXButton btnDesignedNetwork;
 
     @FXML
@@ -185,6 +188,14 @@ public class MetrostGUI {
                     goToMenu(event);
                 }
             });
+            btnEmptyNetwork.setOnAction(new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    stage.close();
+                    createEmptyNetwork(event);
+                }
+            });
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
@@ -199,12 +210,11 @@ public class MetrostGUI {
         File file = fc.showOpenDialog(stage);
         if (file != null) {
             try {
+                metrost = new Metrost();
                 metrost.addDesignedNetwork(file);
                 goToMenu(event);
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            } catch (CsvException ioe) {
-                ioe.printStackTrace();
+            } catch (IOException | CsvException ioe) {
+                showErrorAlert("Format Error", null, "The file given did not have the correct format.");
             }
         } else
             showInformationAlert("Missing File", null, "No file was selected");
@@ -220,6 +230,16 @@ public class MetrostGUI {
                 ioe.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    public void createEmptyNetwork(ActionEvent event) {
+        metrost = new Metrost();
+        File file = new File("data/stations.csv");
+        if (file.exists()) {
+            file.delete();
+        }
+        goToMenu(event);
     }
 
     @FXML
@@ -483,6 +503,12 @@ public class MetrostGUI {
                         showErrorAlert("Connection failed", null, "A station can't be connected to itself.");
                     else if (txtDistance.getText().isEmpty())
                         showWarningAlert("Missing data", null, "The distance between the two stations must be filled.");
+                    else if (cbStations2.getValue() == null || cbStations.getValue() == null)
+                        showWarningAlert("Missing data", null, "Both stations must be filled.");
+                    else if (txtDistance.getText().charAt(0) == '.')
+                        showErrorAlert("Text format problem", null, "The first character cannot be a point.");
+                    else if (Double.parseDouble(txtDistance.getText()) == 0)
+                        showErrorAlert("Connection modification failed", null, "A station can't have distance 0 to another station.");
                     else
                         addConnection(event);
                 }
@@ -549,9 +575,13 @@ public class MetrostGUI {
                 @Override
                 public void handle(ActionEvent event) {
                     if (cbStations.getValue().equals(cbStations2.getValue()) && !txtDistance.getText().isEmpty())
-                        showErrorAlert("Connection modification failed", null, "A station can't be connected to itself.");
+                        showErrorAlert("Connection failed", null, "A station can't be connected to itself.");
                     else if (txtDistance.getText().isEmpty())
                         showWarningAlert("Missing data", null, "The distance between the two stations must be filled.");
+                    else if (cbStations2.getValue() == null || cbStations.getValue() == null)
+                        showWarningAlert("Missing data", null, "Both stations must be filled.");
+                    else if (txtDistance.getText().charAt(0) == '.')
+                        showErrorAlert("Text format problem", null, "The first character cannot be a point.");
                     else if (Double.parseDouble(txtDistance.getText()) == 0)
                         showErrorAlert("Connection modification failed", null, "A station can't have distance 0 to another station.");
                     else
@@ -616,6 +646,8 @@ public class MetrostGUI {
                 public void handle(ActionEvent event) {
                     if (cbStations.getValue().equals(cbStations2.getValue()))
                         showErrorAlert("Connection deletion failed", null, "A station can't be connected to itself.");
+                    else if (cbStations2.getValue() == null || cbStations.getValue() == null)
+                        showWarningAlert("Missing data", null, "Both stations must be filled.");
                     else
                         deleteConnection(event);
                 }
